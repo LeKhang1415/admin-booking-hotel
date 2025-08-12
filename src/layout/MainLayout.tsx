@@ -7,7 +7,7 @@ import { useAppDispatch, useAppSelector } from "../store";
 
 function MainLayout() {
     const dispatch = useAppDispatch();
-    const { expanded, mobileOpen } = useAppSelector((state) => state.sidebar);
+    const { mobileOpen } = useAppSelector((state) => state.sidebar);
 
     const handleOverlayClick = () => {
         dispatch(setMobileOpen(false));
@@ -18,7 +18,7 @@ function MainLayout() {
             {/* Mobile Overlay */}
             {mobileOpen && (
                 <div
-                    className="lg:hidden fixed inset-0 bg-black bg-opacity-50 z-30"
+                    className="lg:hidden fixed inset-0 bg-black/20 z-30"
                     onClick={handleOverlayClick}
                 />
             )}
@@ -26,14 +26,14 @@ function MainLayout() {
             {/* Sidebar */}
             <div
                 className={`
-                fixed lg:static top-0 left-0 h-full z-40
+                fixed lg:static top-0 left-0 h-full z-40 w-72 lg:w-64
                 transform transition-all duration-300 ease-in-out
                 ${
                     mobileOpen
                         ? "translate-x-0"
                         : "-translate-x-full lg:translate-x-0"
                 }
-                ${expanded ? "w-72 lg:w-64" : "w-20"}
+               
             `}
             >
                 <Sidebar />
@@ -49,8 +49,8 @@ function MainLayout() {
                 {/* Header */}
                 <Header />
 
-                {/* Page Content - React Router Outlet */}
-                <main className="flex-1 overflow-auto p-4 lg:p-6">
+                {/* Page Content */}
+                <main className="flex-1 overflow-hidden p-4 lg:p-6">
                     <Outlet />
                 </main>
             </div>

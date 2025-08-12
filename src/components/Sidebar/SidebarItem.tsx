@@ -1,6 +1,5 @@
 import type { ReactNode } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { useAppSelector } from "../../store";
 
 interface SidebarItemProps {
     href: string;
@@ -10,7 +9,6 @@ interface SidebarItemProps {
 
 export default function SidebarItem({ href, icon, text }: SidebarItemProps) {
     const location = useLocation();
-    const { expanded } = useAppSelector((state) => state.sidebar);
     const isActive = location.pathname === href;
 
     return (
@@ -39,10 +37,7 @@ export default function SidebarItem({ href, icon, text }: SidebarItemProps) {
                 </div>
                 <span
                     className={`
-                        overflow-hidden transition-all capitalize ${
-                            expanded ? "ml-3" : ""
-                        }
-                        ${expanded ? "w-52" : "w-0"}
+                        overflow-hidden transition-all capitalize w-52 ml-3
                     `}
                 >
                     {text}
@@ -50,19 +45,17 @@ export default function SidebarItem({ href, icon, text }: SidebarItemProps) {
             </Link>
 
             {/* Tooltip khi sidebar collapsed */}
-            {!expanded && (
-                <div
-                    className={`
+            <div
+                className={`
                         absolute left-full rounded-md px-2 py-1 ml-6 
                         bg-[#1a1a1a] text-white text-sm whitespace-nowrap
                         invisible opacity-0 -translate-x-3 transition-all
                         group-hover:visible group-hover:opacity-100 group-hover:translate-x-0
                         z-50 shadow-lg border border-gray-600
                     `}
-                >
-                    {text}
-                </div>
-            )}
+            >
+                {text}
+            </div>
         </li>
     );
 }
