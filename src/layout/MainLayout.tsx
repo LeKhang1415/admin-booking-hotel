@@ -1,26 +1,58 @@
+// layouts/MainLayout.tsx
 import { Outlet } from "react-router-dom";
+import { setMobileOpen } from "../store/slices/sidebarSlice";
 import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
+import { useAppDispatch, useAppSelector } from "../store";
 
 function MainLayout() {
+    const dispatch = useAppDispatch();
+    const { expanded, mobileOpen } = useAppSelector((state) => state.sidebar);
+
+    const handleOverlayClick = () => {
+        dispatch(setMobileOpen(false));
+    };
+
     return (
-        <div className="bg-[#171717] h-screen">
-            <div className="container mx-auto h-full">
-                <div className=" grid items-start grid-cols-12 gap-4 h-full">
-                    {/* Sidebar - Ẩn trên mobile, hiện trên desktop */}
-                    <div className="sm:hidden lg:block lg:col-span-3 h-full bg-[#2a2a2a]  shadow-custom">
-                        <Sidebar />
-                    </div>
+        <div className="bg-[#171717] h-screen flex">
+            {/* Mobile Overlay */}
+            {mobileOpen && (
+                <div
+                    className="lg:hidden fixed inset-0 bg-black bg-opacity-50 z-30"
+                    onClick={handleOverlayClick}
+                />
+            )}
 
-                    {/* Main Content Area */}
-                    <div className="col-span-12 lg:col-span-9 flex flex-col h-full overflow-auto relative">
-                        {/* Header */}
-                        <Header />
+            {/* Sidebar */}
+            <div
+                className={`
+                fixed lg:static top-0 left-0 h-full z-40
+                transform transition-all duration-300 ease-in-out
+                ${
+                    mobileOpen
+                        ? "translate-x-0"
+                        : "-translate-x-full lg:translate-x-0"
+                }
+                ${expanded ? "w-72 lg:w-64" : "w-20"}
+            `}
+            >
+                <Sidebar />
+            </div>
 
-                        {/* Page Content - React Router Outlet */}
-                        <Outlet />
-                    </div>
-                </div>
+            {/* Main Content Area */}
+            <div
+                className={`
+                flex-1 flex flex-col h-full overflow-hidden
+                transition-all duration-300 ease-in-out
+            `}
+            >
+                {/* Header */}
+                <Header />
+
+                {/* Page Content - React Router Outlet */}
+                <main className="flex-1 overflow-auto p-4 lg:p-6">
+                    <Outlet />
+                </main>
             </div>
         </div>
     );
