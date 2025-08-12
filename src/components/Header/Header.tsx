@@ -1,12 +1,12 @@
 import { HiMenuAlt2 } from "react-icons/hi";
 import { useAppDispatch } from "../../store";
-import { toggleMobileOpen } from "../../store/slices/sidebarSlice";
+import { openMobile } from "../../store/slices/sidebarSlice";
 
 export default function Header() {
     const dispatch = useAppDispatch();
 
     const handleMobileToggle = () => {
-        dispatch(toggleMobileOpen());
+        dispatch(openMobile());
     };
 
     return (

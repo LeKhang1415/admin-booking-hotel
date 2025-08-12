@@ -43,19 +43,6 @@ export default function SidebarItem({ href, icon, text }: SidebarItemProps) {
                     {text}
                 </span>
             </Link>
-
-            {/* Tooltip khi sidebar collapsed */}
-            <div
-                className={`
-                        absolute left-full rounded-md px-2 py-1 ml-6 
-                        bg-[#1a1a1a] text-white text-sm whitespace-nowrap
-                        invisible opacity-0 -translate-x-3 transition-all
-                        group-hover:visible group-hover:opacity-100 group-hover:translate-x-0
-                        z-50 shadow-lg border border-gray-600
-                    `}
-            >
-                {text}
-            </div>
         </li>
     );
 }

@@ -17,9 +17,9 @@ export default function Sidebar() {
     return (
         <aside className="h-screen">
             <nav className="h-full flex flex-col bg-[#2a2a2a] text-white shadow-sm">
-                {/* Header với logo và toggle button */}
+                {/* Header với logo */}
                 <div className="p-4 pb-2 flex justify-between items-center flex-shrink-0">
-                    {/* Logo - chỉ hiện khi expanded */}
+                    {/* Logo */}
                     <div className="flex items-center gap-3">
                         <img
                             src={icons.logo}
@@ -35,7 +35,6 @@ export default function Sidebar() {
                             </span>
                         </div>
                     </div>
-                    {/* Toggle button - chỉ hiện trên desktop */}
                 </div>
 
                 {/* Navigation Links */}

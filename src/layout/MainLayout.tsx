@@ -1,6 +1,6 @@
 // layouts/MainLayout.tsx
 import { Outlet } from "react-router-dom";
-import { setMobileOpen } from "../store/slices/sidebarSlice";
+import { closeMobile } from "../store/slices/sidebarSlice";
 import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
 import { useAppDispatch, useAppSelector } from "../store";
@@ -10,7 +10,7 @@ function MainLayout() {
     const { mobileOpen } = useAppSelector((state) => state.sidebar);
 
     const handleOverlayClick = () => {
-        dispatch(setMobileOpen(false));
+        dispatch(closeMobile());
     };
 
     return (
