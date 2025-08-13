@@ -29,3 +29,20 @@ export type RoomResponse = {
         totalPages: number;
     };
 };
+
+export type RoomsListQuery = {
+    // Pagination fields
+    page?: number;
+    itemsPerPage?: number;
+
+    // Room filter fields
+    roomStatus?: "active" | "inactive";
+    minPricePerDay?: number;
+    maxPricePerDay?: number;
+    minPricePerHour?: number;
+    maxPricePerHour?: number;
+    maxPeople?: number;
+
+    // Type room filters
+    typeRoomId?: string;
+};

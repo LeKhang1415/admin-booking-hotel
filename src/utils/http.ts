@@ -6,8 +6,17 @@ import axios, {
 } from "axios";
 import { store } from "../store";
 import { logout, setAccessToken } from "../store/slices/authSlice";
+import { authApi } from "../services/auth.api";
 
 const API_BASE_URL = import.meta.env.API_BASE_URL || "http://localhost:3000/";
+
+// Instance riêng chỉ để refresh token, không có interceptor
+const refreshInstance = axios.create({
+    baseURL: API_BASE_URL,
+    withCredentials: true,
+    timeout: 10000,
+    headers: { "Content-Type": "application/json" },
+});
 
 class Http {
     instance: AxiosInstance;
@@ -29,17 +38,18 @@ class Http {
     }
 
     private setupInterceptors() {
-        // Gắn token vào request
+        // Gắn token vào request (trừ request refresh-token)
         this.instance.interceptors.request.use(
             (config: InternalAxiosRequestConfig) => {
+                const isRefresh = config.url?.includes("/auth/refresh-token");
                 const token = store.getState().auth.token;
-                if (token) {
+
+                if (token && !isRefresh) {
                     config.headers.Authorization = `Bearer ${token}`;
                 }
                 return config;
             }
         );
-
         // Xử lý response và lỗi
         this.instance.interceptors.response.use(
             (response: AxiosResponse) => response,
@@ -50,7 +60,11 @@ class Http {
                     };
 
                 // Nếu lỗi 401 và chưa retry
-                if (error.response?.status === 401 && !originalRequest._retry) {
+                if (
+                    error.response?.status === 401 &&
+                    !originalRequest._retry &&
+                    !originalRequest.url?.includes("/auth/refresh-token") // tránh loop
+                ) {
                     originalRequest._retry = true;
 
                     // Nếu đang refresh token, đợi trong queue
@@ -84,9 +98,9 @@ class Http {
         this.isRefreshing = true;
 
         try {
-            // Gọi API refresh token
-            const response = await this.instance.get<{ accessToken: string }>(
-                "/users/refresh-token"
+            // Gọi API refresh token bằng axios riêng, không gắn Authorization
+            const response = await refreshInstance.get<{ accessToken: string }>(
+                "/auth/refresh-token"
             );
             const newToken = response.data.accessToken;
 
@@ -105,11 +119,21 @@ class Http {
             this.refreshQueue.forEach(({ reject }) => reject(error));
             this.refreshQueue = [];
 
-            store.dispatch(logout());
+            await this.logoutUser();
 
             return Promise.reject(error);
         } finally {
             this.isRefreshing = false;
+        }
+    }
+
+    private async logoutUser(): Promise<void> {
+        store.dispatch(logout());
+
+        try {
+            await authApi.logout();
+        } catch (error) {
+            console.warn("Logout API call failed:", error);
         }
     }
 }

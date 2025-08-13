@@ -6,52 +6,39 @@ type BodyProps = {
 };
 
 type Props = {
-    header?: string[];
+    data?: string[];
     className?: string;
-    children?: React.ReactNode; // Nội dung bên trong (ví dụ Table.Header, Table.Body)
+    children?: React.ReactNode;
 };
 
 export default function Table({ children }: Props) {
-    return <table className=" mt-3 w-full text-sm">{children}</table>;
+    return (
+        <table className="mt-3 w-full text-sm table-fixed ">{children}</table>
+    );
 }
 
-function Header({ header, className }: Props) {
+function Header({ data, className }: Props) {
     return (
-        <thead className={classNames("bg-[#202020]", className)}>
+        <thead className={classNames("bg-gray-600 border-b ", className)}>
             <tr>
-                {header &&
-                    header?.map((headerElement) => (
-                        <th
-                            key={headerElement}
-                            scope="col"
-                            className="px-6 py-3 text-left text-xs font-bold text-white uppercase tracking-wider text-nowrap"
-                        >
-                            {headerElement}
-                        </th>
-                    ))}
+                {data?.map((ele, index) => (
+                    <th
+                        key={ele}
+                        scope="col"
+                        className={`p-4 text-left text-md font-bold text-white tracking-wide uppercase ${
+                            index === 0 && index ? "rounded-tl-xl" : ""
+                        } ${index === data.length - 1 ? "rounded-tr-xl" : ""}`}
+                    >
+                        {ele}
+                    </th>
+                ))}
             </tr>
         </thead>
     );
 }
 
 function Body({ bodyData, render }: BodyProps) {
-    if (!bodyData.length)
-        return (
-            <tbody className="text-3xl text-white">
-                <tr>
-                    <td>
-                        <p className="uppercase font-semibold absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
-                            Không có dữ liệu
-                        </p>
-                    </td>
-                </tr>
-            </tbody>
-        );
-    return (
-        <tbody className="bg-[#202020] divide-y divide-gray-200">
-            {bodyData.map(render)}
-        </tbody>
-    );
+    return <tbody className="bg-[#202020]">{bodyData.map(render)}</tbody>;
 }
 
 Table.Header = Header;
