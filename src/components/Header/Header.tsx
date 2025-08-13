@@ -1,6 +1,6 @@
 import { HiMenuAlt2 } from "react-icons/hi";
-import { useAppDispatch } from "../../store";
 import { openMobile } from "../../store/slices/sidebarSlice";
+import { useAppDispatch } from "../../hooks/redux";
 
 export default function Header() {
     const dispatch = useAppDispatch();
@@ -10,7 +10,7 @@ export default function Header() {
     };
 
     return (
-        <header className="bg-white shadow-sm border-b border-gray-200 px-4 py-3 lg:px-6">
+        <header className="bg-[#2a2a2a] text-white shadow-sm border-b border-gray-200 px-4 py-3 lg:px-6">
             <div className="flex items-center justify-between">
                 {/* Mobile Menu Button */}
                 <button

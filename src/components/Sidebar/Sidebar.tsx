@@ -1,8 +1,8 @@
 import { links } from "../../utils/links";
 import icons from "../../assets/icons";
 import SidebarItem from "./SidebarItem";
-import { useAppDispatch } from "../../store";
 import { closeMobile } from "../../store/slices/sidebarSlice";
+import { useAppDispatch } from "../../hooks/redux";
 
 export default function Sidebar() {
     const dispatch = useAppDispatch();

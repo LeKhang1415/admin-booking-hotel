@@ -3,7 +3,7 @@ import { Outlet } from "react-router-dom";
 import { closeMobile } from "../store/slices/sidebarSlice";
 import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
-import { useAppDispatch, useAppSelector } from "../store";
+import { useAppDispatch, useAppSelector } from "../hooks/redux";
 
 function MainLayout() {
     const dispatch = useAppDispatch();

@@ -1,24 +1,27 @@
 import { configureStore } from "@reduxjs/toolkit";
+import { persistReducer, persistStore } from "redux-persist";
+import storage from "redux-persist/lib/storage";
 import sidebarReducer from "./slices/sidebarSlice";
-import {
-    useDispatch,
-    useSelector,
-    type TypedUseSelectorHook,
-} from "react-redux";
+import authReducer from "./slices/authSlice";
+import type { AuthState } from "./slices/authSlice";
+
+const authPersistConfig = {
+    key: "auth",
+    storage,
+    whitelist: ["token", "user", "isAuthenticated"],
+};
+
 export const store = configureStore({
     reducer: {
         sidebar: sidebarReducer,
+        auth: persistReducer<AuthState>(authPersistConfig, authReducer),
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({
-            serializableCheck: {
-                ignoredActions: ["persist/PERSIST"],
-            },
+            serializableCheck: false, // để tránh cảnh báo từ redux-persist
         }),
 });
 
+export const persistor = persistStore(store);
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
-
-export const useAppDispatch = () => useDispatch<AppDispatch>();
-export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
