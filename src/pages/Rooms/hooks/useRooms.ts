@@ -6,6 +6,7 @@ import type { Room, RoomsListQuery } from "../../../types/room.types";
 import { roomApi } from "../../../services/room.api";
 
 function useRooms() {
+    // Lấy page hiện tại từ URL (?page=...); defaultValue = 1
     const { currentValue } = useUrl<number>({ field: "page", defaultValue: 1 });
     const page = Number(currentValue);
     const queryClient = useQueryClient();
