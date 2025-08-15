@@ -26,7 +26,7 @@ function Header({ data, className }: Props) {
                         key={ele}
                         scope="col"
                         className={`p-4 text-left text-md font-bold text-white tracking-wide uppercase ${
-                            index === 0 && index ? "rounded-tl-xl" : ""
+                            index === 0 ? "rounded-tl-xl" : ""
                         } ${index === data.length - 1 ? "rounded-tr-xl" : ""}`}
                     >
                         {ele}

@@ -14,3 +14,5 @@ export const userSchema = yup.object().shape({
         .min(8, "Mật khẩu cần ít nhất 8 ký tự"),
     role: yup.string(),
 });
+
+export type UserSchema = yup.InferType<typeof userSchema>;
