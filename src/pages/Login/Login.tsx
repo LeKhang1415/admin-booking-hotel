@@ -31,15 +31,10 @@ function Login() {
     });
 
     function onSubmit(data: FormData) {
-        console.log("Form data:", data); // Log input data
-
         mutate(data, {
             onSuccess: (response) => {
-                console.log("Success response:", response); // Log full response
                 const user = response.data?.user;
                 const token = response.data?.accessToken;
-                console.log("User:", user);
-                console.log("Token:", token);
 
                 if (user.role?.name === "Customer")
                     return toast.error(
@@ -52,14 +47,9 @@ function Login() {
                 toast.success("Login successfully");
             },
             onError: (error) => {
-                console.log("Full error:", error); // Log full error
-
                 const axiosError = error as AxiosError<{ message: string }>;
                 const errorMessage = axiosError.response?.data
                     ?.message as string;
-
-                console.log("Error message:", errorMessage); // Log extracted message
-
                 toast.error(
                     errorMessage ||
                         "Something went wrong. Please try again later!"

@@ -16,7 +16,7 @@ export default function Sidebar() {
 
     return (
         <aside className="h-screen">
-            <nav className="h-full flex flex-col bg-[#2a2a2a] text-white shadow-sm">
+            <nav className="h-full flex flex-col bg-secondary text-white shadow-sm">
                 {/* Header với logo */}
                 <div className="p-4 pb-2 flex justify-between items-center flex-shrink-0">
                     {/* Logo */}

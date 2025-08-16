@@ -2,7 +2,7 @@ import { Outlet } from "react-router-dom";
 
 export default function LoginLayout() {
     return (
-        <div className="flex h-screen flex-col justify-center px-6 py-12 lg:px-8 bg-[#171717]">
+        <div className="flex h-screen flex-col justify-center px-6 py-12 lg:px-8 bg-primary">
             <div className="sm:mx-auto sm:w-full sm:max-w-sm">
                 <div className="mt-10 text-center text-2xl/9 font-bold tracking-tight text-white">
                     <div className="center gap-3">

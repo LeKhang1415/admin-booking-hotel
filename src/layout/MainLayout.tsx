@@ -14,7 +14,7 @@ function MainLayout() {
     };
 
     return (
-        <div className="bg-[#171717] h-screen flex">
+        <div className="bg-main h-screen flex">
             {/* Mobile Overlay */}
             {mobileOpen && (
                 <div

@@ -1,5 +1,11 @@
 @import "tailwindcss";
 
+@theme {
+    --color-primary: #202020;
+    --color-secondary: #2a2a2a;
+    --color-main: #171717;
+}
+
 @layer components {
     .center {
         @apply flex items-center justify-center;

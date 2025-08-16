@@ -13,7 +13,9 @@ type Props = {
 
 export default function Table({ children }: Props) {
     return (
-        <table className="mt-3 w-full text-sm table-fixed ">{children}</table>
+        <table className="mt-3 w-full text-sm table-auto md:table-fixed ">
+            {children}
+        </table>
     );
 }
 
@@ -38,7 +40,7 @@ function Header({ data, className }: Props) {
 }
 
 function Body({ bodyData, render }: BodyProps) {
-    return <tbody className="bg-[#202020]">{bodyData.map(render)}</tbody>;
+    return <tbody className="bg-primary">{bodyData.map(render)}</tbody>;
 }
 
 Table.Header = Header;

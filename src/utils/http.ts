@@ -7,6 +7,8 @@ import axios, {
 import { store } from "../store";
 import { logout, setAccessToken } from "../store/slices/authSlice";
 import { authApi } from "../services/auth.api";
+import toast from "react-hot-toast";
+import { redirect } from "react-router-dom";
 
 const API_BASE_URL = import.meta.env.API_BASE_URL || "http://localhost:3000/";
 
@@ -59,20 +61,25 @@ class Http {
                         _retry?: boolean;
                     };
 
-                // Nếu lỗi 401 và chưa retry
+                // 401 Unauthorized
                 if (
                     error.response?.status === 401 &&
                     !originalRequest._retry &&
-                    !originalRequest.url?.includes("/auth/refresh-token") // tránh loop
+                    !originalRequest.url?.includes("/auth/refresh-token")
                 ) {
                     originalRequest._retry = true;
 
-                    // Nếu đang refresh token, đợi trong queue
                     if (this.isRefreshing) {
                         return this.addToRefreshQueue(originalRequest);
                     }
-
                     return this.handleTokenRefresh(originalRequest);
+                }
+
+                // 403 Forbidden - không đủ quyền
+                if (error.response?.status === 403) {
+                    console.warn("Bạn không có quyền truy cập tài nguyên này.");
+                    toast.error("Bạn không có quyền truy cập");
+                    redirect("/");
                 }
 
                 return Promise.reject(error);
@@ -98,7 +105,7 @@ class Http {
         this.isRefreshing = true;
 
         try {
-            // Gọi API refresh token bằng axios riêng, không gắn Authorization
+            // Gọi API refresh token bằng axios không gắn Authorization
             const response = await refreshInstance.get<{ accessToken: string }>(
                 "/auth/refresh-token"
             );
