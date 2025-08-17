@@ -2,12 +2,13 @@ import {
     createContext,
     useContext,
     useState,
+    useEffect,
     type ReactNode,
     type MouseEvent,
 } from "react";
 import { createPortal } from "react-dom";
-import { CiMenuKebab } from "react-icons/ci";
-import { useOutsideClick } from "../../hooks/useOutsideClick";
+import { HiDotsHorizontal } from "react-icons/hi";
+import useOutsideClick from "../../hooks/useOutsideClick.ts";
 
 type MenusContextType = {
     openId: string;
@@ -28,6 +29,23 @@ function Menus({ children }: { children: ReactNode }) {
     const close = () => setOpenId("");
     const open = (id: string) => setOpenId(id);
 
+    // đóng menu khi scroll hoặc resize
+    useEffect(() => {
+        function handleScroll() {
+            if (openId) {
+                close();
+            }
+        }
+
+        window.addEventListener("scroll", handleScroll, true); // true để bắt cả scroll con
+        window.addEventListener("resize", handleScroll);
+
+        return () => {
+            window.removeEventListener("scroll", handleScroll, true);
+            window.removeEventListener("resize", handleScroll);
+        };
+    }, [openId]);
+
     return (
         <MenusContext.Provider
             value={{ openId, close, open, position, setPosition }}
@@ -38,7 +56,7 @@ function Menus({ children }: { children: ReactNode }) {
 }
 
 function Menu({ children }: { children: ReactNode }) {
-    return <div className="flex items-center justify-end">{children}</div>;
+    return <div className="flex items-center justify-start ">{children}</div>;
 }
 
 function Toggle({ id }: { id: string }) {
@@ -56,15 +74,16 @@ function Toggle({ id }: { id: string }) {
             y: rect.y + rect.height + 8,
         });
 
-        openId === "" || openId !== id ? open(id) : close();
+        if (openId === "" || openId !== id) {
+            open(id);
+        } else {
+            close();
+        }
     }
 
     return (
-        <button
-            onClick={handleClick}
-            className="p-1 rounded-sm translate-x-2 transition-colors hover:bg-gray-100"
-        >
-            <CiMenuKebab className="w-6 h-6 text-gray-700" />
+        <button onClick={handleClick} className="p-1 rounded-sm ">
+            <HiDotsHorizontal className="w-6 h-6 text-white" />
         </button>
     );
 }
@@ -81,7 +100,7 @@ function List({ id, children }: { id: string; children: ReactNode }) {
     return createPortal(
         <ul
             ref={ref}
-            className="fixed bg-white shadow-md rounded-md"
+            className="fixed bg-main text-white shadow-md rounded-md"
             style={{ right: position.x, top: position.y }}
         >
             {children}
@@ -113,7 +132,7 @@ function Button({
         <li>
             <button
                 onClick={handleClick}
-                className="w-full text-left px-6 py-3 text-sm transition-colors flex items-center gap-4 hover:bg-gray-50"
+                className="w-full rounded-md text-left px-6 py-3 text-sm transition-colors flex items-center justify-center gap-4 hover:bg-gray-600"
             >
                 {icon && <span className="w-4 h-4 text-gray-400">{icon}</span>}
                 <span>{children}</span>

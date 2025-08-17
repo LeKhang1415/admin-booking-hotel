@@ -1,5 +1,7 @@
 import type { Room } from "../../../types/room.types";
 import { formatCurrency } from "../../../utils/utils";
+import Menus from "../../../components/Menus";
+import {FiEdit, FiTrash2} from "react-icons/fi";
 
 function RoomRow({ room }: { room: Room }) {
     return (
@@ -53,8 +55,23 @@ function RoomRow({ room }: { room: Room }) {
                     {room.roomStatus}
                 </span>
             </td>
+
+            {/* Hành động */}
+            <td className="px-4 py-3">
+                    <Menus.Menu>
+                        <Menus.Toggle id={room.id.toString()}/>
+                        <Menus.List id={room.id.toString()}>
+                            <Menus.Button icon={<FiEdit/>} onClick={() => console.log("Edit", room.id)}>
+                                Sửa
+                            </Menus.Button>
+                            <Menus.Button icon={<FiTrash2/>} onClick={() => console.log("Delete", room.id)}>
+                                Xoá
+                            </Menus.Button>
+                        </Menus.List>
+                    </Menus.Menu>
+            </td>
         </tr>
-    );
+);
 }
 
 export default RoomRow;

@@ -1,34 +1,38 @@
 import Modal from "../../components/Modal";
-import Spinner from "../../components/Spinner";
 import Table from "../../components/Table";
 import type { Room } from "../../types/room.types";
 import RoomRow from "./components/RoomRow";
 import useRooms from "./hooks/useRooms";
+import Menus from "../../components/Menus";
 
 function Rooms() {
     const { rooms, isLoading, totalPages } = useRooms();
     console.log(rooms);
     return (
         <div className="overflow-x-auto flex-1">
-            <Table>
-                <Table.Header
-                    data={[
-                        "Phòng",
-                        "Tên Phòng",
-                        "Loại phòng",
-                        "Giá/ngày",
-                        "Giá/giờ",
-                        "Tiện nghi",
-                        "Trạng thái",
-                    ]}
-                />
-                <Table.Body
-                    bodyData={rooms}
-                    render={(room: Room) => (
-                        <RoomRow room={room} key={room.id} />
-                    )}
-                />
-            </Table>
+            <Menus>
+                <Table>
+                    <Table.Header
+                        data={[
+                            "Phòng",
+                            "Tên Phòng",
+                            "Loại phòng",
+                            "Giá/ngày",
+                            "Giá/giờ",
+                            "Tiện nghi",
+                            "Trạng thái",
+                            "Hành động"
+                        ]}
+                    />
+                    <Table.Body
+                        bodyData={rooms}
+                        render={(room: Room) => (
+                            <RoomRow room={room} key={room.id} />
+                        )}
+                    />
+                </Table>
+            </Menus>
+
             <Modal>
                 <Modal.Open opens="example">
                     <button className="px-4 py-2 bg-blue-500 text-white rounded">
