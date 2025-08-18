@@ -1,38 +1,34 @@
 import Modal from "../../components/Modal";
 import Table from "../../components/Table";
-import type { Room } from "../../types/room.types";
 import RoomRow from "./components/RoomRow";
 import useRooms from "./hooks/useRooms";
 import Menus from "../../components/Menus";
 
 function Rooms() {
     const { rooms, isLoading, totalPages } = useRooms();
-    console.log(rooms);
+
     return (
         <div className="overflow-x-auto flex-1">
             <Menus>
-                <Table>
-                    <Table.Header
-                        data={[
-                            "Phòng",
-                            "Tên Phòng",
-                            "Loại phòng",
-                            "Giá/ngày",
-                            "Giá/giờ",
-                            "Tiện nghi",
-                            "Trạng thái",
-                            "Hành động"
-                        ]}
-                    />
+                <Table columns="2fr 1fr 1fr 1fr 1fr 1fr 1fr">
+                    <Table.Header>
+                        <div>Tên phòng</div>
+                        <div>Loại phòng</div>
+                        <div>Tiện nghi</div>
+                        <div>Nội thất</div>
+                        <div>Giá/ngày</div>
+                        <div>Giá/giờ</div>
+                        <div>Trạng thái</div>
+                    </Table.Header>
+
                     <Table.Body
-                        bodyData={rooms}
-                        render={(room: Room) => (
-                            <RoomRow room={room} key={room.id} />
-                        )}
+                        data={rooms}
+                        render={(room) => <RoomRow key={room.id} room={room} />}
                     />
                 </Table>
             </Menus>
 
+            {/* Modal demo */}
             <Modal>
                 <Modal.Open opens="example">
                     <button className="px-4 py-2 bg-blue-500 text-white rounded">

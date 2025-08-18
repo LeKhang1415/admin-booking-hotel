@@ -1,47 +1,87 @@
-import classNames from "classnames";
+import { createContext, useContext, type ReactNode } from "react";
 
-type BodyProps = {
-    bodyData: any;
-    render: (data: any) => React.ReactNode;
+type TableContextType = {
+    columns: string;
 };
 
-type Props = {
-    data?: string[];
-    className?: string;
-    children?: React.ReactNode;
+const TableContext = createContext<TableContextType | null>(null);
+
+type TableProps = {
+    columns: string;
+    children: ReactNode;
 };
 
-export default function Table({ children }: Props) {
+function Table({ columns, children }: TableProps) {
     return (
-        <table className="mt-3 w-full text-sm table-auto md:table-fixed ">
+        <div className="overflow-x-auto">
+            <TableContext.Provider value={{ columns }}>
+                <div
+                    role="table"
+                    className="text-sm bg-primary rounded-md overflow-hidden min-w-[900px]" // 👈 bảng sẽ không nhỏ hơn 900px
+                >
+                    {children}
+                </div>
+            </TableContext.Provider>
+        </div>
+    );
+}
+
+function Header({ children }: { children: ReactNode }) {
+    const ctx = useContext(TableContext);
+    if (!ctx) throw new Error("Header must be used inside <Table>");
+    return (
+        <header
+            role="row"
+            style={{ gridTemplateColumns: ctx.columns }}
+            className="grid gap-x-6 items-center px-6 py-4 bg-gray-600 text-white uppercase tracking-[0.4px] font-semibold "
+        >
             {children}
-        </table>
+        </header>
     );
 }
 
-function Header({ data, className }: Props) {
+function Row({ children }: { children: ReactNode }) {
+    const ctx = useContext(TableContext);
+    if (!ctx) throw new Error("Row must be used inside <Table>");
     return (
-        <thead className={classNames("bg-gray-600 border-b ", className)}>
-            <tr>
-                {data?.map((ele, index) => (
-                    <th
-                        key={ele}
-                        scope="col"
-                        className={`p-4 text-left text-md font-bold text-white tracking-wide uppercase ${
-                            index === 0 ? "rounded-tl-xl" : ""
-                        } ${index === data.length - 1 ? "rounded-tr-xl" : ""}`}
-                    >
-                        {ele}
-                    </th>
-                ))}
-            </tr>
-        </thead>
+        <div
+            role="row"
+            style={{ gridTemplateColumns: ctx.columns }}
+            className="grid gap-x-6 items-center px-6 py-3 border-b last:border-b-0 border-gray-100"
+        >
+            {children}
+        </div>
     );
 }
 
-function Body({ bodyData, render }: BodyProps) {
-    return <tbody className="bg-primary">{bodyData.map(render)}</tbody>;
+type BodyProps<T> = {
+    data: T[];
+    render: (item: T) => ReactNode;
+};
+
+function Body<T>({ data, render }: BodyProps<T>) {
+    if (!data.length)
+        return (
+            <p className="text-[1.6rem] font-medium text-center my-6">
+                No data to show at the moment
+            </p>
+        );
+
+    return <section className="my-1">{data.map(render)}</section>;
+}
+
+function Footer({ children }: { children?: ReactNode }) {
+    if (!children) return null;
+    return (
+        <footer className="bg-gray-50 flex justify-center p-3">
+            {children}
+        </footer>
+    );
 }
 
 Table.Header = Header;
 Table.Body = Body;
+Table.Row = Row;
+Table.Footer = Footer;
+
+export default Table;

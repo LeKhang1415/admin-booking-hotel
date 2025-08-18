@@ -1,12 +1,4 @@
-export type TypeRoom = {
-    id: string;
-    name: string;
-    introduction: string;
-    highlight: string;
-    sizeRoom: number;
-    beds: string;
-    maxPeople: number;
-};
+import type { TypeRoom } from "./type-room.types";
 
 export type Room = {
     id: string;

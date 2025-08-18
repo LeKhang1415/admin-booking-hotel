@@ -4,3 +4,12 @@ export type User = {
     email: string;
     role: string;
 };
+export type UserResponse = {
+    data: User[];
+    meta: {
+        itemsPerPage: number;
+        totalItems: number;
+        currentPage: number;
+        totalPages: number;
+    };
+};
