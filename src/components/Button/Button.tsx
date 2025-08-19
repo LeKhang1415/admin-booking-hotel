@@ -36,7 +36,7 @@ export default function Button(props: PropsType) {
     return (
         <button
             className={classNames(
-                "relative center min-w-[108px] px-3 rounded-xl text-center text-white capitalize font-bold text-sm hover:opacity-90 bg-[#1a56db]",
+                "relative center min-w-[108px] px-3 rounded-xl text-center text-white capitalize font-bold text-sm hover:opacity-90 bg-[#135846]",
                 className,
                 {
                     "h-[45px]": size === "lg",

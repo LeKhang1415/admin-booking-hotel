@@ -14,7 +14,7 @@ function useRooms() {
 
     const queryConfig: RoomsListQuery = omitBy(
         {
-            limit: Number(queryParams.itemsPerPage) || 10,
+            limit: Number(queryParams.limit) || 10,
             page: Number(queryParams.page) || 1,
             roomStatus: queryParams.roomStatus,
             minPricePerDay: queryParams.minPricePerDay

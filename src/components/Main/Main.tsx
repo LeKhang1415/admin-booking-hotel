@@ -1,5 +1,20 @@
-function Main() {
-    return <div>Main</div>;
-}
+import classNames from "classnames";
 
-export default Main;
+export default function Main({
+    cssClasses = "",
+    children,
+}: {
+    cssClasses?: string;
+    children: React.ReactNode;
+}) {
+    return (
+        <div
+            className={classNames(
+                "relative flex-1 flex flex-col bg-main rounded-2xl shadow-custom h-full w-full",
+                cssClasses
+            )}
+        >
+            {children}
+        </div>
+    );
+}

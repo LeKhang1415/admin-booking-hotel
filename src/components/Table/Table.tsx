@@ -17,7 +17,7 @@ function Table({ columns, children }: TableProps) {
             <TableContext.Provider value={{ columns }}>
                 <div
                     role="table"
-                    className="text-sm bg-primary rounded-md overflow-hidden min-w-[900px]" // 👈 bảng sẽ không nhỏ hơn 900px
+                    className="text-sm bg-primary rounded-md overflow-hidden min-w-[1147px] table-fixed" // 👈 bảng sẽ không nhỏ hơn 900px
                 >
                     {children}
                 </div>
@@ -33,7 +33,7 @@ function Header({ children }: { children: ReactNode }) {
         <header
             role="row"
             style={{ gridTemplateColumns: ctx.columns }}
-            className="grid gap-x-6 items-center px-6 py-4 bg-gray-600 text-white uppercase tracking-[0.4px] font-semibold "
+            className="grid gap-x-6 items-center px-6 py-4 bg-primary border-b border-gray-100 text-white uppercase tracking-[0.4px] font-semibold "
         >
             {children}
         </header>
@@ -47,7 +47,7 @@ function Row({ children }: { children: ReactNode }) {
         <div
             role="row"
             style={{ gridTemplateColumns: ctx.columns }}
-            className="grid gap-x-6 items-center px-6 py-3 border-b last:border-b-0 border-gray-100"
+            className="grid gap-x-6 items-center px-6 py-3"
         >
             {children}
         </div>
@@ -72,11 +72,7 @@ function Body<T>({ data, render }: BodyProps<T>) {
 
 function Footer({ children }: { children?: ReactNode }) {
     if (!children) return null;
-    return (
-        <footer className="bg-gray-50 flex justify-center p-3">
-            {children}
-        </footer>
-    );
+    return <footer className="bg-primary">{children}</footer>;
 }
 
 Table.Header = Header;

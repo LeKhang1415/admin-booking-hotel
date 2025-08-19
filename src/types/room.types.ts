@@ -1,5 +1,6 @@
 import type { TypeRoom } from "./type-room.types";
 
+// Dữ liệu trả về từ API (đầy đủ)
 export type Room = {
     id: string;
     name: string;
@@ -25,7 +26,7 @@ export type RoomResponse = {
 export type RoomsListQuery = {
     // Pagination fields
     page?: number;
-    itemsPerPage?: number;
+    limit?: number;
 
     // Room filter fields
     roomStatus?: "active" | "inactive";

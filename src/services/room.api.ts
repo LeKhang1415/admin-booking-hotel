@@ -4,4 +4,11 @@ import http from "../utils/http";
 export const roomApi = {
     getAllRooms: (params: RoomsListQuery) =>
         http.get<RoomResponse>("/room", { params }),
+
+    createNewRoom: (body: any) =>
+        http.post("/room", body, {
+            headers: {
+                "Content-Type": "multipart/form-data",
+            },
+        }),
 };

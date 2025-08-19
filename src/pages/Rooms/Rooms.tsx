@@ -1,63 +1,61 @@
-import Modal from "../../components/Modal";
 import Table from "../../components/Table";
 import RoomRow from "./components/RoomRow";
 import useRooms from "./hooks/useRooms";
 import Menus from "../../components/Menus";
+import Pagination from "../../components/Pagination";
+import Main from "../../components/Main";
+import Heading from "../../components/Heading";
+import Button from "../../components/Button";
+import Modal from "../../components/Modal";
+import CreateRoomContent from "./components/CreateRoomContent";
 
 function Rooms() {
     const { rooms, isLoading, totalPages } = useRooms();
 
     return (
-        <div className="overflow-x-auto flex-1">
-            <Menus>
-                <Table columns="2fr 1fr 1fr 1fr 1fr 1fr 1fr">
-                    <Table.Header>
-                        <div>Tên phòng</div>
-                        <div>Loại phòng</div>
-                        <div>Tiện nghi</div>
-                        <div>Nội thất</div>
-                        <div>Giá/ngày</div>
-                        <div>Giá/giờ</div>
-                        <div>Trạng thái</div>
-                    </Table.Header>
+        <Main>
+            <Heading>
+                <>
+                    <div className="text-white">Filter</div>
+                    <Modal>
+                        <Modal.Open opens="create-tour">
+                            <Button className="px-6 py-3">+ New Room</Button>
+                        </Modal.Open>
+                        <Modal.Content name="create-tour">
+                            <CreateRoomContent />
+                        </Modal.Content>
+                    </Modal>
+                </>
+            </Heading>
+            <div className="flex-1 mt-4">
+                <Menus>
+                    <Table columns="2fr 1fr 1fr 1fr 1fr 1fr 1fr">
+                        <Table.Header>
+                            <div>Room Name</div>
+                            <div>Room Type</div>
+                            <div>Amenities</div>
+                            <div>Interior</div>
+                            <div>Price/Day</div>
+                            <div>Price/Hour</div>
+                            <div>Status</div>
+                        </Table.Header>
 
-                    <Table.Body
-                        data={rooms}
-                        render={(room) => <RoomRow key={room.id} room={room} />}
-                    />
-                </Table>
-            </Menus>
-
-            {/* Modal demo */}
-            <Modal>
-                <Modal.Open opens="example">
-                    <button className="px-4 py-2 bg-blue-500 text-white rounded">
-                        Open Modal
-                    </button>
-                </Modal.Open>
-
-                <Modal.Content name="example">
-                    <div>
-                        <Modal.Header>Modal title</Modal.Header>
-                        <Modal.Body>
-                            <p>
-                                Cras mattis consectetur purus sit amet
-                                fermentum. Cras justo odio, dapibus ac facilisis
-                                in, egestas eget quam.
-                            </p>
-                        </Modal.Body>
-                        <Modal.Footer>
-                            <button className="px-4 py-2 bg-red-700 rounded text-white">
-                                Close
-                            </button>
-                            <button className="px-4 py-2 bg-green-700 rounded text-white">
-                                Save changes
-                            </button>
-                        </Modal.Footer>
-                    </div>
-                </Modal.Content>
-            </Modal>
-        </div>
+                        <Table.Body
+                            data={rooms}
+                            render={(room) => (
+                                <RoomRow key={room.id} room={room} />
+                            )}
+                        />
+                        <Table.Footer>
+                            <Pagination
+                                className="flex justify-between mb-[20px] px-5 mt-2"
+                                totalPages={totalPages}
+                            />
+                        </Table.Footer>
+                    </Table>
+                </Menus>
+            </div>
+        </Main>
     );
 }
 

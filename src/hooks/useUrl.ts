@@ -12,7 +12,17 @@ function useUrl<T>({
 
     function handler(value: T): void {
         const newParams = new URLSearchParams(searchParams);
+        // reset page nếu đổi filter
         if (searchParams.get("page")) newParams.set("page", "1");
+
+        // nếu field là page và value = 1 → xóa khỏi URL
+        if (field === "page" && value === 1) {
+            newParams.delete("page");
+        } else {
+            newParams.set(field, `${value}`);
+        }
+
+        setSearchParams(newParams);
         newParams.set(field, `${value}`);
         setSearchParams(newParams);
     }

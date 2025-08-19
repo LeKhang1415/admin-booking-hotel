@@ -1,5 +1,20 @@
 @import "tailwindcss";
 
+/* Áp dụng cho toàn bộ */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #135846;
+    border-radius: 9999px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
 @theme {
     --color-primary: #202020;
     --color-secondary: #2a2a2a;

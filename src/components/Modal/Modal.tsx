@@ -7,6 +7,7 @@ import {
 } from "react";
 import { createPortal } from "react-dom";
 import { IoMdClose } from "react-icons/io";
+import useOutsideClick from "../../hooks/useOutsideClick";
 
 type ModalContextType = {
     open: (name: string) => void;
@@ -61,19 +62,22 @@ function Content({
     children: React.ReactElement<{ close?: () => void }>;
 }) {
     const { modalName, close } = useContext(ModalContext);
+    const ref = useOutsideClick<HTMLDivElement>(close);
 
     if (modalName !== name) return null;
 
     return createPortal(
-        <div className="fixed inset-0 w-full h-screen bg-black/40 backdrop-blur-sm z-[1000] flex items-center justify-center">
-            <div className="relative bg-[#1e1e1e] text-gray-200 rounded-lg shadow-2xl min-w-[500px] overflow-hidden">
+        <div className="fixed inset-0 w-full h-screen bg-black/40 backdrop-blur-sm z-[1000] flex items-center justify-center p-4">
+            <div
+                ref={ref}
+                className="relative bg-[#1e1e1e] text-gray-200 rounded-lg shadow-2xl w-full max-w-4xl max-h-[90vh] overflow-hidden flex flex-col"
+            >
                 {cloneElement(children, { close })}
             </div>
         </div>,
         document.body
     );
 }
-
 // Header
 function Header({ children }: { children: React.ReactNode }) {
     const { close } = useContext(ModalContext);
@@ -92,7 +96,7 @@ function Header({ children }: { children: React.ReactNode }) {
 
 // Body
 function Body({ children }: { children: React.ReactNode }) {
-    return <div className="px-6 py-4">{children}</div>;
+    return <div className="px-6 py-4 overflow-y-auto flex-1">{children}</div>;
 }
 
 // Footer

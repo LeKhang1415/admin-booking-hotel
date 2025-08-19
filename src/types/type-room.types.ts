@@ -8,7 +8,7 @@ export type TypeRoom = {
     maxPeople: number;
 };
 
-export type RoomResponse = {
+export type TypeRoomResponse = {
     data: TypeRoom[];
     meta: {
         itemsPerPage: number;
@@ -16,4 +16,14 @@ export type RoomResponse = {
         currentPage: number;
         totalPages: number;
     };
+};
+
+export type TypeRoomListQuery = {
+    // Pagination fields
+    page?: number;
+    limit?: number;
+
+    sizeRoom?: number;
+    maxSize?: number;
+    maxPeople?: number;
 };
