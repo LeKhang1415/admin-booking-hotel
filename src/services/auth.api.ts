@@ -1,3 +1,4 @@
+import type { AuthResponse } from "../types/auth.types";
 import http from "../utils/http";
 
 export const authApi = {
@@ -5,7 +6,7 @@ export const authApi = {
         return http.post("/auth/signup", body);
     },
     login: (body: { email: string; password: string }) => {
-        return http.post("/auth/login", body);
+        return http.post<AuthResponse>("/auth/login", body);
     },
     logout: () => http.post("/auth/logout"),
     getMe: () => http.get("/auth/get-me"),

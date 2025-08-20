@@ -42,8 +42,8 @@ function useRooms() {
         queryFn: () => roomApi.getAllRooms(queryConfig),
     });
 
-    const rooms: Room[] = data?.data.data || [];
-    const totalPages = data?.data.meta.totalPages ?? 0;
+    const rooms: Room[] = data?.data?.data.data || [];
+    const totalPages = data?.data?.data.meta.totalPages ?? 0;
 
     if (page < totalPages) {
         queryClient.prefetchQuery({

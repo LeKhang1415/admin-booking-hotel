@@ -4,6 +4,8 @@ import { formatCurrency } from "../../../utils/utils";
 import Menus from "../../../components/Menus";
 import { FiEdit, FiTrash2 } from "react-icons/fi";
 import Table from "../../../components/Table";
+import Modal from "../../../components/Modal";
+import UpdateRoomContent from "./UpdateRoomContent";
 
 function RoomRow({ room }: { room: Room }) {
     return (
@@ -63,23 +65,26 @@ function RoomRow({ room }: { room: Room }) {
                 </span>
                 {/* Hành động */}
                 <div className="text-right">
-                    <Menus.Menu>
-                        <Menus.Toggle id={room.id.toString()} />
-                        <Menus.List id={room.id.toString()}>
-                            <Menus.Button
-                                icon={<FiEdit />}
-                                onClick={() => console.log("Edit", room.id)}
-                            >
-                                Sửa
-                            </Menus.Button>
-                            <Menus.Button
-                                icon={<FiTrash2 />}
-                                onClick={() => console.log("Delete", room.id)}
-                            >
-                                Xoá
-                            </Menus.Button>
-                        </Menus.List>
-                    </Menus.Menu>
+                    <Modal>
+                        <Menus.Menu>
+                            <Menus.Toggle id={room.id.toString()} />
+                            <Menus.List id={room.id.toString()}>
+                                <Modal.Open opens="update-room">
+                                    <Menus.Button icon={<FiEdit />}>
+                                        Edit
+                                    </Menus.Button>
+                                </Modal.Open>
+
+                                <Menus.Button icon={<FiTrash2 />}>
+                                    Delete
+                                </Menus.Button>
+                            </Menus.List>
+                        </Menus.Menu>
+
+                        <Modal.Content name="update-room">
+                            <UpdateRoomContent roomId={room.id} />
+                        </Modal.Content>
+                    </Modal>
                 </div>
             </div>
         </Table.Row>

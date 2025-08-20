@@ -6,6 +6,7 @@ type PropsType = {
     label?: string;
     className?: string;
     errorMessage?: string;
+    defaultValue?: string;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     register?: UseFormRegister<any>;
 };
@@ -16,6 +17,7 @@ export default function Textarea({
     placeholder,
     label,
     errorMessage,
+    defaultValue,
     register,
 }: PropsType) {
     const registerResult = name && register ? register(name) : null;
@@ -34,6 +36,7 @@ export default function Textarea({
             <textarea
                 id={name}
                 {...registerResult}
+                defaultValue={defaultValue}
                 rows={4}
                 className="resize-none w-full px-3 py-2 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-200"
                 placeholder={placeholder}

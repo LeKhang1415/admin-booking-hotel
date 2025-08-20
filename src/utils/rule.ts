@@ -31,7 +31,17 @@ export const roomSchema = yup.object({
         .required("Vui lòng nhập giá theo giờ"),
     interior: yup.string().required(),
     facilities: yup.string().required(),
-    image: yup.mixed().required("Vui lòng chọn hình ảnh phòng"),
+    image: yup
+        .mixed<FileList>()
+        .required("Vui lòng chọn hình ảnh phòng")
+        .test("fileSize", "File quá lớn (tối đa 2MB)", (value) => {
+            if (!value || value.length === 0) return false;
+            return value[0].size <= FILE_SIZE;
+        })
+        .test("fileType", "Chỉ chấp nhận file ảnh", (value) => {
+            if (!value || value.length === 0) return false;
+            return value[0].type.startsWith("image/");
+        }),
 });
 
 export type UserSchema = yup.InferType<typeof userSchema>;

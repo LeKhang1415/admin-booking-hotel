@@ -8,7 +8,7 @@ function useTypeRoom() {
     });
 
     return {
-        typeRoom: data?.data ?? [],
+        typeRoom: data?.data?.data ?? [],
         isLoading,
     };
 }

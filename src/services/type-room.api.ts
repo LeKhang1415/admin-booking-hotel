@@ -3,11 +3,14 @@ import type {
     TypeRoomListQuery,
     TypeRoomResponse,
 } from "../types/type-room.types";
+import type { SuccessResponseApi } from "../types/utils.type";
 import http from "../utils/http";
 
 export const typeRoomApi = {
     getAllTypeRoom: (params: TypeRoomListQuery) =>
-        http.get<TypeRoomResponse>("/type-room", { params }),
+        http.get<SuccessResponseApi<TypeRoomResponse>>("/type-room", {
+            params,
+        }),
     getAllTypeRoomWithoutPagination: () =>
-        http.get<TypeRoom[]>("/type-room/all"),
+        http.get<SuccessResponseApi<TypeRoom[]>>("/type-room/all"),
 };

@@ -33,10 +33,10 @@ function Login() {
     function onSubmit(data: FormData) {
         mutate(data, {
             onSuccess: (response) => {
-                const user = response.data?.user;
-                const token = response.data?.accessToken;
+                const user = response.data?.data?.user;
+                const token = response.data?.data?.accessToken;
 
-                if (user.role?.name === "Customer")
+                if (user?.role === "Customer")
                     return toast.error(
                         `You don't have permission to access this route`
                     );

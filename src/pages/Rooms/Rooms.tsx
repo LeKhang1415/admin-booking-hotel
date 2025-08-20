@@ -18,10 +18,10 @@ function Rooms() {
                 <>
                     <div className="text-white">Filter</div>
                     <Modal>
-                        <Modal.Open opens="create-tour">
+                        <Modal.Open opens="create-room">
                             <Button className="px-6 py-3">+ New Room</Button>
                         </Modal.Open>
-                        <Modal.Content name="create-tour">
+                        <Modal.Content name="create-room">
                             <CreateRoomContent />
                         </Modal.Content>
                     </Modal>
