@@ -44,5 +44,31 @@ export const roomSchema = yup.object({
         }),
 });
 
+export const typeRoomSchema = yup.object({
+    name: yup
+        .string()
+        .required("Vui lòng nhập tên loại phòng")
+        .max(50, "Tên loại phòng không được vượt quá 50 ký tự"),
+
+    introduction: yup.string().required("Vui lòng nhập phần giới thiệu"),
+
+    highlight: yup.string().required("Vui lòng nhập điểm nổi bật"),
+
+    sizeRoom: yup
+        .number()
+        .typeError("Diện tích phòng phải là số")
+        .min(1, "Diện tích phải lớn hơn 0")
+        .required("Vui lòng nhập diện tích phòng"),
+
+    beds: yup.string().required("Vui lòng nhập thông tin giường ngủ"),
+
+    maxPeople: yup
+        .number()
+        .typeError("Số người tối đa phải là số")
+        .min(1, "Số người tối đa phải lớn hơn 0")
+        .required("Vui lòng nhập số người tối đa"),
+});
+
+export type TypeRoomSchema = yup.InferType<typeof typeRoomSchema>;
 export type UserSchema = yup.InferType<typeof userSchema>;
 export type RoomSchema = yup.InferType<typeof roomSchema>;

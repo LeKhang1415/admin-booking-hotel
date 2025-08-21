@@ -27,7 +27,7 @@ function UpdateRoomContent({
 }) {
     const queryClient = useQueryClient();
     const { typeRoom } = useTypeRoom();
-    const { room, isLoading } = useRoom(roomId);
+    const { room } = useRoom(roomId);
 
     const { mutate, isPending } = useMutation({
         mutationFn: ({ body, id }: { body: any; id: string }) =>
@@ -117,7 +117,7 @@ function UpdateRoomContent({
 
     return (
         <>
-            <Modal.Header>Cập Nhật Phòng</Modal.Header>
+            <Modal.Header>Update Room</Modal.Header>
 
             <Modal.Body>
                 <form
@@ -128,9 +128,9 @@ function UpdateRoomContent({
                     {/* Row 1: Tên phòng và Loại phòng */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <Input
-                            label="Tên phòng"
+                            label="Room Name"
                             type="text"
-                            placeholder="Nhập tên phòng"
+                            placeholder="Enter room name"
                             name="name"
                             register={register}
                             errorMessage={errors?.name?.message}
@@ -140,7 +140,7 @@ function UpdateRoomContent({
                         <div>
                             <Select
                                 name="typeRoomId"
-                                label="Loại phòng"
+                                label="Room Type"
                                 register={register}
                                 errorMessage={errors?.typeRoomId?.message}
                                 options={typeRoomOpts}
@@ -151,9 +151,9 @@ function UpdateRoomContent({
                     {/* Row 2: Giá theo ngày và Giá theo giờ */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <Input
-                            label="Giá theo ngày (VNĐ)"
+                            label="Price per Day (VND)"
                             type="text"
-                            placeholder="Nhập giá theo ngày"
+                            placeholder="Enter daily price"
                             name="pricePerDay"
                             register={register}
                             errorMessage={errors?.pricePerDay?.message}
@@ -161,9 +161,9 @@ function UpdateRoomContent({
                         />
 
                         <Input
-                            label="Giá theo giờ (VNĐ)"
+                            label="Price per Hour (VND)"
                             type="text"
-                            placeholder="Nhập giá theo giờ"
+                            placeholder="Enter hourly price"
                             name="pricePerHour"
                             register={register}
                             errorMessage={errors?.pricePerHour?.message}
@@ -176,8 +176,8 @@ function UpdateRoomContent({
                         <div>
                             <Textarea
                                 name="interior"
-                                label="Nội thất"
-                                placeholder="Mô tả nội thất trong phòng"
+                                label="Interior"
+                                placeholder="Describe the room interior"
                                 register={register}
                                 errorMessage={errors?.interior?.message}
                             />
@@ -186,8 +186,8 @@ function UpdateRoomContent({
                         <div>
                             <Textarea
                                 name="facilities"
-                                label="Tiện nghi"
-                                placeholder="Mô tả tiện nghi trong phòng"
+                                label="Facilities"
+                                placeholder="Describe the room facilities"
                                 register={register}
                                 errorMessage={errors?.facilities?.message}
                             />
@@ -200,7 +200,7 @@ function UpdateRoomContent({
                             name="image"
                             previewUrl={room?.image}
                             register={register}
-                            label="Hình ảnh phòng (tùy chọn)"
+                            label="Room Image"
                             errorMessage={errors?.image?.message}
                         />
                     </div>
@@ -214,14 +214,14 @@ function UpdateRoomContent({
                     className="px-4 py-2 text-gray-300 bg-gray-600 rounded-md hover:bg-gray-700 transition-colors"
                     disabled={isPending}
                 >
-                    Hủy
+                    Cancel
                 </button>
                 <Button
                     type="button"
                     onClick={handleSubmit(onSubmit)}
                     isLoading={isPending}
                 >
-                    Cập nhật
+                    Update Room
                 </Button>
             </Modal.Footer>
         </>

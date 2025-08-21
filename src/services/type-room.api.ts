@@ -13,4 +13,13 @@ export const typeRoomApi = {
         }),
     getAllTypeRoomWithoutPagination: () =>
         http.get<SuccessResponseApi<TypeRoom[]>>("/type-room/all"),
+
+    createNewTypeRoom: (body: any) =>
+        http.post<SuccessResponseApi<TypeRoom>>("/type-room", body),
+
+    getTypeRoom: (id: string) =>
+        http.get<SuccessResponseApi<TypeRoom>>(`/type-room/${id}`),
+
+    updateTypeRoom: ({ body, id }: { body: any; id: string }) =>
+        http.post<SuccessResponseApi<TypeRoom>>(`/type-room/${id}`, body),
 };
