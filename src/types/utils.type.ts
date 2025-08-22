@@ -7,3 +7,8 @@ export type SuccessResponseApi<T> = {
     status: string;
     data: T;
 };
+
+export type DeleteResponse = {
+    status: string;
+    data: { deleted: boolean; id: string };
+};

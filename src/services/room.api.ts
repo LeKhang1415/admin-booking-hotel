@@ -1,5 +1,5 @@
 import type { Room, RoomResponse, RoomsListQuery } from "../types/room.types";
-import type { SuccessResponseApi } from "../types/utils.type";
+import type { DeleteResponse, SuccessResponseApi } from "../types/utils.type";
 import http from "../utils/http";
 
 export const roomApi = {
@@ -21,4 +21,5 @@ export const roomApi = {
                 "Content-Type": "multipart/form-data",
             },
         }),
+    deleteRoom: (id: string) => http.delete<DeleteResponse>(`/room/${id}`),
 };

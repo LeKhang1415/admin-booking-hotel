@@ -4,6 +4,7 @@ import Modal from "../../../components/Modal";
 import Table from "../../../components/Table";
 import type { TypeRoom } from "../../../types/type-room.types";
 import UpdateTypeRoomContent from "./UpdateTypeRoomContent";
+import DeleteTypeRoomContent from "./DeleteTypeRoomContent";
 
 function TypeRoomRow({ typeRoom }: { typeRoom: TypeRoom }) {
     return (
@@ -53,16 +54,24 @@ function TypeRoomRow({ typeRoom }: { typeRoom: TypeRoom }) {
                                 </Menus.Button>
                             </Modal.Open>
 
-                            <Menus.Button
-                                icon={<FiTrash2 className="text-red-400" />}
-                            >
-                                Delete
-                            </Menus.Button>
+                            <Modal.Open opens="delete-type-room">
+                                <Menus.Button
+                                    icon={<FiTrash2 className="text-red-400" />}
+                                >
+                                    Delete
+                                </Menus.Button>
+                            </Modal.Open>
                         </Menus.List>
                     </Menus.Menu>
 
                     <Modal.Content name="update-type-room">
                         <UpdateTypeRoomContent typeRoomId={typeRoom.id} />
+                    </Modal.Content>
+                    <Modal.Content name="delete-type-room">
+                        <DeleteTypeRoomContent
+                            typeRoomId={typeRoom.id}
+                            name={typeRoom.name}
+                        />
                     </Modal.Content>
                 </Modal>
             </div>

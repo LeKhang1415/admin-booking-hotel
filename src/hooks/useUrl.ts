@@ -8,24 +8,35 @@ function useUrl<T>({
     defaultValue?: T;
 }) {
     const [searchParams, setSearchParams] = useSearchParams();
-    const currentValue = searchParams.get(field) || defaultValue;
 
-    function handler(value: T): void {
+    // Lấy value từ URL, nếu không có thì dùng defaultValue
+    const urlValue = searchParams.get(field);
+    const currentValue = urlValue !== null ? (urlValue as T) : defaultValue;
+
+    function handler(value: T | undefined): void {
         const newParams = new URLSearchParams(searchParams);
-        // reset page nếu đổi filter
-        if (searchParams.get("page")) newParams.set("page", "1");
 
-        // nếu field là page và value = 1 → xóa khỏi URL
+        // Reset page nếu đổi filter
+        if (searchParams.get("page")) {
+            newParams.set("page", "1");
+        }
+
+        // Xử lý field page đặc biệt
         if (field === "page" && value === 1) {
             newParams.delete("page");
-        } else {
-            newParams.set(field, `${value}`);
+        }
+        // Nếu value là undefined, null hoặc empty string → xóa khỏi URL
+        else if (value === undefined || value === null || value === "") {
+            newParams.delete(field);
+        }
+        // Set giá trị bình thường
+        else {
+            newParams.set(field, String(value));
         }
 
         setSearchParams(newParams);
-        newParams.set(field, `${value}`);
-        setSearchParams(newParams);
     }
+
     return { currentValue, handler };
 }
 

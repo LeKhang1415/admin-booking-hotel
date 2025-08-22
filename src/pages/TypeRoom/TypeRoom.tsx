@@ -8,6 +8,7 @@ import Modal from "../../components/Modal";
 import useTypeRooms from "./hooks/useTypeRooms";
 import TypeRoomRow from "./components/TypeRoomRow";
 import CreateTypeRoomContent from "./components/CreateTypeRoomContent";
+import Spinner from "../../components/Spinner";
 
 function TypeRoom() {
     const { typeRooms, isLoading, totalPages } = useTypeRooms();
@@ -28,36 +29,43 @@ function TypeRoom() {
                     </Modal>
                 </>
             </Heading>
-            <div className="flex-1 mt-4">
-                <Menus>
-                    <Table columns="1fr 1.5fr 1.5fr 0.75fr 1fr 0.75fr">
-                        <Table.Header>
-                            <div>Name</div>
-                            <div>Introduction</div>
-                            <div>Highlight</div>
-                            <div>SizeRoom</div>
-                            <div>Beds</div>
-                            <div>Max People</div>
-                        </Table.Header>
+            {isLoading && (
+                <div className="h-full center">
+                    <Spinner size="lg" />
+                </div>
+            )}
+            {!isLoading && (
+                <div className="flex-1 mt-4">
+                    <Menus>
+                        <Table columns="1fr 1.5fr 1.5fr 0.75fr 1fr 0.75fr">
+                            <Table.Header>
+                                <div>Name</div>
+                                <div>Introduction</div>
+                                <div>Highlight</div>
+                                <div>SizeRoom</div>
+                                <div>Beds</div>
+                                <div>Max People</div>
+                            </Table.Header>
 
-                        <Table.Body
-                            data={typeRooms}
-                            render={(typeRoom) => (
-                                <TypeRoomRow
-                                    key={typeRoom.id}
-                                    typeRoom={typeRoom}
-                                />
-                            )}
-                        />
-                        <Table.Footer>
-                            <Pagination
-                                className="flex justify-between mb-[20px] px-5 mt-2"
-                                totalPages={totalPages}
+                            <Table.Body
+                                data={typeRooms}
+                                render={(typeRoom) => (
+                                    <TypeRoomRow
+                                        key={typeRoom.id}
+                                        typeRoom={typeRoom}
+                                    />
+                                )}
                             />
-                        </Table.Footer>
-                    </Table>
-                </Menus>
-            </div>
+                            <Table.Footer>
+                                <Pagination
+                                    className="flex justify-between mb-[20px] px-5 mt-2"
+                                    totalPages={totalPages}
+                                />
+                            </Table.Footer>
+                        </Table>
+                    </Menus>
+                </div>
+            )}
         </Main>
     );
 }

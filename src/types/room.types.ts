@@ -29,13 +29,21 @@ export type RoomsListQuery = {
     limit?: number;
 
     // Room filter fields
-    roomStatus?: "active" | "inactive";
+    status?: RoomStatus;
     minPricePerDay?: number;
     maxPricePerDay?: number;
     minPricePerHour?: number;
     maxPricePerHour?: number;
-    maxPeople?: number;
+    numberOfPeople?: number;
 
     // Type room filters
     typeRoomId?: string;
 };
+
+export const RoomStatus = {
+    ACTIVE: "active",
+    INACTIVE: "inactive",
+    MAINTENANCE: "maintenance",
+} as const;
+
+export type RoomStatus = (typeof RoomStatus)[keyof typeof RoomStatus];

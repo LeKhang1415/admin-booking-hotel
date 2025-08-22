@@ -16,7 +16,7 @@ function useRooms() {
         {
             limit: Number(queryParams.limit) || 10,
             page: Number(queryParams.page) || 1,
-            roomStatus: queryParams.roomStatus,
+            status: queryParams.status,
             minPricePerDay: queryParams.minPricePerDay
                 ? Number(queryParams.minPricePerDay)
                 : undefined,
@@ -29,8 +29,8 @@ function useRooms() {
             maxPricePerHour: queryParams.maxPricePerHour
                 ? Number(queryParams.maxPricePerHour)
                 : undefined,
-            maxPeople: queryParams.maxPeople
-                ? Number(queryParams.maxPeople)
+            numberOfPeople: queryParams.numberOfPeople
+                ? Number(queryParams.numberOfPeople)
                 : undefined,
             typeRoomId: queryParams.typeRoomId,
         },

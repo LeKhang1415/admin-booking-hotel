@@ -43,3 +43,6 @@ export function timeAgo(isoDate: Date) {
     const years = Math.floor(months / 12);
     return `${years} năm trước`;
 }
+
+export const capitalizeFirst = (str: string) =>
+    str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();

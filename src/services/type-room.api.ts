@@ -3,7 +3,7 @@ import type {
     TypeRoomListQuery,
     TypeRoomResponse,
 } from "../types/type-room.types";
-import type { SuccessResponseApi } from "../types/utils.type";
+import type { DeleteResponse, SuccessResponseApi } from "../types/utils.type";
 import http from "../utils/http";
 
 export const typeRoomApi = {
@@ -22,4 +22,7 @@ export const typeRoomApi = {
 
     updateTypeRoom: ({ body, id }: { body: any; id: string }) =>
         http.post<SuccessResponseApi<TypeRoom>>(`/type-room/${id}`, body),
+
+    deleteTypeRoom: (id: string) =>
+        http.delete<DeleteResponse>(`/type-room/${id}`),
 };

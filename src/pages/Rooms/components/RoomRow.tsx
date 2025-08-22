@@ -6,6 +6,7 @@ import { FiEdit, FiTrash2 } from "react-icons/fi";
 import Table from "../../../components/Table";
 import Modal from "../../../components/Modal";
 import UpdateRoomContent from "./UpdateRoomContent";
+import DeleteRoomContent from "./DeleteRoomContent";
 
 function RoomRow({ room }: { room: Room }) {
     return (
@@ -75,14 +76,23 @@ function RoomRow({ room }: { room: Room }) {
                                     </Menus.Button>
                                 </Modal.Open>
 
-                                <Menus.Button icon={<FiTrash2 />}>
-                                    Delete
-                                </Menus.Button>
+                                <Modal.Open opens="delete-room">
+                                    <Menus.Button icon={<FiTrash2 />}>
+                                        Delete
+                                    </Menus.Button>
+                                </Modal.Open>
                             </Menus.List>
                         </Menus.Menu>
 
                         <Modal.Content name="update-room">
                             <UpdateRoomContent roomId={room.id} />
+                        </Modal.Content>
+
+                        <Modal.Content name="delete-room">
+                            <DeleteRoomContent
+                                roomId={room.id}
+                                name={room.name}
+                            />
                         </Modal.Content>
                     </Modal>
                 </div>
