@@ -1,4 +1,9 @@
-import type { Room, RoomResponse, RoomsListQuery } from "../types/room.types";
+import type {
+    FindAvailableRoomsQuery,
+    Room,
+    RoomResponse,
+    RoomsListQuery,
+} from "../types/room.types";
 import type { DeleteResponse, SuccessResponseApi } from "../types/utils.type";
 import http from "../utils/http";
 
@@ -22,4 +27,9 @@ export const roomApi = {
             },
         }),
     deleteRoom: (id: string) => http.delete<DeleteResponse>(`/room/${id}`),
+
+    findAvailableRooms: (params: FindAvailableRoomsQuery) =>
+        http.get<SuccessResponseApi<RoomResponse>>("/room/available", {
+            params,
+        }),
 };

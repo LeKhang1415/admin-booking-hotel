@@ -15,6 +15,7 @@ import Users from "../pages/Users";
 import UserProfile from "../pages/UserProfile";
 import { MdOutlineRoomPreferences } from "react-icons/md";
 import TypeRoom from "../pages/TypeRoom";
+import AvailableRooms from "../pages/Bookings/availableRooms";
 
 type NavLink = {
     href: string;
@@ -84,9 +85,14 @@ export const routes: Routes[] = [
         element: Bookings,
     },
     {
+        path: "available-rooms",
+        element: AvailableRooms,
+    },
+    {
         path: "bookings/:id",
         element: BookingDetail,
     },
+
     {
         path: "reviews",
         element: Reviews,

@@ -1,8 +1,12 @@
+import Button from "../../components/Button";
+import Heading from "../../components/Heading";
 import Main from "../../components/Main";
 import Menus from "../../components/Menus";
+import Modal from "../../components/Modal";
 import Pagination from "../../components/Pagination";
 import Spinner from "../../components/Spinner";
 import Table from "../../components/Table";
+import AvailableRoomsContent from "./components/AvailableRoomsContent";
 import BookingRow from "./components/BookingRow";
 import useBookings from "./hooks/useBookings";
 
@@ -11,6 +15,26 @@ function Bookings() {
 
     return (
         <Main>
+            <Heading>
+                <>
+                    <Modal>
+                        <Modal.Open opens="filter-rooms">
+                            <Button variant="outline" className="px-4 py-2">
+                                Filter Bookings
+                            </Button>
+                        </Modal.Open>
+
+                        <Modal.Open opens="available-rooms">
+                            <Button className="px-6 py-3">
+                                Find Available Rooms
+                            </Button>
+                        </Modal.Open>
+                        <Modal.Content name="available-rooms">
+                            <AvailableRoomsContent />
+                        </Modal.Content>
+                    </Modal>
+                </>
+            </Heading>
             {isLoading && (
                 <div className="h-full center">
                     <Spinner size="lg" />

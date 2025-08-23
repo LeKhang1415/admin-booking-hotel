@@ -9,6 +9,7 @@ import { logout, setAccessToken } from "../store/slices/authSlice";
 import { authApi } from "../services/auth.api";
 import toast from "react-hot-toast";
 import { redirect } from "react-router-dom";
+import type { SuccessResponseApi } from "../types/utils.type";
 
 const API_BASE_URL = import.meta.env.API_BASE_URL || "http://localhost:3000/";
 
@@ -106,10 +107,12 @@ class Http {
 
         try {
             // Gọi API refresh token bằng axios không gắn Authorization
-            const response = await refreshInstance.get<{ accessToken: string }>(
-                "/auth/refresh-token"
-            );
-            const newToken = response.data.accessToken;
+            const response = await refreshInstance.post<
+                SuccessResponseApi<{
+                    accessToken: string;
+                }>
+            >("/auth/refresh-token");
+            const newToken = response.data.data.accessToken;
 
             // Cập nhật token trong store
             store.dispatch(setAccessToken(newToken));

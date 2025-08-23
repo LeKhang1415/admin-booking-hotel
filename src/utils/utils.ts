@@ -16,3 +16,9 @@ export function formatDate(date: string | Date, detail: boolean = false) {
 
 export const capitalizeFirst = (str: string) =>
     str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+
+export function cleanObject<T extends Record<string, any>>(obj: T): T {
+    return Object.fromEntries(
+        Object.entries(obj).filter(([_, v]) => v !== undefined)
+    ) as T;
+}

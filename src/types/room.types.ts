@@ -47,3 +47,17 @@ export const RoomStatus = {
 } as const;
 
 export type RoomStatus = (typeof RoomStatus)[keyof typeof RoomStatus];
+
+export interface FindAvailableRoomsQuery {
+    page?: number;
+    limit?: number;
+
+    minPrice?: number;
+    maxPrice?: number;
+    priceType?: "hour" | "day";
+    numberOfPeople?: number;
+    typeRoomId?: string;
+
+    startTime: string;
+    endTime: string;
+}

@@ -69,6 +69,64 @@ export const typeRoomSchema = yup.object({
         .required("Vui lòng nhập số người tối đa"),
 });
 
+export const findAvailableRoomsSchema = yup.object({
+    startTime: yup
+        .date()
+        .required("Start time is required")
+        .min(new Date(), "Start time cannot be in the past"),
+    endTime: yup
+        .date()
+        .required("End time is required")
+        .min(yup.ref("startTime"), "End time must be after start time"),
+    typeRoomId: yup.string().nullable().notRequired(),
+    minPrice: yup
+        .number()
+        .nullable()
+        .transform((value, originalValue) => {
+            // Nếu là string rỗng hoặc undefined, return null
+            if (originalValue === "" || originalValue === undefined) {
+                return null;
+            }
+            // Parse thành number
+            const parsed = parseFloat(originalValue);
+            return isNaN(parsed) ? null : parsed;
+        })
+        .min(0, "Minimum price must be non-negative")
+        .notRequired(),
+    maxPrice: yup
+        .number()
+        .nullable()
+        .transform((value, originalValue) => {
+            if (originalValue === "" || originalValue === undefined) {
+                return null;
+            }
+            const parsed = parseFloat(originalValue);
+            return isNaN(parsed) ? null : parsed;
+        })
+        .min(
+            yup.ref("minPrice"),
+            "Maximum price must be greater than minimum price"
+        )
+        .notRequired(),
+    priceType: yup.string().oneOf(["day", "hour"]).nullable().notRequired(),
+    numberOfPeople: yup
+        .number()
+        .nullable()
+        .transform((value, originalValue) => {
+            if (originalValue === "" || originalValue === undefined) {
+                return null;
+            }
+            const parsed = parseInt(originalValue);
+            return isNaN(parsed) ? null : parsed;
+        })
+        .min(1, "Number of people must be at least 1")
+        .notRequired(),
+});
+
+export type FindAvailableRoomsFormData = yup.InferType<
+    typeof findAvailableRoomsSchema
+>;
+
 export type TypeRoomSchema = yup.InferType<typeof typeRoomSchema>;
 export type UserSchema = yup.InferType<typeof userSchema>;
 export type RoomSchema = yup.InferType<typeof roomSchema>;
