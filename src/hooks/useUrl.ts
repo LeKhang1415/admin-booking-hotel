@@ -21,7 +21,6 @@ function useUrl<T>({
             newParams.set("page", "1");
         }
 
-        // Xử lý field page đặc biệt
         if (field === "page" && value === 1) {
             newParams.delete("page");
         }

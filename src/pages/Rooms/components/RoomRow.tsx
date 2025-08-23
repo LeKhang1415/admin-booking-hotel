@@ -1,4 +1,3 @@
-// RoomRow.tsx
 import type { Room } from "../../../types/room.types";
 import { formatCurrency } from "../../../utils/utils";
 import Menus from "../../../components/Menus";
