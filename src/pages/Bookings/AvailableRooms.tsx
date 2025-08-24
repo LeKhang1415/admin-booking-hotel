@@ -1,34 +1,116 @@
+import { useEffect, useMemo } from "react";
+import { useNavigate } from "react-router-dom";
 import Pagination from "../../components/Pagination";
+import useQueryParams from "../../hooks/useQueryParams";
 import useAvailableRooms from "../Rooms/hooks/useAvailableRooms";
+import type { FindAvailableRoomsQuery, Room } from "../../types/room.types";
+import { useDispatch } from "react-redux";
+import { setBooking } from "../../store/slices/bookingSlice";
+import { fromTimestamp } from "../../utils/utils";
+import RoomCard from "../Rooms/components/RoomCard";
+import Spinner from "../../components/Spinner";
+
+// Danh sách tham số bắt buộc
+const requiredParams: (keyof FindAvailableRoomsQuery)[] = [
+    "numberOfPeople",
+    "priceType",
+    "startTime",
+    "endTime",
+];
 
 function AvailableRooms() {
-    const { rooms, totalPages, isLoading } = useAvailableRooms();
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const queryParams = useQueryParams<FindAvailableRoomsQuery>();
 
-    if (isLoading) return <p>Đang tải dữ liệu...</p>;
+    // Check đủ params chưa
+    const hasAllParams = useMemo(
+        () =>
+            requiredParams.every(
+                (key) =>
+                    queryParams[key] !== undefined && queryParams[key] !== ""
+            ),
+        [queryParams]
+    );
+
+    // Nếu thiếu thì redirect
+    useEffect(() => {
+        if (!hasAllParams) {
+            navigate("/bookings", { replace: true });
+        }
+    }, [hasAllParams, navigate]);
+
+    // Query rooms
+    const { rooms, totalPages, isLoading } = hasAllParams
+        ? useAvailableRooms()
+        : { rooms: [], totalPages: 0, isLoading: false };
+
+    if (!hasAllParams) return null; // tránh render khi redirect
+
+    function handleChooseRoom(room: Room) {
+        dispatch(
+            setBooking({
+                room,
+                priceType: queryParams.priceType as "hour" | "day",
+                numberOfPeople: Number(queryParams.numberOfPeople),
+                startTime: new Date(Number(queryParams.startTime)),
+                endTime: new Date(Number(queryParams.endTime)),
+            })
+        );
+        navigate("/create-booking");
+    }
 
     return (
         <div>
-            <h2 className="text-xl font-bold mb-4">Danh sách phòng trống</h2>
-            {rooms.length === 0 ? (
-                <p>Không có phòng nào phù hợp.</p>
-            ) : (
-                <ul className="space-y-2">
+            {/* Header */}
+            <div className="bg-primary p-8 rounded-xl shadow-sm w-full mx-auto mb-5">
+                <h2 className="text-2xl text-white font-bold mb-1">
+                    Choose Room
+                </h2>
+
+                <p className="text-gray-300 text-md">
+                    {queryParams.startTime && queryParams.endTime && (
+                        <>
+                            {fromTimestamp(queryParams.startTime)} -{" "}
+                            {fromTimestamp(queryParams.endTime)}
+                        </>
+                    )}
+                    <span className="mx-1">•</span>
+                    {queryParams.numberOfPeople} guest
+                </p>
+            </div>
+
+            {/* Loading */}
+            {isLoading && (
+                <div className="h-full flex justify-center items-center">
+                    <Spinner size="lg" />
+                </div>
+            )}
+
+            {/* Empty state */}
+            {!isLoading && rooms.length === 0 && (
+                <p className="text-center text-white text-4xl font-semibold">
+                    No suitable room found.
+                </p>
+            )}
+
+            {/* List rooms */}
+            {!isLoading && rooms.length > 0 && (
+                <ul className="space-y-4">
                     {rooms.map((room) => (
-                        <li
+                        <RoomCard
                             key={room.id}
-                            className="border p-3 rounded shadow-sm hover:bg-gray-50"
-                        >
-                            <p>
-                                <strong>{room.name}</strong>
-                            </p>
-                            <p>Loại: {room.typeRoom.name}</p>
-                            <p>Giá: {room.pricePerDay} / ngày</p>
-                        </li>
+                            room={room}
+                            priceType={queryParams.priceType}
+                            onChoose={handleChooseRoom}
+                        />
                     ))}
                 </ul>
             )}
+
+            {/* Pagination */}
             <Pagination
-                className="flex justify-between mb-[20px] px-5 mt-2"
+                className="flex justify-between mb-5 px-5 mt-4"
                 totalPages={totalPages}
             />
         </div>

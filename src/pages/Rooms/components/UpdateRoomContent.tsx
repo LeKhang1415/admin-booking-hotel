@@ -4,9 +4,9 @@ import useTypeRoom from "../hooks/useTypeRoom";
 import useRoom from "../hooks/useRoom";
 import { roomApi } from "../../../services/room.api";
 import type { SelectOptsType } from "../../../types/utils.type";
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { roomSchema, type RoomSchema } from "../../../utils/rule";
+import { updateRoomSchema, type UpdateRoomSchema } from "../../../utils/rule";
 import { useForm } from "react-hook-form";
 import type { AxiosError } from "axios";
 import toast from "react-hot-toast";
@@ -16,7 +16,7 @@ import Input from "../../../components/Input";
 import Select from "../../../components/Select";
 import Button from "../../../components/Button";
 
-type FormData = RoomSchema;
+type FormData = UpdateRoomSchema;
 
 function UpdateRoomContent({
     roomId,
@@ -28,6 +28,7 @@ function UpdateRoomContent({
     const queryClient = useQueryClient();
     const { typeRoom } = useTypeRoom();
     const { room } = useRoom(roomId);
+    const fileInputRef = useRef<HTMLInputElement>(null);
 
     const { mutate, isPending } = useMutation({
         mutationFn: ({ body, id }: { body: any; id: string }) =>
@@ -47,9 +48,10 @@ function UpdateRoomContent({
         register,
         handleSubmit,
         reset,
+        clearErrors,
         formState: { errors },
     } = useForm<FormData>({
-        resolver: yupResolver(roomSchema),
+        resolver: yupResolver(updateRoomSchema) as any,
     });
 
     // Khi room thay đổi, reset form với dữ liệu room
@@ -62,9 +64,18 @@ function UpdateRoomContent({
                 pricePerHour: room.pricePerHour,
                 interior: room.interior || "",
                 facilities: room.facilities || "",
+                image: undefined, //  Đặt image về undefined để tránh conflict
             });
+
+            // Clear tất cả lỗi
+            clearErrors();
+
+            // Reset file input element
+            if (fileInputRef.current) {
+                fileInputRef.current.value = "";
+            }
         }
-    }, [room, reset]);
+    }, [room, reset, clearErrors]);
 
     const onSubmit = (data: FormData) => {
         const submitData = new FormData();
@@ -81,8 +92,12 @@ function UpdateRoomContent({
             submitData.append("facilities", data.facilities);
         }
 
-        // ✅ Kiểm tra image có tồn tại và có file không
-        if (data.image && data.image.length > 0) {
+        // Chỉ append image khi người dùng thực sự chọn file mới
+        if (
+            data.image &&
+            data.image.length > 0 &&
+            data.image[0] instanceof File
+        ) {
             submitData.append("image", data.image[0]);
         }
 
@@ -95,8 +110,7 @@ function UpdateRoomContent({
                     queryClient.invalidateQueries({
                         queryKey: ["room", roomId],
                     });
-                    reset();
-                    close?.();
+                    handleCancel(); //Sử dụng handleCancel để reset đầy đủ
                 },
                 onError: (error) => {
                     const axiosError = error as AxiosError<{ message: string }>;
@@ -112,6 +126,7 @@ function UpdateRoomContent({
 
     const handleCancel = () => {
         reset();
+        clearErrors(); // Clear tất cả lỗi
         close?.();
     };
 

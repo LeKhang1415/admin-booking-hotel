@@ -48,8 +48,19 @@ function FindAvailableRoomsModal({ close }: { close?: () => void }) {
     });
 
     const onSubmit = (data: FormData) => {
-        // build query string
-        const query = stringify(data, { skipNulls: true });
+        const query = stringify(
+            {
+                ...data,
+                startTime: data.startTime
+                    ? new Date(data.startTime).getTime()
+                    : undefined,
+                endTime: data.endTime
+                    ? new Date(data.endTime).getTime()
+                    : undefined,
+            },
+            { skipNulls: true }
+        );
+
         navigate(`/available-rooms?${query}`);
         close?.();
     };
@@ -77,6 +88,7 @@ function FindAvailableRoomsModal({ close }: { close?: () => void }) {
                         <Input
                             name="numberOfPeople"
                             label="Number of People"
+                            defaultValue={1}
                             type="text"
                             placeholder="Enter number of guests"
                             register={register}

@@ -1,12 +1,12 @@
 import { type UseFormRegister } from "react-hook-form";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type PropsType = {
     name: string;
     label?: string;
     multiple?: boolean;
     errorMessage?: string;
-    previewUrl?: string; // 👈 thêm prop này để hiển thị ảnh cũ
+    previewUrl?: string;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     register?: UseFormRegister<any>;
 };
@@ -22,12 +22,40 @@ export default function InputFile({
     const registerResult = name && register ? register(name) : null;
     const [preview, setPreview] = useState<string | null>(previewUrl || null);
 
+    // Đồng bộ lại khi previewUrl thay đổi (trường hợp load chậm từ API)
+    useEffect(() => {
+        if (previewUrl) {
+            setPreview(previewUrl);
+        } else {
+            setPreview(null); // Reset preview khi không có previewUrl
+        }
+    }, [previewUrl]);
+
     const handlePreview = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (file) {
+            // ✅ Revoke URL cũ trước khi tạo mới để tránh memory leak
+            if (preview && preview.startsWith("blob:")) {
+                URL.revokeObjectURL(preview);
+            }
             setPreview(URL.createObjectURL(file));
+        } else {
+            // ✅ Nếu không có file, reset về previewUrl ban đầu
+            if (preview && preview.startsWith("blob:")) {
+                URL.revokeObjectURL(preview);
+            }
+            setPreview(previewUrl || null);
         }
     };
+
+    // Cleanup khi component unmount
+    useEffect(() => {
+        return () => {
+            if (preview && preview.startsWith("blob:")) {
+                URL.revokeObjectURL(preview);
+            }
+        };
+    }, []);
 
     return (
         <div>

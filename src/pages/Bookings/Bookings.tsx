@@ -6,7 +6,7 @@ import Modal from "../../components/Modal";
 import Pagination from "../../components/Pagination";
 import Spinner from "../../components/Spinner";
 import Table from "../../components/Table";
-import AvailableRoomsContent from "./components/AvailableRoomsContent";
+import FindAvailableRoomsModal from "./components/FindAvailableRoomsModal";
 import BookingRow from "./components/BookingRow";
 import useBookings from "./hooks/useBookings";
 
@@ -30,7 +30,7 @@ function Bookings() {
                             </Button>
                         </Modal.Open>
                         <Modal.Content name="available-rooms">
-                            <AvailableRoomsContent />
+                            <FindAvailableRoomsModal />
                         </Modal.Content>
                     </Modal>
                 </>

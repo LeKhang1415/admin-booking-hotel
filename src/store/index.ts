@@ -3,6 +3,7 @@ import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import sidebarReducer from "./slices/sidebarSlice";
 import authReducer from "./slices/authSlice";
+import bookingReducer from "./slices/bookingSlice";
 import type { AuthState } from "./slices/authSlice";
 
 const authPersistConfig = {
@@ -14,6 +15,7 @@ const authPersistConfig = {
 export const store = configureStore({
     reducer: {
         sidebar: sidebarReducer,
+        booking: bookingReducer,
         auth: persistReducer<AuthState>(authPersistConfig, authReducer),
     },
     middleware: (getDefaultMiddleware) =>

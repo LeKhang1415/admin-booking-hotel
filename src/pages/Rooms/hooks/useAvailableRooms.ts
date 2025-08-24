@@ -19,8 +19,8 @@ function useAvailableRooms() {
         page: Number(queryParams.page) || 1,
         priceType: queryParams.priceType, // "day" | "hour"
         typeRoomId: queryParams.typeRoomId || undefined,
-        startTime: queryParams.startTime,
-        endTime: queryParams.endTime,
+        startTime: new Date(Number(queryParams.startTime)).toISOString(),
+        endTime: new Date(Number(queryParams.endTime)).toISOString(),
         numberOfPeople: queryParams.numberOfPeople
             ? Number(queryParams.numberOfPeople)
             : undefined,
