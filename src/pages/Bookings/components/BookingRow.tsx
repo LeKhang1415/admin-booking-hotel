@@ -3,7 +3,9 @@ import Menus from "../../../components/Menus";
 import { FiEdit, FiTrash2 } from "react-icons/fi";
 import Table from "../../../components/Table";
 import Modal from "../../../components/Modal";
-import type { Booking } from "../../../types/booking.types";
+import { StayType, type Booking } from "../../../types/booking.types";
+import { MdCalendarToday } from "react-icons/md";
+import { TbClockHour10 } from "react-icons/tb";
 
 const statusColor: Record<string, string> = {
     unpaid: "bg-red-500 text-white",
@@ -13,26 +15,23 @@ const statusColor: Record<string, string> = {
 };
 
 function BookingRow({ booking }: { booking: Booking }) {
-    const { user, room } = booking;
+    const { customer, room } = booking;
 
     return (
         <Table.Row>
             {/* User */}
-            <div className="flex flex-col">
-                {user ? (
-                    <>
-                        <span className="font-semibold text-white">
-                            {user.name}
-                        </span>
-                        <span className="text-sm text-gray-400">
-                            {user.email}
-                        </span>
-                    </>
-                ) : (
-                    <span className="font-semibold text-xl text-amber-300">
-                        Khách vãng lai
+            <div className="flex items-center gap-3">
+                <div className="w-8 h-8 flex items-center justify-center rounded-full text-white bg-[#135846] font-semibold">
+                    {customer.fullName.charAt(0).toUpperCase()}
+                </div>
+                <div className="flex flex-col">
+                    <span className="font-semibold text-white">
+                        {customer.fullName}
                     </span>
-                )}
+                    <span className="text-sm text-gray-400">
+                        {customer.phone}
+                    </span>
+                </div>
             </div>
 
             {/* Room */}
@@ -57,8 +56,15 @@ function BookingRow({ booking }: { booking: Booking }) {
             </div>
 
             {/* Stay type */}
-            <div className="uppercase font-semibold text-gray-400">
-                {booking.stayType}
+            <div className="flex items-center gap-2">
+                {booking.stayType === StayType.DAILY ? (
+                    <MdCalendarToday className="w-4 h-4 text-gray-300" />
+                ) : (
+                    <TbClockHour10 className="w-4 h-4 text-gray-300" />
+                )}
+                <div className="uppercase font-semibold text-gray-400">
+                    {booking.stayType}
+                </div>
             </div>
 
             {/* Status */}

@@ -112,7 +112,7 @@ export const findAvailableRoomsSchema = yup.object({
     minPrice: yup
         .number()
         .nullable()
-        .transform((value, originalValue) => {
+        .transform((_value, originalValue) => {
             // Nếu là string rỗng hoặc undefined, return null
             if (originalValue === "" || originalValue === undefined) {
                 return null;
@@ -126,7 +126,7 @@ export const findAvailableRoomsSchema = yup.object({
     maxPrice: yup
         .number()
         .nullable()
-        .transform((value, originalValue) => {
+        .transform((_value, originalValue) => {
             if (originalValue === "" || originalValue === undefined) {
                 return null;
             }
@@ -144,6 +144,25 @@ export const findAvailableRoomsSchema = yup.object({
         .required("Number of people is required")
         .min(1, "Number of people must be at least 1"),
 });
+
+export const customerFormSchema = yup.object({
+    bookingType: yup.string().oneOf(["online", "walk_in"]).required("Required"),
+    customerFullName: yup.string().trim().required("Full name is required"),
+    customerPhone: yup
+        .string()
+        .trim()
+        .required("Phone number is required")
+        .matches(/^[0-9+()\-\s]{6,20}$/, "Invalid phone number"),
+    customerEmail: yup
+        .string()
+        .trim()
+        .email("Invalid email")
+        .nullable()
+        .notRequired(),
+    customerIdentityCard: yup.string().trim().nullable().notRequired(),
+});
+
+export type CustomerFormSchema = yup.InferType<typeof customerFormSchema>;
 
 export type FindAvailableRoomsFormData = yup.InferType<
     typeof findAvailableRoomsSchema

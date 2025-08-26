@@ -2,6 +2,7 @@ import { Controller, type Control } from "react-hook-form";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { forwardRef } from "react";
+import { PiCalendarCheckFill } from "react-icons/pi";
 
 interface DateTimePickerProps {
     name: string;
@@ -16,18 +17,23 @@ interface DateTimePickerProps {
 }
 
 const CustomInput = forwardRef<HTMLInputElement, any>(
-    ({ value, onClick, placeholder, className }, ref) => (
-        <input
-            ref={ref}
-            value={value}
-            onClick={onClick}
-            placeholder={placeholder}
-            readOnly
-            className={className}
-        />
-    )
+    ({ value, onClick, placeholder }, ref) => {
+        return (
+            <div onClick={onClick} className="relative w-full">
+                <input
+                    ref={ref}
+                    value={value || "DD/MM/YYYY HH:MM"}
+                    readOnly
+                    placeholder={placeholder}
+                    className="w-full h-10 px-3 pr-10 bg-transparent border border-gray-600 rounded-lg text-sm placeholder-gray-400 focus:outline-none"
+                />
+                <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">
+                    <PiCalendarCheckFill />
+                </div>
+            </div>
+        );
+    }
 );
-
 CustomInput.displayName = "CustomInput";
 
 function DateTimePicker({

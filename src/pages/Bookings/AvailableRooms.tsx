@@ -71,8 +71,8 @@ function AvailableRooms() {
                 <p className="text-gray-300 text-md">
                     {queryParams.startTime && queryParams.endTime && (
                         <>
-                            {fromTimestamp(queryParams.startTime)} -{" "}
-                            {fromTimestamp(queryParams.endTime)}
+                            {fromTimestamp(queryParams.startTime, true)} -{" "}
+                            {fromTimestamp(queryParams.endTime, true)}
                         </>
                     )}
                     <span className="mx-1">•</span>

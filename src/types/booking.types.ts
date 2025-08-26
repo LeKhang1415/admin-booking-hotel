@@ -1,4 +1,4 @@
-import type { Review } from "../services/review.api";
+import type { Customer } from "./customer.type";
 import type { Payment } from "./payment.types";
 import type { Room } from "./room.types";
 import type { User } from "./user.type";
@@ -39,7 +39,7 @@ export type Booking = {
     numberOfGuest: number;
     user: User;
     room: Room;
-    review: Review | null;
+    customer: Customer;
     payments: Payment[];
     totalAmount: number;
     extraCharges: number;
@@ -53,6 +53,37 @@ export type BookingResponse = {
         currentPage: number;
         totalPages: number;
     };
+};
+
+export type BookingPreviewDto = {
+    roomId: string;
+    startTime: string;
+    endTime: string;
+    stayType: StayType;
+    numberOfGuest: number;
+};
+
+export type BookingPreviewResponse = {
+    startTime: string; // ISO string
+    endTime: string; // ISO string
+    stayType: StayType;
+    numberOfGuest: number;
+    totalAmount: number; // number (vnd)
+    room: Room;
+};
+
+export type CreateBookingDto = {
+    roomId: string;
+    startTime: string;
+    endTime: string;
+    stayType: StayType;
+    numberOfGuest: number;
+    customerFullName: string;
+    customerPhone: string;
+    customerEmail?: string;
+    customerIdentityCard?: string;
+    userId?: string;
+    bookingType: BookingType;
 };
 
 // Query filters
