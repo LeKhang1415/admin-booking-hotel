@@ -1,3 +1,4 @@
+// SidebarItem.tsx
 import type { ReactNode } from "react";
 import { Link, useLocation } from "react-router-dom";
 
@@ -14,32 +15,29 @@ export default function SidebarItem({ href, icon, text }: SidebarItemProps) {
     return (
         <li
             className={`
-                relative flex items-center py-3 px-3 my-1 font-medium rounded-xl cursor-pointer 
-                transition-all duration-200 group
+                relative flex items-center my-1 font-medium rounded-xl cursor-pointer 
+                transition-all duration-200 group overflow-hidden
                 ${
                     isActive
-                        ? "bg-[#3a3a3a] text-white"
-                        : "text-gray-300 hover:bg-[#3a3a3a] hover:text-white"
+                        ? "bg-accent text-black shadow-lg transform scale-[1.02]"
+                        : "text-muted hover:bg-yellow-100 hover:text-warm hover:shadow-md"
                 }
             `}
         >
-            <Link to={href} className="flex items-center ">
+            <Link to={href} className="flex items-center w-full py-3 px-3">
                 <div
-                    className={`p-2 rounded-lg transition-colors
+                    className={`
+                        p-2 rounded-lg transition-all duration-200 flex-shrink-0
                         ${
                             isActive
-                                ? "bg-gray-500 text-white"
-                                : "bg-gray-600 text-gray-300"
+                                ? "bg-white/20 text-black shadow-sm"
+                                : "bg-cream text-muted-2 group-hover:bg-yellow-200 group-hover:text-warm"
                         }
                     `}
                 >
                     {icon}
                 </div>
-                <span
-                    className={`
-                        overflow-hidden transition-all capitalize w-52 ml-3
-                    `}
-                >
+                <span className="overflow-hidden transition-all capitalize ml-3 text-sm font-medium">
                     {text}
                 </span>
             </Link>

@@ -14,43 +14,47 @@ function TypeRoomRow({ typeRoom }: { typeRoom: TypeRoom }) {
         <Table.Row>
             {/* Tên phòng */}
             <div className="flex items-center gap-3 py-3">
-                <p className="text-sm font-semibold text-gray-100">
+                <p className="text-sm font-semibold text-text">
                     {typeRoom.name}
                 </p>
             </div>
 
             {/* Introduction */}
-            <div className="text-gray-300 text-sm font-medium line-clamp-2 py-3">
+            <div className="text-sm font-medium line-clamp-2 py-3 text-muted">
                 {typeRoom.introduction}
             </div>
 
             {/* Highlight */}
-            <div className="text-gray-400 text-sm line-clamp-2 py-3">
+            <div className="text-sm line-clamp-2 py-3 text-muted-2">
                 {typeRoom.highlight}
             </div>
 
             {/* Size room */}
-            <div className="text-gray-200 font-medium whitespace-nowrap py-3">
+            <div className="font-medium whitespace-nowrap py-3">
                 <div className="flex items-center gap-3">
-                    <IoLocationOutline className="w-4 h-4 text-gray-300" />
-                    <span className="text-sm">{typeRoom.sizeRoom}m²</span>
+                    <IoLocationOutline className="w-4 h-4 text-muted-2" />
+                    <span className="text-sm text-text">
+                        {typeRoom.sizeRoom}m²
+                    </span>
                 </div>
             </div>
 
             {/* Beds */}
-            <div className="text-gray-200 font-semibold py-3">
+            <div className="font-semibold py-3">
                 <div className="flex items-center gap-2">
-                    <FaBed className="w-4 h-4 text-gray-300" />
-                    <span className="text-sm">{typeRoom.beds}</span>
+                    <FaBed className="w-4 h-4 text-muted-2" />
+                    <span className="text-sm text-text">{typeRoom.beds}</span>
                 </div>
             </div>
 
             {/* Max People + Actions */}
-            <div className="flex items-center justify-between text-gray-200 text-sm font-medium whitespace-nowrap py-3">
+            <div className="flex items-center justify-between text-sm font-medium whitespace-nowrap py-3">
                 {/* Số - căn giữa cột */}
                 <div className="flex items-center gap-2">
-                    <CiUser className="w-4 h-4 text-gray-300" />
-                    <span className="text-sm">{typeRoom.maxPeople} khách</span>
+                    <CiUser className="w-4 h-4 text-muted-2" />
+                    <span className="text-sm text-text">
+                        {typeRoom.maxPeople} khách
+                    </span>
                 </div>
 
                 {/* Actions - sát lề phải */}

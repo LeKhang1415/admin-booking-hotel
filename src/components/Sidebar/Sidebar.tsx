@@ -16,7 +16,7 @@ export default function Sidebar() {
 
     return (
         <aside className="h-screen">
-            <nav className="h-full flex flex-col bg-secondary text-white shadow-sm">
+            <nav className="h-full flex flex-col bg-surface text-text shadow-card border-r border-border">
                 {/* Header với logo */}
                 <div className="p-4 pb-2 flex justify-between items-center flex-shrink-0">
                     {/* Logo */}
@@ -27,10 +27,10 @@ export default function Sidebar() {
                             className="w-8 h-8 flex-shrink-0"
                         />
                         <div className="overflow-hidden">
-                            <h3 className="text-teal-400 font-bold text-lg uppercase whitespace-nowrap">
+                            <h3 className="text-warm font-bold text-lg uppercase whitespace-nowrap">
                                 travl
                             </h3>
-                            <span className="text-sm text-gray-300 whitespace-nowrap">
+                            <span className="text-xs text-muted-2 whitespace-nowrap">
                                 Hotel Admin Travel
                             </span>
                         </div>
@@ -38,7 +38,7 @@ export default function Sidebar() {
                 </div>
 
                 {/* Navigation Links */}
-                <ul className="flex-1 px-3 mt-6 overflow-hidden">
+                <ul className="flex-1 px-3 mt-4 overflow-hidden">
                     {links.map((link) => {
                         const Icon = link.icon;
                         return (
@@ -52,6 +52,13 @@ export default function Sidebar() {
                         );
                     })}
                 </ul>
+
+                {/* Footer với gradient nhẹ */}
+                <div className="p-4 bg-gradient-to-t from-yellow-100/30 to-transparent">
+                    <div className="text-xs text-muted-2 text-center">
+                        © 2024 Travl Admin
+                    </div>
+                </div>
             </nav>
         </aside>
     );

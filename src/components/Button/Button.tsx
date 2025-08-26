@@ -27,30 +27,26 @@ export default function Button(props: PropsType) {
         ...rest
     } = props;
 
-    if (disabled) {
-        Object.keys(props).forEach((key) => {
-            if (key.startsWith("on") && typeof key === "function")
-                delete props[key];
-        });
-    }
     return (
         <button
             className={classNames(
-                "relative center min-w-[108px] px-3 rounded-xl text-center text-white capitalize font-bold text-sm hover:opacity-90 bg-[#135846]",
+                "relative center min-w-[108px] px-3 rounded-xl text-center capitalize font-bold text-sm bg-accent text-black shadow-card",
                 className,
                 {
                     "h-[45px]": size === "lg",
                     "h-[28px] text-sm font-semibold": size === "md",
                     "h-[20px] text-xs font-normal": size === "sm",
+                    "opacity-50 cursor-not-allowed": disabled,
                 }
             )}
             onClick={onClick}
+            disabled={disabled}
             {...rest}
         >
             {isLoading && <Spinner />}
             {!isLoading && (
                 <>
-                    {icon && icon}
+                    {icon}
                     {children}
                 </>
             )}

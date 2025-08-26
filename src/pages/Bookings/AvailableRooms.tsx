@@ -63,12 +63,12 @@ function AvailableRooms() {
     return (
         <div>
             {/* Header */}
-            <div className="bg-primary p-8 rounded-xl shadow-sm w-full mx-auto mb-5">
-                <h2 className="text-2xl text-white font-bold mb-1">
+            <div className="bg-accent p-8 rounded-xl shadow-card w-full mx-auto mb-5">
+                <h2 className="text-2xl text-black font-bold mb-1">
                     Choose Room
                 </h2>
 
-                <p className="text-gray-300 text-md">
+                <p className="text-muted text-md">
                     {queryParams.startTime && queryParams.endTime && (
                         <>
                             {fromTimestamp(queryParams.startTime, true)} -{" "}
@@ -89,7 +89,7 @@ function AvailableRooms() {
 
             {/* Empty state */}
             {!isLoading && rooms.length === 0 && (
-                <p className="text-center text-white text-4xl font-semibold">
+                <p className="text-center text-text text-2xl font-semibold">
                     No suitable room found.
                 </p>
             )}

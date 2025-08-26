@@ -56,7 +56,7 @@ function Menus({ children }: { children: ReactNode }) {
 }
 
 function Menu({ children }: { children: ReactNode }) {
-    return <div className="flex items-center justify-start ">{children}</div>;
+    return <div className="flex items-center justify-start">{children}</div>;
 }
 
 function Toggle({ id }: { id: string }) {
@@ -82,8 +82,12 @@ function Toggle({ id }: { id: string }) {
     }
 
     return (
-        <button onClick={handleClick} className="p-1 rounded-sm ">
-            <HiDotsHorizontal className="w-6 h-6 text-white" />
+        <button
+            onClick={handleClick}
+            className="p-1 rounded-sm hover:bg-elevated transition-colors"
+            aria-expanded={ctx?.openId === id}
+        >
+            <HiDotsHorizontal className="w-6 h-6 text-muted-2" />
         </button>
     );
 }
@@ -100,8 +104,8 @@ function List({ id, children }: { id: string; children: ReactNode }) {
     return createPortal(
         <ul
             ref={ref}
-            className="fixed bg-main text-white shadow-md rounded-md"
-            style={{ right: position.x, top: position.y }}
+            className="fixed bg-card-bg text-text shadow-card rounded-md border border-border min-w-[160px] overflow-hidden"
+            style={{ right: position.x, top: position.y, zIndex: 1100 }}
         >
             {children}
         </ul>,
@@ -132,10 +136,15 @@ function Button({
         <li>
             <button
                 onClick={handleClick}
-                className="w-full rounded-md text-left px-6 py-3 text-sm transition-colors flex items-center justify-center gap-4 hover:bg-gray-600"
+                className="w-full rounded-md text-left px-4 py-2 text-sm transition-colors flex items-center gap-3 hover:bg-elevated"
+                type="button"
             >
-                {icon && <span className="w-4 h-4 text-gray-400">{icon}</span>}
-                <span>{children}</span>
+                {icon && (
+                    <span className="w-4 h-4 text-muted-2 flex-shrink-0">
+                        {icon}
+                    </span>
+                )}
+                <span className="text-text">{children}</span>
             </button>
         </li>
     );

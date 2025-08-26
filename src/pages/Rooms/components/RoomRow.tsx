@@ -12,7 +12,7 @@ function RoomRow({ room }: { room: Room }) {
         <Table.Row>
             {/* Ảnh + tên phòng */}
             <div className="flex items-center gap-3 py-2">
-                <div className="min-w-[120px] h-[80px] overflow-hidden rounded-md border border-gray-700 bg-gray-800">
+                <div className="min-w-[120px] h-[80px] overflow-hidden rounded-md border border-border bg-card-bg">
                     <img
                         className="w-full h-full object-cover"
                         src={room.image || "/placeholder.jpg"}
@@ -21,35 +21,33 @@ function RoomRow({ room }: { room: Room }) {
                 </div>
 
                 <div>
-                    <p className="text-sm font-semibold text-white">
+                    <p className="text-sm font-semibold text-text">
                         {room.name}
                     </p>
                 </div>
             </div>
 
             {/* Loại giường */}
-            <div className="text-gray-200 font-semibold">
-                {room.typeRoom.name}
-            </div>
+            <div className="text-text font-semibold">{room.typeRoom.name}</div>
 
             {/* Tiện nghi */}
-            <div className="text-gray-300 text-sm font-semibold whitespace-normal">
+            <div className="text-muted text-sm font-semibold whitespace-normal">
                 {room.facilities}
             </div>
 
             {/* Tiện nghi */}
-            <div className="text-gray-300 text-sm font-semibold whitespace-normal">
+            <div className="text-muted text-sm font-semibold whitespace-normal">
                 {room.interior}
             </div>
 
             {/* Giá/ngày */}
-            <div className="text-yellow-400 font-semibold">
+            <div className="text-accent font-semibold">
                 {formatCurrency(room.pricePerDay)} / đêm
             </div>
 
-            {/* Giá/giờ */}
-            <div className="text-green-400 font-semibold">
-                {formatCurrency(room.pricePerHour)} / giờ
+            {/* Giá/giờ */}
+            <div className="text-warm font-semibold">
+                {formatCurrency(room.pricePerHour)} / giờ
             </div>
 
             {/* Trạng thái */}
@@ -57,8 +55,8 @@ function RoomRow({ room }: { room: Room }) {
                 <span
                     className={`px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider shadow-md ${
                         room.roomStatus === "active"
-                            ? "bg-green-500 text-white"
-                            : "bg-red-500 text-white"
+                            ? "bg-success text-white"
+                            : "bg-danger text-white"
                     }`}
                 >
                     {room.roomStatus === "active" ? "Available" : "Booked"}

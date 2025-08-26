@@ -16,9 +16,28 @@
 }
 
 @theme {
-    --color-primary: #202020;
-    --color-secondary: #2a2a2a;
-    --color-main: #171717;
+    --color-bg: #f7f7f7; /* nền chính */
+    --color-surface: #fffdf8; /* bề mặt/khung trắng ấm */
+    --color-card-bg: #ffffff; /* thẻ / card nền trắng */
+    --color-cream: #fff9ec; /* kem dịu */
+    --color-yellow-100: #fff7e0; /* vàng nhạt nhất (background accent nhẹ) */
+    --color-yellow-200: #ffeed0;
+    --color-yellow-300: #ffd976;
+    --color-accent: #ffb22c; /* vàng nổi bật (CTA) — giữ) */
+    --color-accent-600: #e09a16; /* accent cho hover/active */
+    --color-warm: #854836; /* nâu/ấm cho điểm nhấn */
+    --color-black: #000000; /* đen */
+    --color-text: #171717; /* chữ chính */
+    --color-muted: #2a2a2a; /* chữ/biểu tượng phụ */
+    --color-muted-2: #6b6b6b; /* phụ hơn nữa */
+    --color-border: #efe7db; /* đường viền nhẹ, hòa với nền vàng-trắng */
+    --color-glass: rgba(255, 255, 255, 0.6); /* lớp overlay mờ */
+    --color-elevated: rgba(255, 178, 44, 0.06); /* nền nhẹ cho phần nổi */
+    --color-focus: #ffd580; /* outline/focus ring */
+    --color-success: #2e8b57;
+    --color-danger: #d04949;
+    --color-info: #2b74b8;
+    --card-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
 }
 
 @layer components {

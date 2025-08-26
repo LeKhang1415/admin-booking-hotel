@@ -8,10 +8,10 @@ import { MdCalendarToday } from "react-icons/md";
 import { TbClockHour10 } from "react-icons/tb";
 
 const statusColor: Record<string, string> = {
-    unpaid: "bg-red-500 text-white",
-    paid: "bg-green-500 text-white",
-    checked_in: "bg-blue-500 text-white",
-    checked_out: "bg-purple-500 text-white",
+    unpaid: "bg-danger text-white",
+    paid: "bg-success text-white",
+    checked_in: "bg-accent text-black",
+    checked_out: "bg-warm text-white",
 };
 
 function BookingRow({ booking }: { booking: Booking }) {
@@ -21,36 +21,34 @@ function BookingRow({ booking }: { booking: Booking }) {
         <Table.Row>
             {/* User */}
             <div className="flex items-center gap-3">
-                <div className="w-8 h-8 flex items-center justify-center rounded-full text-white bg-[#135846] font-semibold">
+                <div className="w-8 h-8 flex items-center justify-center rounded-full font-semibold bg-accent text-black">
                     {customer.fullName.charAt(0).toUpperCase()}
                 </div>
                 <div className="flex flex-col">
-                    <span className="font-semibold text-white">
+                    <span className="font-semibold text-text">
                         {customer.fullName}
                     </span>
-                    <span className="text-sm text-gray-400">
-                        {customer.phone}
-                    </span>
+                    <span className="text-sm text-muted">{customer.phone}</span>
                 </div>
             </div>
 
             {/* Room */}
             <div className="flex flex-col">
-                <p className="font-semibold text-white">{room.name}</p>
-                <p className="text-sm text-gray-400">{room.typeRoom.name}</p>
+                <p className="font-semibold text-text">{room.name}</p>
+                <p className="text-sm text-muted">{room.typeRoom.name}</p>
             </div>
 
             {/* Booking date */}
-            <div className="text-gray-300 text-sm">
+            <div className="text-muted text-sm">
                 {formatDate(booking.bookingDate, true)}
             </div>
 
             {/* Check-in/out */}
-            <div className=" flex flex-col">
-                <p className="font-semibold text-white">
+            <div className="flex flex-col">
+                <p className="font-semibold text-text">
                     {formatDate(booking.startTime, true)}
                 </p>
-                <p className="text-sm text-gray-400">
+                <p className="text-sm text-muted">
                     {formatDate(booking.endTime, true)}
                 </p>
             </div>
@@ -58,11 +56,11 @@ function BookingRow({ booking }: { booking: Booking }) {
             {/* Stay type */}
             <div className="flex items-center gap-2">
                 {booking.stayType === StayType.DAILY ? (
-                    <MdCalendarToday className="w-4 h-4 text-gray-300" />
+                    <MdCalendarToday className="w-4 h-4 text-muted-2" />
                 ) : (
-                    <TbClockHour10 className="w-4 h-4 text-gray-300" />
+                    <TbClockHour10 className="w-4 h-4 text-muted-2" />
                 )}
-                <div className="uppercase font-semibold text-gray-400">
+                <div className="uppercase font-semibold text-muted">
                     {booking.stayType}
                 </div>
             </div>
@@ -72,7 +70,7 @@ function BookingRow({ booking }: { booking: Booking }) {
                 <span
                     className={`px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wide shadow-md ${
                         statusColor[booking.bookingStatus] ||
-                        "bg-gray-500 text-white"
+                        "bg-elevated text-text"
                     }`}
                 >
                     {capitalizeFirst(booking.bookingStatus)}
@@ -80,7 +78,7 @@ function BookingRow({ booking }: { booking: Booking }) {
             </div>
 
             {/* Guests */}
-            <div className="text-gray-300 text-sm">
+            <div className="text-muted text-sm">
                 {booking.numberOfGuest} khách
             </div>
 

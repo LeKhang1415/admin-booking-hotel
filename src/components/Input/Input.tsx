@@ -24,7 +24,7 @@ export default function Input({
             {label && (
                 <label
                     htmlFor={name}
-                    className="block mb-1 font-medium capitalize text-white"
+                    className="block mb-1 font-medium capitalize text-muted"
                 >
                     {label}
                 </label>
@@ -34,13 +34,13 @@ export default function Input({
                 id={name}
                 type={type}
                 placeholder={placeholder}
-                className="w-full border text-white border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:border-blue-500 h-[40px] min-w-64 text-sm "
+                className="w-full border border-border bg-card-bg text-text rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-focus focus:border-accent h-[40px] min-w-64 text-sm placeholder:text-muted-2"
                 {...(register ? register(name, rules) : {})}
                 {...rest}
             />
 
             {errorMessage && (
-                <p className="text-sm text-red-500 mt-1">{errorMessage}</p>
+                <p className="text-sm text-danger mt-1">{errorMessage}</p>
             )}
         </div>
     );

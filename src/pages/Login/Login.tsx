@@ -59,10 +59,10 @@ function Login() {
     }
 
     return (
-        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm bg-[#202020] px-10 py-12 rounded-2xl">
-            <h2 className="text-lg text-white text-center font-bold">Login</h2>
+        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm bg-card-bg text-text px-10 py-12 rounded-2xl shadow-card">
+            <h2 className="text-lg text-text text-center font-bold">Login</h2>
             <form
-                className="flex flex-col gap-4"
+                className="flex flex-col gap-4 mt-6"
                 onSubmit={handleSubmit(onSubmit)}
                 noValidate
             >
@@ -84,7 +84,11 @@ function Login() {
                     register={register}
                     errorMessage={errors?.password?.message}
                 />
-                <Button type="submit" isLoading={isPending}>
+                <Button
+                    type="submit"
+                    isLoading={isPending}
+                    className="bg-accent text-black font-bold hover:opacity-90"
+                >
                     Login
                 </Button>
             </form>

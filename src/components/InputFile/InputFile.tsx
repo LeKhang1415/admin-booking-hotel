@@ -7,7 +7,6 @@ type PropsType = {
     multiple?: boolean;
     errorMessage?: string;
     previewUrl?: string;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     register?: UseFormRegister<any>;
 };
 
@@ -60,7 +59,7 @@ export default function InputFile({
     return (
         <div>
             {label && (
-                <label className="block mb-1 font-medium capitalize text-white">
+                <label className="block mb-1 font-medium capitalize text-text">
                     {label}
                 </label>
             )}
@@ -72,11 +71,11 @@ export default function InputFile({
                     handlePreview(e);
                     registerResult?.onChange?.(e); // Gọi lại onChange của react-hook-form
                 }}
-                className="w-full px-3 py-2 bg-[#2a2a2a] border border-gray-600 rounded-md 
-                   focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-200
-                   file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 
-                   file:text-sm file:font-semibold file:bg-blue-600 file:text-white 
-                   hover:file:bg-blue-700"
+                className="w-full px-3 py-2 bg-card-bg border border-border rounded-md
+                    focus:outline-none focus:ring-2 focus:ring-focus text-text
+                   file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0
+                    file:text-sm file:font-semibold file:bg-accent file:text-black
+                    hover:file:bg-accent-600 hover:border-accent transition-colors"
                 type="file"
             />
 
@@ -86,13 +85,13 @@ export default function InputFile({
                     <img
                         src={preview}
                         alt="Preview"
-                        className="h-32 rounded-md border border-gray-600 object-cover"
+                        className="h-32 rounded-md border border-border object-cover shadow-sm"
                     />
                 </div>
             )}
 
             {errorMessage && (
-                <span className="text-xs text-red-500 text-nowrap">
+                <span className="text-xs text-danger text-nowrap">
                     {errorMessage}
                 </span>
             )}

@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import type { RootState } from "../../store";
 import type {
@@ -22,7 +22,6 @@ import toast from "react-hot-toast";
 import type { AxiosError } from "axios";
 import { bookingApi } from "../../services/booking.api";
 import Spinner from "../../components/Spinner";
-import { useDispatch } from "react-redux";
 import { resetBooking } from "../../store/slices/bookingSlice";
 
 const mapPriceTypeToStayType = {
@@ -106,7 +105,7 @@ function CreateBooking() {
 
     if (isLoading) {
         return (
-            <div className="h-full flex justify-center items-center">
+            <div className="min-h-[200px] flex justify-center items-center bg-bg">
                 <Spinner size="lg" />
             </div>
         );
@@ -115,20 +114,22 @@ function CreateBooking() {
     if (!preview?.room) return null;
 
     return (
-        <div>
-            <div className="bg-primary p-8 rounded-xl shadow-sm w-full mx-auto mb-5">
-                <h2 className="text-2xl text-white font-bold mb-1">
+        <div className="space-y-6">
+            {/* Header */}
+            <div className="bg-accent p-8 rounded-xl shadow-card w-full mx-auto mb-5">
+                <h2 className="text-2xl text-black font-bold mb-1">
                     Create Booking
                 </h2>
-
                 <button
                     onClick={() => navigate(-1)}
-                    className="text-yellow-500 text-md hover:text-yellow-300 transition"
+                    className="text-warm hover:opacity-70 transition"
                 >
                     ← Go Back
                 </button>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-white">
+
+            {/* Main grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {/* LEFT: Preview */}
                 <div>
                     <BookingPreviewCard
@@ -140,9 +141,10 @@ function CreateBooking() {
                         totalPrice={preview.totalAmount}
                     />
                 </div>
+
                 {/* RIGHT: Form */}
-                <div className="p-6 bg-primary rounded-xl shadow ">
-                    <h2 className="text-lg font-semibold mb-4">
+                <div className="p-6 bg-surface rounded-xl shadow card">
+                    <h2 className="text-lg font-semibold text-text mb-4">
                         Customer Information
                     </h2>
 
@@ -159,6 +161,8 @@ function CreateBooking() {
                                 register={register}
                                 errorMessage={errors?.bookingType?.message}
                                 options={bookingTypeOpts}
+                                // Nếu Select hỗ trợ className, bạn có thể truyền thêm
+                                // className="bg-card border border-border"
                             />
                         </div>
 
@@ -207,7 +211,7 @@ function CreateBooking() {
                         <div className="flex justify-end gap-3">
                             <button
                                 type="button"
-                                className="px-4 py-2 text-gray-300 bg-gray-600 rounded-md hover:bg-gray-700 transition-colors"
+                                className="px-4 py-2 text-muted bg-glass rounded-md hover:opacity-95 transition-colors disabled:opacity-50"
                                 onClick={() => navigate(-1)}
                                 disabled={isPending}
                             >
@@ -217,6 +221,7 @@ function CreateBooking() {
                                 type="submit"
                                 isLoading={isPending}
                                 onClick={handleSubmit(onSubmit)}
+                                className="btn-primary"
                             >
                                 Create Booking
                             </Button>

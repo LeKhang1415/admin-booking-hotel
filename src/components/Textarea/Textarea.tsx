@@ -1,3 +1,4 @@
+// Textarea.tsx
 import { type UseFormRegister } from "react-hook-form";
 
 type PropsType = {
@@ -12,7 +13,7 @@ type PropsType = {
 };
 
 export default function Textarea({
-    className,
+    className = "",
     name,
     placeholder,
     label,
@@ -27,7 +28,7 @@ export default function Textarea({
             {label && (
                 <label
                     htmlFor={name}
-                    className="block mb-1 font-medium capitalize text-white"
+                    className="block mb-1 font-medium capitalize text-muted"
                 >
                     {label}
                 </label>
@@ -38,12 +39,12 @@ export default function Textarea({
                 {...registerResult}
                 defaultValue={defaultValue}
                 rows={4}
-                className="resize-none w-full px-3 py-2 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-200"
                 placeholder={placeholder}
-            ></textarea>
+                className="resize-none w-full px-3 py-2 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-focus bg-card-bg text-text placeholder:text-muted-2"
+            />
 
             {errorMessage && (
-                <span className="text-xs text-red-500 mt-2">
+                <span className="text-xs text-danger mt-2 block">
                     {errorMessage}
                 </span>
             )}

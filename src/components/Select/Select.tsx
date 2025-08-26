@@ -24,7 +24,7 @@ export default function Select({
             {label && (
                 <label
                     htmlFor={name}
-                    className="block mb-1 font-medium capitalize text-white"
+                    className="block mb-1 font-medium capitalize text-text"
                 >
                     {label}
                 </label>
@@ -32,7 +32,7 @@ export default function Select({
 
             <select
                 id={name}
-                className="w-full border text-white border-gray-300 rounded-lg px-3 py-2 focus:outline-none h-[40px] min-w-64 text-sm bg-[#2a2a2a]"
+                className="w-full border text-text border-border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-focus h-[40px] min-w-64 text-sm bg-card-bg hover:border-accent transition-colors"
                 {...(register ? register(name, rules) : {})}
                 {...rest}
             >
@@ -40,7 +40,7 @@ export default function Select({
                     <option
                         key={opt.value}
                         value={opt.value}
-                        className="bg-[#2a2a2a] text-white"
+                        className="bg-card-bg text-text"
                     >
                         {opt.label}
                     </option>
@@ -48,7 +48,7 @@ export default function Select({
             </select>
 
             {errorMessage && (
-                <p className="text-sm text-red-500 mt-1">{errorMessage}</p>
+                <p className="text-sm text-danger mt-1">{errorMessage}</p>
             )}
         </div>
     );

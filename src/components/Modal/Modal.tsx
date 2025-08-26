@@ -67,10 +67,10 @@ function Content({
     if (modalName !== name) return null;
 
     return createPortal(
-        <div className="fixed inset-0 w-full h-screen bg-black/40 backdrop-blur-sm z-[1000] flex items-center justify-center p-4">
+        <div className="fixed inset-0 w-full h-screen bg-black/50 backdrop-blur-sm z-[1000] flex items-center justify-center p-4">
             <div
                 ref={ref}
-                className="relative bg-[#1e1e1e] text-gray-200 rounded-lg shadow-2xl w-full max-w-4xl max-h-[90vh] overflow-hidden flex flex-col"
+                className="relative bg-surface text-text rounded-lg shadow-card w-full max-w-4xl max-h-[90vh] overflow-hidden flex flex-col border border-border"
             >
                 {cloneElement(children, { close })}
             </div>
@@ -78,15 +78,16 @@ function Content({
         document.body
     );
 }
+
 // Header
 function Header({ children }: { children: React.ReactNode }) {
     const { close } = useContext(ModalContext);
     return (
-        <div className="flex items-center justify-between px-6 py-4 border-b border-gray-700">
-            <h3 className="text-lg font-semibold">{children}</h3>
+        <div className="flex items-center justify-between px-6 py-4 border-b border-border bg-yellow-100/50">
+            <h3 className="text-lg font-semibold text-warm">{children}</h3>
             <button
                 onClick={close}
-                className="text-gray-400 hover:text-gray-200 transition-colors"
+                className="text-muted-2 hover:text-warm transition-colors p-1 rounded-md hover:bg-yellow-200"
             >
                 <IoMdClose className="text-2xl" />
             </button>
@@ -96,13 +97,17 @@ function Header({ children }: { children: React.ReactNode }) {
 
 // Body
 function Body({ children }: { children: React.ReactNode }) {
-    return <div className="px-6 py-4 overflow-y-auto flex-1">{children}</div>;
+    return (
+        <div className="px-6 py-4 overflow-y-auto flex-1 bg-card-bg">
+            {children}
+        </div>
+    );
 }
 
 // Footer
 function Footer({ children }: { children: React.ReactNode }) {
     return (
-        <div className="flex justify-end gap-3 px-6 py-4 border-t border-gray-700">
+        <div className="flex justify-end gap-3 px-6 py-4 border-t border-border bg-cream">
             {children}
         </div>
     );

@@ -22,13 +22,13 @@ const CustomInput = forwardRef<HTMLInputElement, any>(
             <div onClick={onClick} className="relative w-full">
                 <input
                     ref={ref}
-                    value={value || "DD/MM/YYYY HH:MM"}
+                    value={value || ""}
                     readOnly
-                    placeholder={placeholder}
-                    className="w-full h-10 px-3 pr-10 bg-transparent border border-gray-600 rounded-lg text-sm placeholder-gray-400 focus:outline-none"
+                    placeholder={placeholder || "DD/MM/YYYY HH:MM"}
+                    className="w-full h-10 px-3 pr-10 bg-card-bg border border-border rounded-lg text-sm placeholder:text-muted-2 text-text focus:outline-none focus:ring-2 focus:ring-focus focus:border-accent"
                 />
                 <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">
-                    <PiCalendarCheckFill />
+                    <PiCalendarCheckFill className="w-5 h-5 text-muted-2" />
                 </div>
             </div>
         );
@@ -49,7 +49,7 @@ function DateTimePicker({
 }: DateTimePickerProps) {
     return (
         <div>
-            <label className="block mb-1 font-medium capitalize text-white">
+            <label className="block mb-1 font-medium capitalize text-muted">
                 {label}
             </label>
 
@@ -67,21 +67,21 @@ function DateTimePicker({
                         placeholderText={placeholder}
                         minDate={minDate}
                         maxDate={maxDate}
-                        className={`w-full px-3 py-2 border rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 `}
+                        className="w-full px-3 py-2 border rounded-md shadow-sm focus:ring-focus focus:border-accent bg-card-bg text-text"
                         customInput={
                             <CustomInput
-                                className={`w-full border text-white border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:border-blue-500 h-[40px] min-w-64 text-sm `}
+                                className="w-full border text-text border-border rounded-lg px-3 py-2 focus:outline-none h-[40px] min-w-64 text-sm"
                                 placeholder={placeholder}
                             />
                         }
-                        popperClassName="z-50"
+                        popperClassName="bg-card-bg text-text shadow-card border border-border z-50"
                         popperPlacement="bottom-start"
                     />
                 )}
             />
 
             {errorMessage && (
-                <p className="mt-1 text-sm text-red-600">{errorMessage}</p>
+                <p className="mt-1 text-sm text-danger">{errorMessage}</p>
             )}
         </div>
     );
