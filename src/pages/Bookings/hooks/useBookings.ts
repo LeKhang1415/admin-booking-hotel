@@ -33,7 +33,7 @@ function useBookings() {
 
     const { data, isLoading } = useQuery({
         queryKey: ["booking", queryConfig],
-        queryFn: () => bookingApi.getAllBookings(queryConfig),
+        queryFn: () => bookingApi.getAll(queryConfig),
     });
 
     const bookings: Booking[] = data?.data?.data.data || [];
@@ -43,7 +43,7 @@ function useBookings() {
         queryClient.prefetchQuery({
             queryKey: ["rooms", { ...queryConfig, page: page + 1 }],
             queryFn: () =>
-                bookingApi.getAllBookings({ ...queryConfig, page: page + 1 }),
+                bookingApi.getAll({ ...queryConfig, page: page + 1 }),
         });
     }
 
@@ -51,7 +51,7 @@ function useBookings() {
         queryClient.prefetchQuery({
             queryKey: ["rooms", { ...queryConfig, page: page - 1 }],
             queryFn: () =>
-                bookingApi.getAllBookings({ ...queryConfig, page: page - 1 }),
+                bookingApi.getAll({ ...queryConfig, page: page - 1 }),
         });
     }
 

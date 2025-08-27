@@ -56,8 +56,7 @@ function CreateBooking() {
 
     // Mutation để tạo booking
     const { mutate, isPending } = useMutation({
-        mutationFn: (payload: CreateBookingDto) =>
-            bookingApi.createBooking(payload),
+        mutationFn: (payload: CreateBookingDto) => bookingApi.create(payload),
         onSuccess: () => {
             toast.success("Booking created successfully!");
             queryClient.invalidateQueries({ queryKey: ["bookings"] });
@@ -116,7 +115,7 @@ function CreateBooking() {
     return (
         <div className="space-y-6">
             {/* Header */}
-            <div className="bg-accent p-8 rounded-xl shadow-card w-full mx-auto mb-5">
+            <div className="bg-yellow-300  p-8 rounded-xl shadow-card w-full mx-auto mb-5">
                 <h2 className="text-2xl text-black font-bold mb-1">
                     Create Booking
                 </h2>

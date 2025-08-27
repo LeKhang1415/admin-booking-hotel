@@ -5,7 +5,7 @@ import type { BookingPreviewDto } from "../../../types/booking.types";
 function usePreviewBooking(payload: BookingPreviewDto) {
     const { data, isLoading } = useQuery({
         queryKey: ["booking-preview", payload],
-        queryFn: () => bookingApi.previewBooking(payload),
+        queryFn: () => bookingApi.preview(payload),
         enabled: !!payload.roomId,
     });
 

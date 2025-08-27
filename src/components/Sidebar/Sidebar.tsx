@@ -24,7 +24,7 @@ export default function Sidebar() {
                         <img
                             src={icons.logo}
                             alt="Logo"
-                            className="w-8 h-8 flex-shrink-0"
+                            className="w-10 h-10 flex-shrink-0"
                         />
                         <div className="overflow-hidden">
                             <h3 className="text-warm font-bold text-lg uppercase whitespace-nowrap">

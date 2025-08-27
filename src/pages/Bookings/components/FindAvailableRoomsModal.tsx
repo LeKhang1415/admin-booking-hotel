@@ -117,7 +117,7 @@ function FindAvailableRoomsModal({ close }: { close?: () => void }) {
                     </div>
 
                     {/* Row 3: Start & End Time */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                         <DateTimePicker
                             name="startTime"
                             label="Start Time"
@@ -132,10 +132,6 @@ function FindAvailableRoomsModal({ close }: { close?: () => void }) {
                             control={control}
                             errorMessage={errors?.endTime?.message}
                         />
-                    </div>
-
-                    {/* Row 4: Price Type */}
-                    <div>
                         <Select
                             name="priceType"
                             label="Price Type"

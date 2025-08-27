@@ -34,7 +34,7 @@ export default function Input({
                 id={name}
                 type={type}
                 placeholder={placeholder}
-                className="w-full border border-border bg-card-bg text-text rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-focus focus:border-accent h-[40px] min-w-64 text-sm placeholder:text-muted-2"
+                className="w-full border border-border bg-card-bg text-text rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-focus focus:border-accent h-[40px] text-sm placeholder:text-muted-2"
                 {...(register ? register(name, rules) : {})}
                 {...rest}
             />

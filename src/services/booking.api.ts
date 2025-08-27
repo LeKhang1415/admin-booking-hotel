@@ -9,21 +9,30 @@ import type {
 import type { SuccessResponseApi } from "../types/utils.type";
 import http from "../utils/http";
 
+//
+// ==== STAFF BOOKING API ====
+//
 export const bookingApi = {
-    // Lấy danh sách booking
-    getAllBookings: (params: BookingListQuery) =>
+    getAll: (params: BookingListQuery) =>
         http.get<SuccessResponseApi<BookingResponse>>("/booking/all", {
             params,
         }),
 
-    // Preview booking (tính tiền, check room)
-    previewBooking: (data: BookingPreviewDto) =>
+    getOne: (id: string) =>
+        http.get<SuccessResponseApi<Booking>>(`/booking/${id}`),
+
+    create: (data: CreateBookingDto) =>
+        http.post<SuccessResponseApi<Booking>>("/booking", data),
+
+    // update: (id: string, data: UpdateBookingDto) =>
+    //     http.post<SuccessResponseApi<Booking>>(`/booking/${id}`, data),
+
+    reject: (id: string) =>
+        http.post<SuccessResponseApi<Booking>>(`/booking/reject-booking/${id}`),
+
+    preview: (data: BookingPreviewDto) =>
         http.post<SuccessResponseApi<BookingPreviewResponse>>(
             "/booking/preview",
             data
         ),
-
-    // Create booking
-    createBooking: (data: CreateBookingDto) =>
-        http.post<SuccessResponseApi<Booking>>("/booking", data),
 };

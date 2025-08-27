@@ -38,6 +38,12 @@
     --color-danger: #d04949;
     --color-info: #2b74b8;
     --card-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+    --text-on-accent: #101010; /* trên vàng: dùng đen nhạt */
+    --text-on-success: #ffffff; /* trên xanh: trắng cho tương phản */
+    --text-on-danger: #ffffff; /* trên đỏ: trắng */
+    --text-on-warm: #ffffff; /* trên nâu ấm: trắng */
+    --text-on-muted: #6b6b6b; /* chữ phụ */
+    --text-on-surface: #171717; /* chữ chính trên surface */
 }
 
 @layer components {

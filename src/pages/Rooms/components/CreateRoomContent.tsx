@@ -1,5 +1,4 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import useTypeRoom from "../hooks/useTypeRoom";
 import { roomApi } from "../../../services/room.api";
 import type { SelectOptsType } from "../../../types/utils.type";
 import { useMemo } from "react";
@@ -14,12 +13,13 @@ import { type RoomSchema, roomSchema } from "../../../utils/rule";
 import InputFile from "../../../components/InputFile";
 import Textarea from "../../../components/Textarea";
 import Select from "../../../components/Select";
+import useAllTypeRooms from "../../TypeRoom/hooks/useAllTypeRooms";
 
 type FormData = RoomSchema;
 
 function CreateRoomContent({ close }: { close?: () => void }) {
     const queryClient = useQueryClient();
-    const { typeRoom } = useTypeRoom();
+    const { typeRoom } = useAllTypeRooms();
 
     const { mutate, isPending } = useMutation({
         mutationFn: roomApi.createNewRoom,

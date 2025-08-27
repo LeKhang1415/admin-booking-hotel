@@ -6,6 +6,7 @@ import Modal from "../../../components/Modal";
 import { StayType, type Booking } from "../../../types/booking.types";
 import { MdCalendarToday } from "react-icons/md";
 import { TbClockHour10 } from "react-icons/tb";
+import { useNavigate } from "react-router-dom";
 
 const statusColor: Record<string, string> = {
     unpaid: "bg-danger text-white",
@@ -16,6 +17,7 @@ const statusColor: Record<string, string> = {
 
 function BookingRow({ booking }: { booking: Booking }) {
     const { customer, room } = booking;
+    const navigate = useNavigate();
 
     return (
         <Table.Row>
@@ -88,11 +90,17 @@ function BookingRow({ booking }: { booking: Booking }) {
                     <Menus.Menu>
                         <Menus.Toggle id={booking.bookingId} />
                         <Menus.List id={booking.bookingId}>
-                            <Modal.Open opens="update-booking">
-                                <Menus.Button icon={<FiEdit />}>
-                                    Edit
-                                </Menus.Button>
-                            </Modal.Open>
+                            {/* Edit */}
+                            <Menus.Button
+                                icon={<FiEdit />}
+                                onClick={() =>
+                                    navigate(
+                                        `/bookings/update/${booking.bookingId}`
+                                    )
+                                }
+                            >
+                                Edit
+                            </Menus.Button>
 
                             <Modal.Open opens="delete-booking">
                                 <Menus.Button icon={<FiTrash2 />}>
@@ -101,11 +109,6 @@ function BookingRow({ booking }: { booking: Booking }) {
                             </Modal.Open>
                         </Menus.List>
                     </Menus.Menu>
-
-                    {/* Modal update */}
-                    <Modal.Content name="update-booking">
-                        <div>Update booking {booking.bookingId}</div>
-                    </Modal.Content>
 
                     {/* Modal delete */}
                     <Modal.Content name="delete-booking">

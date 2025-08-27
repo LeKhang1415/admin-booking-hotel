@@ -26,12 +26,12 @@ export default function FilterRadio({ label, field, options }: Props) {
 
     return (
         <div className="space-y-2">
-            <p className="font-medium text-white">{label}</p>
+            <p className="font-medium text-text">{label}</p>
             <div className="flex flex-col gap-2">
                 {options.map((opt) => (
                     <label
                         key={opt.value}
-                        className="inline-flex items-center gap-2 text-white"
+                        className={`inline-flex items-center gap-2 cursor-pointer`}
                     >
                         <input
                             type="radio"
@@ -39,7 +39,7 @@ export default function FilterRadio({ label, field, options }: Props) {
                             value={opt.value}
                             checked={selected === opt.value}
                             onChange={() => handleChange(opt.value)}
-                            className="accent-blue-500 w-4 h-4"
+                            className="w-4 h-4 accent-accent"
                         />
                         {opt.label}
                     </label>

@@ -1,6 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Modal from "../../../components/Modal";
-import useTypeRoom from "../hooks/useTypeRoom";
 import useRoom from "../hooks/useRoom";
 import { roomApi } from "../../../services/room.api";
 import type { SelectOptsType } from "../../../types/utils.type";
@@ -15,6 +14,7 @@ import Textarea from "../../../components/Textarea";
 import Input from "../../../components/Input";
 import Select from "../../../components/Select";
 import Button from "../../../components/Button";
+import useAllTypeRooms from "../../TypeRoom/hooks/useAllTypeRooms";
 
 type FormData = UpdateRoomSchema;
 
@@ -26,7 +26,7 @@ function UpdateRoomContent({
     close?: () => void;
 }) {
     const queryClient = useQueryClient();
-    const { typeRoom } = useTypeRoom();
+    const { typeRoom } = useAllTypeRooms();
     const { room } = useRoom(roomId);
     const fileInputRef = useRef<HTMLInputElement>(null);
 

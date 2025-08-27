@@ -11,6 +11,9 @@ export const roomApi = {
     getAllRooms: (params: RoomsListQuery) =>
         http.get<SuccessResponseApi<RoomResponse>>("/room", { params }),
 
+    getAllRoomWithoutPagination: () =>
+        http.get<SuccessResponseApi<Room[]>>("/room/all"),
+
     createNewRoom: (body: any) =>
         http.post<SuccessResponseApi<Room>>("/room", body, {
             headers: {
