@@ -31,6 +31,9 @@ export const bookingApi = {
     reject: (id: string) =>
         http.post<SuccessResponseApi<Booking>>(`/booking/reject-booking/${id}`),
 
+    markAsPaid: (id: string) =>
+        http.post<SuccessResponseApi<Booking>>(`/booking/mark-as-paid/${id}`),
+
     preview: (data: BookingPreviewDto) =>
         http.post<SuccessResponseApi<BookingPreviewResponse>>(
             "/booking/preview",

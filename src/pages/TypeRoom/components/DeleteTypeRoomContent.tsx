@@ -69,19 +69,18 @@ function DeleteTypeRoomContent({
             </Modal.Body>
 
             <Modal.Footer>
-                <button
+                <Button
                     type="button"
                     onClick={close}
                     className="px-4 py-2 text-gray-300 bg-gray-600 rounded-md hover:bg-gray-700 transition-colors"
                     disabled={isPending}
                 >
                     Cancel
-                </button>
+                </Button>
                 <Button
                     type="button"
                     onClick={handleDelete}
                     isLoading={isPending}
-                    variant="destructive"
                 >
                     Delete Type Room
                 </Button>

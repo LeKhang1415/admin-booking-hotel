@@ -8,45 +8,44 @@ interface UseUpdateBookingProps {
     onError?: (error: any) => void;
 }
 
-const useUpdateBooking = (
+export default function useUpdateBooking(
     bookingId: string,
     options?: UseUpdateBookingProps
-) => {
+) {
     const queryClient = useQueryClient();
 
+    // Mutation function
+    const mutationFn = (data: UpdateBookingDto) =>
+        bookingApi.update(bookingId, data);
+
+    // Success handler
+    const handleSuccess = (_response: any) => {
+        // Invalidate cache
+        queryClient.invalidateQueries({ queryKey: ["booking", bookingId] });
+        queryClient.invalidateQueries({ queryKey: ["bookings"] });
+
+        toast.success("Booking updated successfully!");
+
+        // Custom callback
+        options?.onSuccess?.();
+    };
+
+    // Error handler
+    const handleError = (error: any) => {
+        const errorMessage =
+            error.response?.data?.message ||
+            error.message ||
+            "Failed to update booking";
+
+        toast.error(errorMessage);
+
+        // Custom callback
+        options?.onError?.(error);
+    };
+
     return useMutation({
-        mutationFn: (data: UpdateBookingDto) =>
-            bookingApi.update(bookingId, data),
-
-        onSuccess: (_response) => {
-            // Invalidate và refetch booking data
-            queryClient.invalidateQueries({
-                queryKey: ["booking", bookingId],
-            });
-
-            // Invalidate booking list nếu cần
-            queryClient.invalidateQueries({
-                queryKey: ["bookings"],
-            });
-
-            toast.success("Booking updated successfully!");
-
-            // Gọi callback success nếu có
-            options?.onSuccess?.();
-        },
-
-        onError: (error: any) => {
-            const errorMessage =
-                error.response?.data?.message ||
-                error.message ||
-                "Failed to update booking";
-
-            toast.error(errorMessage);
-
-            // Gọi callback error nếu có
-            options?.onError?.(error);
-        },
+        mutationFn,
+        onSuccess: handleSuccess,
+        onError: handleError,
     });
-};
-
-export default useUpdateBooking;
+}

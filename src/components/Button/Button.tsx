@@ -30,7 +30,7 @@ export default function Button(props: PropsType) {
     return (
         <button
             className={classNames(
-                "relative center min-w-[108px] px-3 rounded-xl text-center capitalize font-bold text-sm bg-accent text-black hover:bg-accent-600  transition-all duration-200 shadow-card",
+                "relative center min-w-[108px] px-3 rounded-md text-center capitalize cursor-pointer font-bold text-sm bg-accent text-black hover:bg-accent-600  transition-all duration-200 shadow-card",
                 className,
                 {
                     "h-[45px]": size === "lg",

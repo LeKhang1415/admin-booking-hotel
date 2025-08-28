@@ -1,6 +1,5 @@
 import { useEffect, useMemo } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useQueryClient } from "@tanstack/react-query";
 import { useForm, useWatch } from "react-hook-form";
 import useBooking from "./hooks/useBooking";
 import DateTimePicker from "../../components/DateTimePicker";
@@ -15,6 +14,10 @@ import useUpdateBooking from "./hooks/useUpdateBooking";
 import Button from "../../components/Button";
 import { updateBookingSchema } from "../../utils/rule";
 import { yupResolver } from "@hookform/resolvers/yup";
+import useDebounce from "../../hooks/useDebounce";
+import Modal from "../../components/Modal";
+import RejectContent from "./components/RejectContent";
+import MarkAsPaidContent from "./components/MarkAsPaidContent";
 
 interface BookingFormData {
     roomId: string;
@@ -59,7 +62,6 @@ function UpdateBooking() {
         [rooms]
     );
 
-    // Gọi hooks luôn ở trên, không đặt sau điều kiện return
     const {
         register,
         handleSubmit,
@@ -81,7 +83,7 @@ function UpdateBooking() {
         },
     });
 
-    // Watch các field thuộc Stay information để trigger preview
+    // Watch các field thuộc Stay information để trigger preview hook
     const roomId = useWatch({ control, name: "roomId" });
     const startTime = useWatch({ control, name: "startTime" });
     const endTime = useWatch({ control, name: "endTime" });
@@ -90,20 +92,20 @@ function UpdateBooking() {
         | number
         | undefined;
 
+    const debouncedNumberOfGuest = useDebounce(numberOfGuest, 400);
+
     // Tạo payload cho preview booking
     const previewPayload = useMemo(() => {
-        if (!roomId || !startTime || !endTime || !stayType) {
-            return null;
-        }
+        if (!roomId || !startTime || !endTime || !stayType) return null;
 
         return {
             roomId,
             startTime: startTime.toISOString(),
             endTime: endTime.toISOString(),
             stayType,
-            numberOfGuest: numberOfGuest ?? 1,
+            numberOfGuest: debouncedNumberOfGuest ?? 1,
         };
-    }, [roomId, startTime, endTime, stayType, numberOfGuest]);
+    }, [roomId, startTime, endTime, stayType, debouncedNumberOfGuest]);
 
     // Gọi preview booking khi có thay đổi
     const {
@@ -166,6 +168,16 @@ function UpdateBooking() {
 
     const handleConfirmUpdate = () => {
         handleSubmit(onSubmit)();
+    };
+
+    const handleMarkAsPaid = () => {
+        // TODO: gọi API update booking status thành "paid"
+        console.log("Mark booking as paid:", booking.bookingId);
+    };
+
+    const handleRejectBooking = () => {
+        // TODO: gọi API update booking status thành "rejected"
+        console.log("Reject booking:", booking.bookingId);
     };
 
     return (
@@ -319,7 +331,7 @@ function UpdateBooking() {
                 </div>
 
                 {/* Right column (price summary) */}
-                <aside className="space-y-6">
+                <aside className="space-y-5">
                     <div className="bg-bg rounded-lg shadow p-5">
                         <h3 className="text-lg font-semibold mb-3">
                             Price summary
@@ -378,7 +390,7 @@ function UpdateBooking() {
                         )}
 
                         <Button
-                            className="mt-4 w-full py-2 rounded-md bg-green-600 text-white hover:bg-green-400 cursor-pointer"
+                            className="mt-4 w-full py-2 rounded-md bg-green-600 text-white hover:bg-green-400"
                             isLoading={isUpdating || isPreviewLoading}
                             onClick={handleConfirmUpdate}
                             disabled={
@@ -398,12 +410,57 @@ function UpdateBooking() {
                             Quick actions
                         </h4>
                         <div className="flex flex-col gap-2">
-                            <button className="py-2 rounded-md border">
-                                Mark as paid
-                            </button>
-                            <button className="py-2 rounded-md border text-red-600">
-                                Reject booking
-                            </button>
+                            <Modal>
+                                <Modal.Open
+                                    opens={`mark-as-paid-${booking.bookingId}`}
+                                >
+                                    <Button
+                                        className="py-2 bg-transparent font-semibold border hover:bg-gray-200"
+                                        disabled={
+                                            !isValid ||
+                                            isSubmitting ||
+                                            isUpdating ||
+                                            isPreviewLoading ||
+                                            isPreviewError
+                                        }
+                                    >
+                                        Mark as paid
+                                    </Button>
+                                </Modal.Open>
+
+                                <Modal.Open
+                                    opens={`reject-booking-${booking.bookingId}`}
+                                >
+                                    <Button
+                                        className="py-2 border bg-transparent text-red-600 hover:bg-red-200"
+                                        disabled={
+                                            !isValid ||
+                                            isSubmitting ||
+                                            isUpdating ||
+                                            isPreviewLoading ||
+                                            isPreviewError
+                                        }
+                                    >
+                                        Reject booking
+                                    </Button>
+                                </Modal.Open>
+
+                                <Modal.Content
+                                    name={`mark-as-paid-${booking.bookingId}`}
+                                >
+                                    <MarkAsPaidContent
+                                        bookingId={booking.bookingId}
+                                    />
+                                </Modal.Content>
+
+                                <Modal.Content
+                                    name={`reject-booking-${booking.bookingId}`}
+                                >
+                                    <RejectContent
+                                        bookingId={booking.bookingId}
+                                    />
+                                </Modal.Content>
+                            </Modal>
                         </div>
                     </div>
                 </aside>
