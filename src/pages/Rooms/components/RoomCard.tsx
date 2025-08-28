@@ -17,7 +17,7 @@ export default function RoomCard({ room, priceType = "day", onChoose }: Props) {
     const price = priceType === "hour" ? room.pricePerHour : room.pricePerDay;
 
     return (
-        <article className="bg-card-bg rounded-2xl shadow-card p-6 flex flex-col md:flex-row gap-6 md:gap-8">
+        <article className="bg-card-bg rounded-2xl w-full shadow-card p-6 flex flex-col md:flex-row gap-6 md:gap-8">
             {/* left: image */}
             <div className="w-full md:w-56 h-44 md:h-44 rounded-lg overflow-hidden bg-card-bg flex-shrink-0 border border-border">
                 <img

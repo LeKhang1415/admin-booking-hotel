@@ -21,7 +21,7 @@ export default function BookingPreviewCard({
     const facilities = parseString(room.facilities);
 
     return (
-        <article className="bg-card-bg rounded-2xl shadow p-6 flex flex-col gap-6 text-text min-h-full">
+        <article className="bg-bg rounded-2xl shadow p-6 flex flex-col gap-6 text-text min-h-full">
             <h2 className="text-lg font-semibold text-text">Booking Summary</h2>
 
             {/* top: image + name */}

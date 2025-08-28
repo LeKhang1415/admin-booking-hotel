@@ -5,6 +5,7 @@ import type {
     BookingPreviewDto,
     CreateBookingDto,
     BookingPreviewResponse,
+    UpdateBookingDto,
 } from "../types/booking.types";
 import type { SuccessResponseApi } from "../types/utils.type";
 import http from "../utils/http";
@@ -24,8 +25,8 @@ export const bookingApi = {
     create: (data: CreateBookingDto) =>
         http.post<SuccessResponseApi<Booking>>("/booking", data),
 
-    // update: (id: string, data: UpdateBookingDto) =>
-    //     http.post<SuccessResponseApi<Booking>>(`/booking/${id}`, data),
+    update: (id: string, data: UpdateBookingDto) =>
+        http.post<SuccessResponseApi<Booking>>(`/booking/${id}`, data),
 
     reject: (id: string) =>
         http.post<SuccessResponseApi<Booking>>(`/booking/reject-booking/${id}`),

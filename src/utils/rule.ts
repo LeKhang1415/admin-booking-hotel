@@ -162,6 +162,109 @@ export const customerFormSchema = yup.object({
     customerIdentityCard: yup.string().trim().nullable().notRequired(),
 });
 
+export const updateBookingSchema = yup.object({
+    // không kiểm tra uuid ở đây (chỉ optional string)
+    roomId: yup.string().nullable().notRequired(),
+
+    // tên khách (optional, nếu có phải không rỗng)
+    customerFullName: yup
+        .string()
+        .transform((v) => (typeof v === "string" ? v.trim() : v))
+        .nullable()
+        .notRequired()
+        .test("not-empty", "Full name is required", (val) => {
+            if (val == null) return true;
+            return String(val).length > 0;
+        }),
+
+    // điện thoại (optional, nếu có phải đúng định dạng)
+    customerPhone: yup
+        .string()
+        .transform((v) => (typeof v === "string" ? v.trim() : v))
+        .nullable()
+        .notRequired()
+        .test("phone-format", "Số điện thoại không hợp lệ", (val) => {
+            if (val == null) return true;
+            return /^(0|\+84)([0-9]{9})$/.test(String(val));
+        }),
+
+    // email: nếu "" hoặc "-" -> null, nếu có thì validate email
+    customerEmail: yup
+        .string()
+        .transform((v, orig) => {
+            if (orig === "" || orig === "-") return null;
+            return typeof v === "string" ? v.trim() : v;
+        })
+        .nullable()
+        .notRequired()
+        .email("Email không hợp lệ"),
+
+    // CMND/CCCD: nếu "" hoặc "-" -> null, nếu có thì phải là 9-12 chữ số
+    customerIdentityCard: yup
+        .string()
+        .transform((v, orig) => {
+            if (orig === "" || orig === "-") return null;
+            return typeof v === "string" ? v.trim() : v;
+        })
+        .nullable()
+        .notRequired()
+        .test("id-format", "CMND/CCCD phải có từ 9 đến 12 số", (val) => {
+            if (val == null) return true;
+            return /^[0-9]{9,12}$/.test(String(val));
+        }),
+
+    // số khách: optional nhưng nếu có phải >=1
+    numberOfGuest: yup
+        .number()
+        .transform((_v, orig) => {
+            if (orig === "" || orig === null || orig === undefined) return null;
+            const parsed = Number(orig);
+            return isNaN(parsed) ? undefined : parsed;
+        })
+        .nullable()
+        .notRequired()
+        .min(1, "Số lượng khách phải lớn hơn hoặc bằng 1"),
+
+    // loại lưu trú: optional, nếu có chỉ 'daily' | 'hourly'
+    stayType: yup
+        .string()
+        .nullable()
+        .notRequired()
+        .oneOf(["daily", "hourly"], "Loại lưu trú không hợp lệ"),
+
+    // start / end: optional; nếu cả hai có thì end > start
+    startTime: yup
+        .date()
+        .transform((_v, orig) => {
+            if (orig === "" || orig === null || orig === undefined) return null;
+            return new Date(orig);
+        })
+        .nullable()
+        .notRequired()
+        .typeError("Thời gian bắt đầu không hợp lệ"),
+
+    endTime: yup
+        .date()
+        .transform((_v, orig) => {
+            if (orig === "" || orig === null || orig === undefined) return null;
+            return new Date(orig);
+        })
+        .nullable()
+        .notRequired()
+        .typeError("Thời gian kết thúc không hợp lệ")
+        .test(
+            "end-after-start",
+            "Thời gian kết thúc phải lớn hơn thời gian bắt đầu",
+            function (end) {
+                const { startTime } = this.parent;
+                if (!end || !startTime) return true;
+                return new Date(end) > new Date(startTime);
+            }
+        ),
+});
+
+export type UpdateBookingSchema = yup.InferType<typeof updateBookingSchema>;
+
 export type CustomerFormSchema = yup.InferType<typeof customerFormSchema>;
 
 export type FindAvailableRoomsFormData = yup.InferType<

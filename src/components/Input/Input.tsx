@@ -17,7 +17,7 @@ export default function Input({
     placeholder,
     register,
     errorMessage,
-    ...rest
+    ...rest // rest sẽ không bao gồm name nữa vì đã destructure
 }: Props) {
     return (
         <div>
@@ -35,7 +35,8 @@ export default function Input({
                 type={type}
                 placeholder={placeholder}
                 className="w-full border border-border bg-card-bg text-text rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-focus focus:border-accent h-[40px] text-sm placeholder:text-muted-2"
-                {...(register ? register(name, rules) : {})}
+                // Thay đổi thứ tự: register trước, rest sau để rest không override
+                {...(register ? register(name, rules) : { name })}
                 {...rest}
             />
 

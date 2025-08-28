@@ -35,7 +35,7 @@ export type Booking = {
     stayType: StayType;
     bookingType: BookingType;
     bookingStatus: BookingStatus;
-    bookingDate: string; // ISO string
+    bookingDate: string;
     numberOfGuest: number;
     user: User;
     room: Room;
@@ -64,11 +64,11 @@ export type BookingPreviewDto = {
 };
 
 export type BookingPreviewResponse = {
-    startTime: string; // ISO string
-    endTime: string; // ISO string
+    startTime: string;
+    endTime: string;
     stayType: StayType;
     numberOfGuest: number;
-    totalAmount: number; // number (vnd)
+    totalAmount: number;
     room: Room;
 };
 
@@ -85,6 +85,20 @@ export type CreateBookingDto = {
     userId?: string;
     bookingType: BookingType;
 };
+
+export type UpdateBookingDto = Partial<{
+    roomId: string;
+    startTime: string;
+    endTime: string;
+    stayType: StayType;
+    numberOfGuest: number;
+    customerFullName: string;
+    customerPhone: string;
+    customerEmail?: string;
+    customerIdentityCard?: string;
+    userId?: string;
+    bookingType: BookingType;
+}>;
 
 // Query filters
 export type BookingListQuery = {
