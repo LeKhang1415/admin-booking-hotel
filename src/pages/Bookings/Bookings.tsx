@@ -50,8 +50,8 @@ function Bookings() {
                                 <div>Booking Date</div>
                                 <div>Check-in / Check-out</div>
                                 <div>Stay Type</div>
-                                <div>Status</div>
                                 <div>Guests</div>
+                                <div>Status</div>
                                 <div>Actions</div>
                             </Table.Header>
 

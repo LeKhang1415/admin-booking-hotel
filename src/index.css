@@ -7,7 +7,7 @@
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #ffd976;
+    background: #1e90ff;
     border-radius: 9999px;
 }
 
@@ -16,34 +16,34 @@
 }
 
 @theme {
-    --color-bg: #f7f7f7; /* nền chính */
-    --color-surface: #fffdf8; /* bề mặt/khung trắng ấm */
-    --color-card-bg: #ffffff; /* thẻ / card nền trắng */
-    --color-cream: #fff9ec; /* kem dịu */
-    --color-yellow-100: #fff7e0; /* vàng nhạt nhất (background accent nhẹ) */
-    --color-yellow-200: #ffeed0;
-    --color-yellow-300: #ffd976;
-    --color-accent: #ffb22c; /* vàng nổi bật (CTA) — giữ) */
-    --color-accent-600: #e09a16; /* accent cho hover/active */
-    --color-warm: #854836; /* nâu/ấm cho điểm nhấn */
-    --color-black: #000000; /* đen */
-    --color-text: #171717; /* chữ chính */
-    --color-muted: #2a2a2a; /* chữ/biểu tượng phụ */
-    --color-muted-2: #6b6b6b; /* phụ hơn nữa */
-    --color-border: #efe7db; /* đường viền nhẹ, hòa với nền vàng-trắng */
-    --color-glass: rgba(255, 255, 255, 0.6); /* lớp overlay mờ */
-    --color-elevated: rgba(255, 178, 44, 0.06); /* nền nhẹ cho phần nổi */
-    --color-focus: #ffd580; /* outline/focus ring */
+    --color-bg: #f3f8ff; /* nền chính — xanh rất nhạt */
+    --color-surface: #ffffff; /* bề mặt/khung trắng (ấm nhẹ) */
+    --color-card-bg: #ffffff; /* thẻ / card nền */
+    --color-sky: #f0f7ff; /* nền accent rất nhẹ (thay cho cream) */
+    --color-blue-100: #e6f3ff;
+    --color-blue-200: #cfe9ff;
+    --color-blue-300: #8ecfff;
+    --color-accent: #1e90ff; /* xanh chính (CTA) */
+    --color-accent-600: #156fd6; /* hover/active */
+    --color-warm: #123a5a; /* điểm nhấn tối (thay cho nâu) — dùng cho header / logo */
+    --color-black: #000000;
+    --color-text: #0f1720; /* chữ chính (đen hơi lạnh) */
+    --color-muted: #3f4b57; /* chữ/biểu tượng phụ */
+    --color-muted-2: #6b7680; /* phụ hơn nữa */
+    --color-border: #e6f0fb; /* đường viền nhẹ, hòa với nền xanh */
+    --color-glass: rgba(255, 255, 255, 0.6);
+    --color-elevated: rgba(30, 144, 255, 0.06); /* nền nhẹ cho phần nổi */
+    --color-focus: #d8ecff; /* outline/focus ring */
     --color-success: #2e8b57;
     --color-danger: #d04949;
     --color-info: #2b74b8;
-    --card-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
-    --text-on-accent: #101010; /* trên vàng: dùng đen nhạt */
-    --text-on-success: #ffffff; /* trên xanh: trắng cho tương phản */
-    --text-on-danger: #ffffff; /* trên đỏ: trắng */
-    --text-on-warm: #ffffff; /* trên nâu ấm: trắng */
-    --text-on-muted: #6b6b6b; /* chữ phụ */
-    --text-on-surface: #171717; /* chữ chính trên surface */
+    --card-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+    --text-on-accent: #ffffff; /* chữ trên nút xanh => trắng */
+    --text-on-success: #ffffff;
+    --text-on-danger: #ffffff;
+    --text-on-warm: #ffffff;
+    --text-on-muted: #6b6b6b;
+    --text-on-surface: #0f1720;
 }
 
 @layer components {

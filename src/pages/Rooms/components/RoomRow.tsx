@@ -42,7 +42,7 @@ function RoomRow({ room }: { room: Room }) {
 
             {/* Giá/ngày */}
             <div className="text-accent font-semibold">
-                {formatCurrency(room.pricePerDay)} / đêm
+                {formatCurrency(room.pricePerDay)} / ngày
             </div>
 
             {/* Giá/giờ */}

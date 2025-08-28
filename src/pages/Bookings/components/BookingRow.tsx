@@ -67,6 +67,11 @@ function BookingRow({ booking }: { booking: Booking }) {
                 </div>
             </div>
 
+            {/* Guests */}
+            <div className="text-muted text-sm">
+                {booking.numberOfGuest} khách
+            </div>
+
             {/* Status */}
             <div>
                 <span
@@ -77,11 +82,6 @@ function BookingRow({ booking }: { booking: Booking }) {
                 >
                     {capitalizeFirst(booking.bookingStatus)}
                 </span>
-            </div>
-
-            {/* Guests */}
-            <div className="text-muted text-sm">
-                {booking.numberOfGuest} khách
             </div>
 
             {/* Action */}

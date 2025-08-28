@@ -4,8 +4,9 @@ import { VscHome } from "react-icons/vsc";
 import { RiBillLine } from "react-icons/ri";
 import { PiUsersThreeThin } from "react-icons/pi";
 import { MdBedroomChild } from "react-icons/md";
-import { MdOutlineRateReview } from "react-icons/md";
+import { MdOutlineRateReview, MdOutlineRoomPreferences } from "react-icons/md";
 import { LiaUserSolid } from "react-icons/lia";
+import { BsBuildingCheck } from "react-icons/bs";
 import Dashboard from "../pages/Dashboard";
 import Rooms from "../pages/Rooms";
 import Bookings from "../pages/Bookings";
@@ -13,11 +14,12 @@ import BookingDetail from "../pages/Bookings/BookingDetail";
 import Reviews from "../pages/Reviews";
 import Users from "../pages/Users";
 import UserProfile from "../pages/UserProfile";
-import { MdOutlineRoomPreferences } from "react-icons/md";
+
 import TypeRoom from "../pages/TypeRoom";
 import AvailableRooms from "../pages/Bookings/AvailableRooms";
 import CreateBooking from "../pages/Bookings/CreateBooking";
 import UpdateBooking from "../pages/Bookings/UpdateBooking";
+import CheckinCheckout from "../pages/Checkin-Checkout";
 
 type NavLink = {
     href: string;
@@ -47,6 +49,16 @@ export const links: NavLink[] = [
         icon: MdOutlineRoomPreferences,
     },
     {
+        href: "/bookings",
+        label: "bookings",
+        icon: RiBillLine,
+    },
+    {
+        href: "/checkin-checkout",
+        label: "Check-in/Check-out",
+        icon: BsBuildingCheck,
+    },
+    {
         href: "/users",
         label: "users",
         icon: PiUsersThreeThin,
@@ -55,11 +67,6 @@ export const links: NavLink[] = [
         href: "/reviews",
         label: "reviews",
         icon: MdOutlineRateReview,
-    },
-    {
-        href: "/bookings",
-        label: "bookings",
-        icon: RiBillLine,
     },
 
     {
@@ -101,6 +108,10 @@ export const routes: Routes[] = [
     {
         path: "bookings/update/:id",
         element: UpdateBooking,
+    },
+    {
+        path: "/checkin-checkout",
+        element: CheckinCheckout,
     },
     {
         path: "reviews",

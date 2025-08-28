@@ -9,7 +9,11 @@ import { capitalizeFirst, formatCurrency, formatDate } from "../../utils/utils";
 import useAllRooms from "../Rooms/hooks/useAllRooms";
 import type { SelectOptsType } from "../../types/utils.type";
 import usePreviewBooking from "./hooks/usePreviewBooking";
-import { StayType, type UpdateBookingDto } from "../../types/booking.types";
+import {
+    BookingStatus,
+    StayType,
+    type UpdateBookingDto,
+} from "../../types/booking.types";
 import useUpdateBooking from "./hooks/useUpdateBooking";
 import Button from "../../components/Button";
 import { updateBookingSchema } from "../../utils/rule";
@@ -18,6 +22,7 @@ import useDebounce from "../../hooks/useDebounce";
 import Modal from "../../components/Modal";
 import RejectContent from "./components/RejectContent";
 import MarkAsPaidContent from "./components/MarkAsPaidContent";
+import toast from "react-hot-toast";
 
 interface BookingFormData {
     roomId: string;
@@ -119,6 +124,15 @@ function UpdateBooking() {
     useEffect(() => {
         if (!booking) return;
 
+        if (
+            booking.bookingStatus === BookingStatus.PAID ||
+            booking.bookingStatus === BookingStatus.REJECTED
+        ) {
+            toast.error("This booking cannot be edited anymore.");
+            navigate("/bookings");
+            return;
+        }
+
         reset({
             customerFullName: booking.customer.fullName ?? "",
             customerPhone: booking.customer.phone ?? "",
@@ -132,7 +146,7 @@ function UpdateBooking() {
             endTime: booking.endTime ? new Date(booking.endTime) : new Date(),
             stayType: booking.stayType ?? "daily",
         });
-    }, [booking, reset]);
+    }, [booking, navigate, reset]);
 
     // Nếu đang loading hoặc không tìm thấy
     if (isLoading) return <div>Loading...</div>;
@@ -170,20 +184,10 @@ function UpdateBooking() {
         handleSubmit(onSubmit)();
     };
 
-    const handleMarkAsPaid = () => {
-        // TODO: gọi API update booking status thành "paid"
-        console.log("Mark booking as paid:", booking.bookingId);
-    };
-
-    const handleRejectBooking = () => {
-        // TODO: gọi API update booking status thành "rejected"
-        console.log("Reject booking:", booking.bookingId);
-    };
-
     return (
         <div className="min-h-screen">
             {/* Header */}
-            <div className="flex justify-between items-center max-w-6xl bg-bg p-6 rounded-xl shadow shadow-card w-full mx-auto mb-5">
+            <div className="flex justify-between items-center max-w-6xl bg-card-bg p-6 rounded-xl shadow shadow-card w-full mx-auto mb-5">
                 <div>
                     <h2 className="text-2xl text-black font-bold mb-1">
                         Update Booking
@@ -210,7 +214,7 @@ function UpdateBooking() {
                         className="space-y-6"
                         noValidate
                     >
-                        <section className="bg-bg rounded-lg shadow p-5">
+                        <section className="bg-card-bg rounded-lg shadow p-5">
                             <h2 className="text-lg font-semibold mb-3">
                                 Customer information
                             </h2>
@@ -265,7 +269,7 @@ function UpdateBooking() {
                             </div>
                         </section>
 
-                        <section className="bg-bg rounded-lg shadow p-5">
+                        <section className="bg-card-bg rounded-lg shadow p-5">
                             <h2 className="text-lg font-semibold mb-3">
                                 Stay information
                             </h2>
@@ -332,7 +336,7 @@ function UpdateBooking() {
 
                 {/* Right column (price summary) */}
                 <aside className="space-y-5">
-                    <div className="bg-bg rounded-lg shadow p-5">
+                    <div className="bg-card-bg rounded-lg shadow p-5">
                         <h3 className="text-lg font-semibold mb-3">
                             Price summary
                             {isPreviewLoading && (
@@ -390,7 +394,7 @@ function UpdateBooking() {
                         )}
 
                         <Button
-                            className="mt-4 w-full py-2 rounded-md bg-green-600 text-white hover:bg-green-400"
+                            className="mt-4 w-full py-2 rounded-md bg-green-600 hover:bg-green-400"
                             isLoading={isUpdating || isPreviewLoading}
                             onClick={handleConfirmUpdate}
                             disabled={
@@ -404,8 +408,7 @@ function UpdateBooking() {
                             Confirm update
                         </Button>
                     </div>
-
-                    <div className="bg-bg rounded-lg shadow py-4 px-5">
+                    <div className="bg-card-bg rounded-lg shadow py-4 px-5">
                         <h4 className="text-md font-semibold mb-2">
                             Quick actions
                         </h4>
@@ -415,7 +418,7 @@ function UpdateBooking() {
                                     opens={`mark-as-paid-${booking.bookingId}`}
                                 >
                                     <Button
-                                        className="py-2 bg-transparent font-semibold border hover:bg-gray-200"
+                                        className="py-2 bg-transparent font-semibold border border-black text-black hover:bg-gray-200"
                                         disabled={
                                             !isValid ||
                                             isSubmitting ||
@@ -432,7 +435,7 @@ function UpdateBooking() {
                                     opens={`reject-booking-${booking.bookingId}`}
                                 >
                                     <Button
-                                        className="py-2 border bg-transparent text-red-600 hover:bg-red-200"
+                                        className="py-2 border bg-transparent text-red-600  hover:bg-red-200"
                                         disabled={
                                             !isValid ||
                                             isSubmitting ||

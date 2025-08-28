@@ -19,7 +19,6 @@ export default function Button(props: PropsType) {
         children,
         className = "",
         icon,
-        variant = "primary",
         size = "lg",
         isLoading,
         disabled,
@@ -30,14 +29,17 @@ export default function Button(props: PropsType) {
     return (
         <button
             className={classNames(
-                "relative center min-w-[108px] px-3 rounded-md text-center capitalize cursor-pointer font-bold text-sm bg-accent text-black hover:bg-accent-600  transition-all duration-200 shadow-card",
-                className,
+                "relative center min-w-[108px] px-3 rounded-md text-center capitalize cursor-pointer font-bold text-sm transition-all duration-200 shadow-card",
                 {
                     "h-[45px]": size === "lg",
                     "h-[28px] text-sm font-semibold": size === "md",
                     "h-[20px] text-xs font-normal": size === "sm",
                     "opacity-50 cursor-not-allowed": disabled,
-                }
+                },
+                !className.includes("bg-") && "bg-accent",
+                !className.includes("text-") && "text-white",
+                !className.includes("hover:bg-") && "hover:bg-accent-600",
+                className
             )}
             onClick={onClick}
             disabled={disabled}

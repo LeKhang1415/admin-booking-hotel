@@ -20,7 +20,7 @@ export default function SidebarItem({ href, icon, text }: SidebarItemProps) {
                 ${
                     isActive
                         ? "bg-accent text-black shadow-lg transform scale-[1.02]"
-                        : "text-muted hover:bg-yellow-100 hover:text-warm hover:shadow-md"
+                        : "text-muted hover:bg-blue-100 hover:text-warm hover:shadow-md"
                 }
             `}
         >
@@ -31,7 +31,7 @@ export default function SidebarItem({ href, icon, text }: SidebarItemProps) {
                         ${
                             isActive
                                 ? "bg-white/20 text-black shadow-sm"
-                                : "bg-cream text-muted-2 group-hover:bg-yellow-200 group-hover:text-warm"
+                                : "bg-cream text-muted-2 group-hover:bg-blue-200 group-hover:text-warm"
                         }
                     `}
                 >

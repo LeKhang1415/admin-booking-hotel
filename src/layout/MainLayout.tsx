@@ -40,7 +40,7 @@ function MainLayout() {
             {/* Main Content với gradient background */}
             <div className="flex-1 flex flex-col h-full overflow-auto transition-all duration-300 ease-in-out">
                 {/* Background gradient overlay */}
-                <div className="absolute inset-0 bg-gradient-to-br from-cream via-yellow-100/50 to-surface" />
+                <div className="absolute inset-0 bg-gradient-to-br from-cream via-blue-100/50 to-surface" />
 
                 <div className="relative z-10 flex flex-col h-full">
                     <Header />

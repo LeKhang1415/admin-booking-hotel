@@ -47,7 +47,7 @@ function Row({ children }: { children: ReactNode }) {
         <div
             role="row"
             style={{ gridTemplateColumns: ctx.columns }}
-            className="grid gap-x-6 items-center px-6 py-3 hover:bg-yellow-100/50 transition-colors duration-200 border-b border-border/30"
+            className="grid gap-x-6 items-center px-6 py-3 hover:bg-blue-100/50 transition-colors duration-200 border-b border-border/30"
         >
             {children}
         </div>
@@ -72,7 +72,7 @@ function Body<T>({ data, render }: BodyProps<T>) {
 
 function Footer({ children }: { children?: ReactNode }) {
     if (!children) return null;
-    return <footer className="bg-yellow-100 p-2">{children}</footer>;
+    return <footer className="bg-blue-100 p-2">{children}</footer>;
 }
 
 Table.Header = Header;

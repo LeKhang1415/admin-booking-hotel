@@ -83,11 +83,11 @@ function Content({
 function Header({ children }: { children: React.ReactNode }) {
     const { close } = useContext(ModalContext);
     return (
-        <div className="flex items-center justify-between px-6 py-4 border-b border-border bg-yellow-100/50">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-border bg-blue-100/50">
             <h3 className="text-lg font-semibold text-warm">{children}</h3>
             <button
                 onClick={close}
-                className="text-muted-2 hover:text-warm transition-colors p-1 rounded-md hover:bg-yellow-200"
+                className="text-muted-2 hover:text-warm transition-colors p-1 rounded-md hover:bg-blue-200"
             >
                 <IoMdClose className="text-2xl" />
             </button>
@@ -107,7 +107,7 @@ function Body({ children }: { children: React.ReactNode }) {
 // Footer
 function Footer({ children }: { children: React.ReactNode }) {
     return (
-        <div className="flex justify-end gap-3 px-6 py-4 border-t border-border bg-cream">
+        <div className="flex justify-end gap-3 px-6 py-4 border-t border-border">
             {children}
         </div>
     );

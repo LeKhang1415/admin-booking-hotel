@@ -115,7 +115,7 @@ function CreateBooking() {
     return (
         <div className="space-y-6">
             {/* Header */}
-            <div className="max-w-6xl bg-bg p-6 rounded-xl shadow shadow-card w-full mx-auto mb-5">
+            <div className="max-w-6xl bg-card-bg p-6 rounded-xl shadow shadow-card w-full mx-auto mb-5">
                 <h2 className="text-2xl text-black font-bold mb-1">
                     Create Booking
                 </h2>
@@ -142,7 +142,7 @@ function CreateBooking() {
                 </div>
 
                 {/* RIGHT: Form */}
-                <div className="p-6 bg-bg rounded-xl shadow card">
+                <div className="p-6 bg-card-bg rounded-xl shadow card">
                     <h2 className="text-lg font-semibold text-text mb-4">
                         Customer Information
                     </h2>

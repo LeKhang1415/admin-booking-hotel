@@ -64,7 +64,7 @@ function AvailableRooms() {
     return (
         <Main>
             {/* Header */}
-            <div className="max-w-6xl bg-bg p-6 rounded-xl shadow shadow-card w-full mx-auto mb-5">
+            <div className="max-w-6xl bg-card-bg p-6 rounded-xl shadow shadow-card w-full mx-auto mb-5">
                 <h2 className="text-2xl text-black font-bold mb-1">
                     Choose Room
                 </h2>
