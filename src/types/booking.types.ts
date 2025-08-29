@@ -86,19 +86,7 @@ export type CreateBookingDto = {
     bookingType: BookingType;
 };
 
-export type UpdateBookingDto = Partial<{
-    roomId: string;
-    startTime: string;
-    endTime: string;
-    stayType: StayType;
-    numberOfGuest: number;
-    customerFullName: string;
-    customerPhone: string;
-    customerEmail?: string;
-    customerIdentityCard?: string;
-    userId?: string;
-    bookingType: BookingType;
-}>;
+export type UpdateBookingDto = Partial<CreateBookingDto>;
 
 // Query filters
 export type BookingListQuery = {

@@ -8,6 +8,7 @@ type Props = SelectHTMLAttributes<HTMLSelectElement> & {
     errorMessage?: string;
     register?: UseFormRegister<any>;
     options: { value: string | number; label: string }[];
+    placeholder?: string;
 };
 
 export default function Select({
@@ -17,6 +18,7 @@ export default function Select({
     register,
     errorMessage,
     options,
+    placeholder,
     ...rest
 }: Props) {
     return (
@@ -36,6 +38,12 @@ export default function Select({
                 {...(register ? register(name, rules) : {})}
                 {...rest}
             >
+                {placeholder && (
+                    <option value="" disabled hidden>
+                        {placeholder}
+                    </option>
+                )}
+
                 {options.map((opt) => (
                     <option
                         key={opt.value}

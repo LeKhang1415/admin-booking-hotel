@@ -1,18 +1,49 @@
 import * as yup from "yup";
+import { UserRole } from "../types/user.type";
 
 const FILE_SIZE = 2 * 1024 * 1024; // 2MB
 
-export const userSchema = yup.object().shape({
-    name: yup.string().required("Trường này là bắt buộc"),
+export const userSchema = yup.object({
+    name: yup.string().required("Name is required"),
     email: yup
         .string()
-        .required("Trường này là bắt buộc")
-        .email("Vui lòng nhập email hợp lệ"),
+        .email("Invalid email format")
+        .required("Email is required"),
     password: yup
         .string()
-        .required("Trường này là bắt buộc")
-        .min(8, "Mật khẩu cần ít nhất 8 ký tự"),
-    role: yup.string(),
+        .min(6, "Password must be at least 6 characters")
+        .required("Password is required"),
+    role: yup
+        .mixed<UserRole>()
+        .oneOf(Object.values(UserRole) as UserRole[], "Invalid role")
+        .required("Role is required"),
+});
+
+export const updateUserSchema = yup.object({
+    name: yup.string().required("Name is required"),
+    email: yup
+        .string()
+        .email("Invalid email format")
+        .required("Email is required"),
+    password: yup
+        .string()
+        .test(
+            "password-validation",
+            "Password must be at least 6 characters",
+            function (value) {
+                // Nếu password rỗng hoặc undefined thì pass validation
+                if (!value || value === "") {
+                    return true;
+                }
+                // Nếu có giá trị thì phải >= 6 ký tự
+                return value.length >= 6;
+            }
+        )
+        .notRequired(),
+    role: yup
+        .mixed<UserRole>()
+        .oneOf(Object.values(UserRole) as UserRole[], "Invalid role")
+        .required("Role is required"),
 });
 
 // Validation schema

@@ -19,3 +19,18 @@ export type UserResponse = {
         totalPages: number;
     };
 };
+
+export type UserListQuery = {
+    // Pagination fields
+    page?: number;
+    limit?: number;
+};
+
+export type CreateUserDto = {
+    name: string;
+    email: string;
+    password: string;
+    role: UserRole;
+};
+
+export type UpdateUserDto = Partial<CreateUserDto>;

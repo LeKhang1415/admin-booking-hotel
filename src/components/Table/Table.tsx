@@ -56,7 +56,7 @@ function Row({ children }: { children: ReactNode }) {
 
 type BodyProps<T> = {
     data: T[];
-    render: (item: T) => ReactNode;
+    render: (item: T, index?: number) => React.ReactNode; // index optional
 };
 
 function Body<T>({ data, render }: BodyProps<T>) {
@@ -67,7 +67,11 @@ function Body<T>({ data, render }: BodyProps<T>) {
             </p>
         );
 
-    return <section className="bg-card-bg">{data.map(render)}</section>;
+    return (
+        <section className="bg-card-bg">
+            {data.map((item, index) => render(item, index))}
+        </section>
+    );
 }
 
 function Footer({ children }: { children?: ReactNode }) {

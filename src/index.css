@@ -30,7 +30,7 @@
     --color-text: #0f1720; /* chữ chính (đen hơi lạnh) */
     --color-muted: #3f4b57; /* chữ/biểu tượng phụ */
     --color-muted-2: #6b7680; /* phụ hơn nữa */
-    --color-border: #e6f0fb; /* đường viền nhẹ, hòa với nền xanh */
+    --color-border: #b8cbe0; /* đường viền */
     --color-glass: rgba(255, 255, 255, 0.6);
     --color-elevated: rgba(30, 144, 255, 0.06); /* nền nhẹ cho phần nổi */
     --color-focus: #d8ecff; /* outline/focus ring */
