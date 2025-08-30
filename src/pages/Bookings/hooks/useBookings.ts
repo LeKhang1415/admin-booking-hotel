@@ -32,7 +32,7 @@ function useBookings() {
     );
 
     const { data, isLoading } = useQuery({
-        queryKey: ["booking", queryConfig],
+        queryKey: ["bookings", queryConfig],
         queryFn: () => bookingApi.getAll(queryConfig),
     });
 
@@ -41,7 +41,7 @@ function useBookings() {
 
     if (page < totalPages) {
         queryClient.prefetchQuery({
-            queryKey: ["rooms", { ...queryConfig, page: page + 1 }],
+            queryKey: ["bookings", { ...queryConfig, page: page + 1 }],
             queryFn: () =>
                 bookingApi.getAll({ ...queryConfig, page: page + 1 }),
         });
@@ -49,7 +49,7 @@ function useBookings() {
 
     if (page > 1) {
         queryClient.prefetchQuery({
-            queryKey: ["rooms", { ...queryConfig, page: page - 1 }],
+            queryKey: ["bookings", { ...queryConfig, page: page - 1 }],
             queryFn: () =>
                 bookingApi.getAll({ ...queryConfig, page: page - 1 }),
         });

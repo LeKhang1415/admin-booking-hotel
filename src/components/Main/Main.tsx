@@ -10,7 +10,7 @@ export default function Main({
     return (
         <div
             className={classNames(
-                "relative flex-1 flex flex-col bg-main  rounded-2xl shadow-custom h-full w-full",
+                "relative flex-1 flex flex-col bg-main rounded-2xl shadow-custom h-full w-full",
                 cssClasses
             )}
         >

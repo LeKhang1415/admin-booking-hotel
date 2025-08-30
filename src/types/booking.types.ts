@@ -55,7 +55,15 @@ export type BookingResponse = {
     };
 };
 
+export type BookingSummary = {
+    total: number;
+    checkedIn: number;
+    waiting: number;
+    completed: number;
+};
+
 export type BookingPreviewDto = {
+    bookingId?: string;
     roomId: string;
     startTime: string;
     endTime: string;
@@ -98,6 +106,11 @@ export type BookingListQuery = {
     endDate?: string;
     bookingDateFrom?: string;
     bookingDateTo?: string;
+    page?: number;
+    limit?: number;
+};
+
+export type TodayBookingQuery = {
     page?: number;
     limit?: number;
 };

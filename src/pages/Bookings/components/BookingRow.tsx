@@ -3,16 +3,22 @@ import Menus from "../../../components/Menus";
 import { FiEdit, FiTrash2 } from "react-icons/fi";
 import Table from "../../../components/Table";
 import Modal from "../../../components/Modal";
-import { StayType, type Booking } from "../../../types/booking.types";
+import {
+    BookingStatus,
+    StayType,
+    type Booking,
+} from "../../../types/booking.types";
 import { MdCalendarToday } from "react-icons/md";
 import { TbClockHour10 } from "react-icons/tb";
 import { useNavigate } from "react-router-dom";
 
-const statusColor: Record<string, string> = {
-    unpaid: "bg-danger text-white",
-    paid: "bg-success text-white",
-    checked_in: "bg-accent text-black",
-    checked_out: "bg-warm text-white",
+const statusColor: Record<BookingStatus, string> = {
+    [BookingStatus.UNPAID]: "bg-danger text-white",
+    [BookingStatus.PAID]: "bg-success text-white",
+    [BookingStatus.CHECKED_IN]: "bg-accent text-black",
+    [BookingStatus.COMPLETED]: "bg-muted text-white",
+    [BookingStatus.CANCELLED]: "bg-border text-text",
+    [BookingStatus.REJECTED]: "bg-border text-text",
 };
 
 function BookingRow({ booking }: { booking: Booking }) {

@@ -107,7 +107,12 @@ function Body({ children }: { children: React.ReactNode }) {
 // Footer
 function Footer({ children }: { children: React.ReactNode }) {
     return (
-        <div className="flex justify-end gap-3 px-6 py-4 border-t border-border">
+        <div
+            className="grid grid-cols-1 sm:grid-cols-auto-fit gap-3 px-6 py-4 border-t border-border"
+            style={{
+                gridTemplateColumns: `repeat(auto-fit, minmax(120px, 1fr))`,
+            }}
+        >
             {children}
         </div>
     );

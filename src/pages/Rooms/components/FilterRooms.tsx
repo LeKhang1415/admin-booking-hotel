@@ -75,21 +75,19 @@ export default function FilterRooms({ close }: { close?: () => void }) {
                 </div>
             </Modal.Body>
             <Modal.Footer>
-                <div className="flex justify-between items-center gap-4">
-                    {/* Reset button */}
-                    <Button
-                        type="button"
-                        onClick={handleReset}
-                        className="px-4 py-2 text-gray-300 bg-gray-600 rounded-md hover:bg-gray-700 transition-colors"
-                    >
-                        Reset All
-                    </Button>
+                {/* Reset button */}
+                <Button
+                    type="button"
+                    onClick={handleReset}
+                    className="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                    Reset All
+                </Button>
 
-                    {/* Action buttons */}
-                    <Button type="button" onClick={handleOk}>
-                        Ok
-                    </Button>
-                </div>
+                {/* Action buttons */}
+                <Button type="button" onClick={handleOk}>
+                    Ok
+                </Button>
             </Modal.Footer>
         </>
     );

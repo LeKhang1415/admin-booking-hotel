@@ -7,14 +7,17 @@ import type {
 } from "../../../types/booking.types";
 import type { SuccessResponseApi } from "../../../types/utils.type";
 
-function usePreviewBooking(payload: BookingPreviewDto | null) {
+function usePreviewBooking(
+    payload: BookingPreviewDto | null,
+    isUpdate = false
+) {
     const { data, isLoading, error, isError } = useQuery<
         SuccessResponseApi<BookingPreviewResponse>,
         AxiosError<{ message: string }>
     >({
-        queryKey: ["booking-preview", payload],
+        queryKey: ["booking-preview", payload, isUpdate],
         queryFn: async () => {
-            const res = await bookingApi.preview(payload!);
+            const res = await bookingApi.preview(payload!, isUpdate);
             return res.data;
         },
         enabled:

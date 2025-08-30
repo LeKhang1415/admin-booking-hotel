@@ -36,11 +36,13 @@ interface BookingFormData {
     endTime: Date;
 }
 
-const statusColor: Record<string, string> = {
-    unpaid: "bg-danger text-on-danger",
-    paid: "bg-success text-on-success",
-    checked_in: "bg-accent text-on-accent",
-    checked_out: "bg-warm text-on-warm",
+const statusColor: Record<BookingStatus, string> = {
+    [BookingStatus.UNPAID]: "bg-danger text-on-danger",
+    [BookingStatus.PAID]: "bg-success text-on-success",
+    [BookingStatus.CHECKED_IN]: "bg-accent text-on-accent",
+    [BookingStatus.COMPLETED]: "bg-warm text-on-warm",
+    [BookingStatus.CANCELLED]: "bg-gray-300 text-gray-600",
+    [BookingStatus.REJECTED]: "bg-gray-500 text-gray-100",
 };
 
 function UpdateBooking() {
@@ -104,13 +106,21 @@ function UpdateBooking() {
         if (!roomId || !startTime || !endTime || !stayType) return null;
 
         return {
+            bookingId: booking?.bookingId,
             roomId,
             startTime: startTime.toISOString(),
             endTime: endTime.toISOString(),
             stayType,
             numberOfGuest: debouncedNumberOfGuest ?? 1,
         };
-    }, [roomId, startTime, endTime, stayType, debouncedNumberOfGuest]);
+    }, [
+        booking?.bookingId,
+        roomId,
+        startTime,
+        endTime,
+        stayType,
+        debouncedNumberOfGuest,
+    ]);
 
     // Gọi preview booking khi có thay đổi
     const {
@@ -118,7 +128,7 @@ function UpdateBooking() {
         isLoading: isPreviewLoading,
         error: previewError,
         isError: isPreviewError,
-    } = usePreviewBooking(previewPayload!);
+    } = usePreviewBooking(previewPayload!, true);
 
     // Khi booking về, reset form với dữ liệu thực tế
     useEffect(() => {

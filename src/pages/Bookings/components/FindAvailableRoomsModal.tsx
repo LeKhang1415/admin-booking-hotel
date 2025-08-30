@@ -89,7 +89,7 @@ function FindAvailableRoomsModal({ close }: { close?: () => void }) {
                             name="numberOfPeople"
                             label="Number of People"
                             defaultValue={1}
-                            type="text"
+                            type="number"
                             placeholder="Enter number of guests"
                             register={register}
                             errorMessage={errors?.numberOfPeople?.message}
@@ -150,7 +150,7 @@ function FindAvailableRoomsModal({ close }: { close?: () => void }) {
                 <button
                     type="button"
                     onClick={handleCancel}
-                    className="px-4 py-2 text-gray-300 bg-gray-600 rounded-md hover:bg-gray-700 transition-colors"
+                    className="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                     Cancel
                 </button>
