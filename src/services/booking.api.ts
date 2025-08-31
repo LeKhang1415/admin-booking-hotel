@@ -46,6 +46,12 @@ export const bookingApi = {
     markAsPaid: (id: string) =>
         http.post<SuccessResponseApi<Booking>>(`/booking/mark-as-paid/${id}`),
 
+    checkIn: (id: string) =>
+        http.post<SuccessResponseApi<Booking>>(`/booking/check-in/${id}`),
+
+    checkOut: (id: string) =>
+        http.post<SuccessResponseApi<Booking>>(`/booking/check-out/${id}`),
+
     preview: (data: BookingPreviewDto, isUpdate = false) => {
         console.log("📦 Preview payload gửi lên:", data, "isUpdate:", isUpdate);
         return http.post<SuccessResponseApi<BookingPreviewResponse>>(

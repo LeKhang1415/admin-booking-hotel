@@ -6,11 +6,7 @@ import {
     StayType,
     type Booking,
 } from "../../../types/booking.types";
-import {
-    capitalizeFirst,
-    formatCurrency,
-    formatDate,
-} from "../../../utils/utils";
+import { formatCurrency, formatDate } from "../../../utils/utils";
 import Button from "../../../components/Button";
 
 const statusStyles: Record<BookingStatus, string> = {
@@ -37,17 +33,10 @@ const statusText: Record<BookingStatus, string> = {
 
 interface BookingCardProps {
     booking: Booking;
-    handleCheckIn?: (booking: Booking) => void;
-    handleCheckOut?: (booking: Booking) => void;
     loading?: boolean;
 }
 
-function BookingCard({
-    booking,
-    handleCheckIn,
-    handleCheckOut,
-    loading = false,
-}: BookingCardProps) {
+function BookingCard({ booking, loading = false }: BookingCardProps) {
     return (
         <div className="p-6 bg-card-bg text-text border-b border-border transition-colors">
             <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between">
@@ -173,7 +162,6 @@ function BookingCard({
                             <Button
                                 disabled={loading}
                                 className="px-4 py-2 rounded-lg bg-accent min-w-[120px]"
-                                onClick={() => handleCheckIn?.(booking)}
                             >
                                 Check In
                             </Button>

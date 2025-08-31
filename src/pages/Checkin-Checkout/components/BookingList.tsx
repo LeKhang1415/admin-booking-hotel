@@ -4,16 +4,9 @@ import BookingCard from "./BookingCard";
 interface BookingListProps {
     bookings: Booking[];
     loading: boolean;
-    handleCheckIn: (booking: Booking) => void;
-    handleCheckOut: (booking: Booking) => void;
 }
 
-export function BookingList({
-    bookings,
-    loading,
-    handleCheckIn,
-    handleCheckOut,
-}: BookingListProps) {
+export function BookingList({ bookings, loading }: BookingListProps) {
     return (
         <div className="bg-blue-100 rounded-lg shadow-sm overflow-hidden">
             <div className="px-6 py-4 border-b border-gray-200">
@@ -33,8 +26,6 @@ export function BookingList({
                             key={booking.bookingId}
                             booking={booking}
                             loading={loading}
-                            handleCheckIn={handleCheckIn}
-                            handleCheckOut={handleCheckOut}
                         />
                     ))}
                 </div>

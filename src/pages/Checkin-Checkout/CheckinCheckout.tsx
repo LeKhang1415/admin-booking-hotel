@@ -6,22 +6,12 @@ import { FiXCircle } from "react-icons/fi";
 import useTodayBooking from "../Bookings/hooks/useTodayBooking";
 import useTodaySummary from "../Bookings/hooks/useTodaySummary";
 import StatCard from "./components/StatCard";
-import type { Booking } from "../../types/booking.types";
 import { BookingList } from "./components/BookingList";
 import Pagination from "../../components/Pagination";
 
 function CheckinCheckout() {
     const { todayBookings, isLoading, totalPages } = useTodayBooking();
     const { todaySummary } = useTodaySummary();
-
-    // tạm để trống logic check-in/out
-    const handleCheckIn = (booking: Booking) => {
-        console.log("Check in:", booking);
-    };
-
-    const handleCheckOut = (booking: Booking) => {
-        console.log("Check out:", booking);
-    };
 
     return (
         <Main>
@@ -70,8 +60,6 @@ function CheckinCheckout() {
                 <BookingList
                     bookings={todayBookings || []}
                     loading={isLoading}
-                    handleCheckIn={handleCheckIn}
-                    handleCheckOut={handleCheckOut}
                 />
             </div>
 
