@@ -8,6 +8,8 @@ function useCheckOut() {
         mutationFn: (bookingId: string) => bookingApi.checkOut(bookingId),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ["bookings"] });
+            queryClient.invalidateQueries({ queryKey: ["today-booking"] });
+            queryClient.invalidateQueries({ queryKey: ["today-summary"] });
         },
     });
 }

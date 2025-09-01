@@ -1,6 +1,7 @@
 import { CiLocationOn, CiCalendar } from "react-icons/ci";
 import { FiUsers, FiMail, FiPhone } from "react-icons/fi";
 import { FaRegUser } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 import {
     BookingStatus,
     StayType,
@@ -8,6 +9,10 @@ import {
 } from "../../../types/booking.types";
 import { formatCurrency, formatDate } from "../../../utils/utils";
 import Button from "../../../components/Button";
+
+import Modal from "../../../components/Modal";
+import CheckInModalContent from "./CheckInModalContent";
+import CheckOutModalContent from "./CheckOutModalContent";
 
 const statusStyles: Record<BookingStatus, string> = {
     [BookingStatus.UNPAID]: "bg-red-100 text-red-600 border border-red-200",
@@ -37,6 +42,8 @@ interface BookingCardProps {
 }
 
 function BookingCard({ booking, loading = false }: BookingCardProps) {
+    const navigate = useNavigate();
+
     return (
         <div className="p-6 bg-card-bg text-text border-b border-border transition-colors">
             <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between">
@@ -143,15 +150,21 @@ function BookingCard({ booking, loading = false }: BookingCardProps) {
                                     </span>
                                 </div>
                                 {booking.actualCheckIn && (
-                                    <div className="text-xs text-success">
+                                    <div className="text-xs text-success font-semibold">
                                         Checked in at:{" "}
-                                        {formatDate(booking.actualCheckIn)}
+                                        {formatDate(
+                                            booking.actualCheckIn,
+                                            true
+                                        )}
                                     </div>
                                 )}
                                 {booking.actualCheckOut && (
-                                    <div className="text-xs text-muted-2">
+                                    <div className="text-xs text-muted-2 font-semibold">
                                         Checked out at:{" "}
-                                        {formatDate(booking.actualCheckOut)}
+                                        {formatDate(
+                                            booking.actualCheckOut,
+                                            true
+                                        )}
                                     </div>
                                 )}
                             </div>
@@ -159,12 +172,47 @@ function BookingCard({ booking, loading = false }: BookingCardProps) {
 
                         {/* Actions */}
                         <div className="flex flex-col justify-end">
-                            <Button
-                                disabled={loading}
-                                className="px-4 py-2 rounded-lg bg-accent min-w-[120px]"
-                            >
-                                Check In
-                            </Button>
+                            <Modal>
+                                {booking.bookingStatus ===
+                                    BookingStatus.UNPAID && (
+                                    <Button
+                                        disabled={loading}
+                                        className="px-4 py-2 rounded-lg bg-red-500 text-white min-w-[120px] hover:bg-red-300"
+                                        onClick={() => {
+                                            navigate(
+                                                `/payment/${booking.bookingId}`
+                                            );
+                                        }}
+                                    >
+                                        Pay Now
+                                    </Button>
+                                )}
+
+                                {booking.bookingStatus ===
+                                    BookingStatus.PAID && (
+                                    <Modal.Open opens="check-in">
+                                        <Button className="px-4 py-2 rounded-lg bg-green-600 hover:bg-green-400 text-white min-w-[120px]">
+                                            Check In
+                                        </Button>
+                                    </Modal.Open>
+                                )}
+
+                                {booking.bookingStatus ===
+                                    BookingStatus.CHECKED_IN && (
+                                    <Modal.Open opens="check-out">
+                                        <Button className="px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-400 text-white min-w-[120px]">
+                                            Check Out
+                                        </Button>
+                                    </Modal.Open>
+                                )}
+
+                                <Modal.Content name="check-in">
+                                    <CheckInModalContent booking={booking} />
+                                </Modal.Content>
+                                <Modal.Content name="check-out">
+                                    <CheckOutModalContent booking={booking} />
+                                </Modal.Content>
+                            </Modal>
                         </div>
                     </div>
                 </div>

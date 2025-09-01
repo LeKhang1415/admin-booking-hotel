@@ -5,21 +5,22 @@ import { RiBillLine } from "react-icons/ri";
 import { PiUsersThreeThin } from "react-icons/pi";
 import { MdBedroomChild } from "react-icons/md";
 import { MdOutlineRateReview, MdOutlineRoomPreferences } from "react-icons/md";
-import { LiaUserSolid } from "react-icons/lia";
 import { BsBuildingCheck } from "react-icons/bs";
+import { MdOutlinePayment } from "react-icons/md";
+
 import Dashboard from "../pages/Dashboard";
 import Rooms from "../pages/Rooms";
 import Bookings from "../pages/Bookings";
 import BookingDetail from "../pages/Bookings/BookingDetail";
 import Reviews from "../pages/Reviews";
 import Users from "../pages/Users";
-import UserProfile from "../pages/UserProfile";
-
 import TypeRoom from "../pages/TypeRoom";
 import AvailableRooms from "../pages/Bookings/AvailableRooms";
 import CreateBooking from "../pages/Bookings/CreateBooking";
 import UpdateBooking from "../pages/Bookings/UpdateBooking";
 import CheckinCheckout from "../pages/Checkin-Checkout";
+import Payment from "../pages/Payment";
+import PaymentDetail from "../pages/Payment/PaymentDetail";
 
 type NavLink = {
     href: string;
@@ -70,9 +71,9 @@ export const links: NavLink[] = [
     },
 
     {
-        href: "/profile",
-        label: "profile",
-        icon: LiaUserSolid,
+        href: "/payment",
+        label: "payment",
+        icon: MdOutlinePayment,
     },
 ];
 
@@ -122,7 +123,11 @@ export const routes: Routes[] = [
         element: Users,
     },
     {
-        path: "profile",
-        element: UserProfile,
+        path: "payment",
+        element: Payment,
+    },
+    {
+        path: "payment/:id",
+        element: PaymentDetail,
     },
 ];

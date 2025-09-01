@@ -9,6 +9,8 @@ function useCheckIn() {
         onSuccess: () => {
             // invalidate dữ liệu booking
             queryClient.invalidateQueries({ queryKey: ["bookings"] });
+            queryClient.invalidateQueries({ queryKey: ["today-booking"] });
+            queryClient.invalidateQueries({ queryKey: ["today-summary"] });
         },
     });
 }

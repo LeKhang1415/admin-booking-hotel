@@ -9,10 +9,20 @@ export function formatCurrency(value: number): string {
     });
 }
 
-export function formatDate(date: string | Date, detail: boolean = false) {
+export function formatDate(
+    date: string | Date,
+    detail: boolean = false,
+    reverse: boolean = false
+) {
     return format(
         new Date(date),
-        detail ? "dd-MM-yyyy HH:mm:ss" : "dd-MM-yyyy"
+        detail
+            ? reverse
+                ? "HH:mm dd-MM-yyyy"
+                : "dd-MM-yyyy HH:mm"
+            : reverse
+            ? "yyyy-MM-dd"
+            : "dd-MM-yyyy"
     );
 }
 

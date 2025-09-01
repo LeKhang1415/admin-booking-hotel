@@ -40,7 +40,7 @@ const statusColor: Record<BookingStatus, string> = {
     [BookingStatus.UNPAID]: "bg-danger text-on-danger",
     [BookingStatus.PAID]: "bg-success text-on-success",
     [BookingStatus.CHECKED_IN]: "bg-accent text-on-accent",
-    [BookingStatus.COMPLETED]: "bg-warm text-on-warm",
+    [BookingStatus.COMPLETED]: "bg-warm text-white",
     [BookingStatus.CANCELLED]: "bg-gray-300 text-gray-600",
     [BookingStatus.REJECTED]: "bg-gray-500 text-gray-100",
 };
@@ -136,7 +136,8 @@ function UpdateBooking() {
 
         if (
             booking.bookingStatus === BookingStatus.PAID ||
-            booking.bookingStatus === BookingStatus.REJECTED
+            booking.bookingStatus === BookingStatus.REJECTED ||
+            booking.bookingStatus === BookingStatus.COMPLETED
         ) {
             toast.error("This booking cannot be edited anymore.");
             navigate("/bookings");
