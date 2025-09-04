@@ -127,7 +127,7 @@ export const routes: Routes[] = [
         element: Payment,
     },
     {
-        path: "payment/:id",
+        path: "payment/:bookingId",
         element: PaymentDetail,
     },
 ];
