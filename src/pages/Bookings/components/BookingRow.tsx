@@ -11,6 +11,7 @@ import {
 import { MdCalendarToday } from "react-icons/md";
 import { TbClockHour10 } from "react-icons/tb";
 import { useNavigate } from "react-router-dom";
+import { FaMoneyBill } from "react-icons/fa";
 
 const statusColor: Record<BookingStatus, string> = {
     [BookingStatus.UNPAID]: "bg-danger text-white",
@@ -96,6 +97,19 @@ function BookingRow({ booking }: { booking: Booking }) {
                     <Menus.Menu>
                         <Menus.Toggle id={booking.bookingId} />
                         <Menus.List id={booking.bookingId}>
+                            {/* Nếu chưa thanh toán thì thêm action Payment */}
+                            {booking.bookingStatus === BookingStatus.UNPAID && (
+                                <Menus.Button
+                                    icon={<FaMoneyBill />}
+                                    onClick={() =>
+                                        navigate(
+                                            `/payment/${booking.bookingId}`
+                                        )
+                                    }
+                                >
+                                    Payment
+                                </Menus.Button>
+                            )}
                             {/* Edit */}
                             <Menus.Button
                                 icon={<FiEdit />}

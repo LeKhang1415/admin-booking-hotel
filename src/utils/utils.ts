@@ -26,6 +26,18 @@ export function formatDate(
     );
 }
 
+export const formatDateTime = (dateString: string) => {
+    const date = new Date(dateString);
+    return {
+        date: date.toLocaleDateString("vi-VN"),
+        time: date.toLocaleTimeString("vi-VN", {
+            hour: "2-digit",
+            minute: "2-digit",
+        }),
+        full: date.toLocaleString("vi-VN"),
+    };
+};
+
 export function fromTimestamp(value?: string | number, detail = false): string {
     if (!value) return "";
     const num = typeof value === "string" ? Number(value) : value;

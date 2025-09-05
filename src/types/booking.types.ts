@@ -34,6 +34,7 @@ export type Booking = {
     actualCheckOut: string | null;
     stayType: StayType;
     bookingType: BookingType;
+    createdBy: User;
     bookingStatus: BookingStatus;
     bookingDate: string;
     numberOfGuest: number;

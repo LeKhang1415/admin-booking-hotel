@@ -8,10 +8,8 @@ export type PaymentMethod = (typeof PaymentMethod)[keyof typeof PaymentMethod];
 
 export const PaymentStatus = {
     PENDING: "pending",
-    PROCESSING: "processing",
     SUCCESS: "success",
     FAILED: "failed",
-    REFUNDED: "refunded",
 } as const;
 export type PaymentStatus = (typeof PaymentStatus)[keyof typeof PaymentStatus];
 
@@ -32,3 +30,7 @@ export interface Payment {
     booking: Booking;
     createdAt: string;
 }
+
+export type VnpayData = {
+    url: string;
+};
