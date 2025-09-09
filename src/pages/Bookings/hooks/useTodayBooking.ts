@@ -19,7 +19,7 @@ function useTodayBooking() {
         isUndefined
     );
 
-    const { data, isLoading } = useQuery({
+    const { data, isLoading, refetch } = useQuery({
         queryKey: ["today-booking", queryConfig],
         queryFn: () => bookingApi.getTodayBooking(queryConfig),
     });
@@ -43,7 +43,7 @@ function useTodayBooking() {
         });
     }
 
-    return { todayBookings, isLoading, totalPages };
+    return { todayBookings, isLoading, totalPages, refetch };
 }
 
 export default useTodayBooking;

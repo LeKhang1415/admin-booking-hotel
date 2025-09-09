@@ -34,3 +34,23 @@ export interface Payment {
 export type VnpayData = {
     url: string;
 };
+
+export type PaymentResponse = {
+    data: Payment[];
+    meta: {
+        itemsPerPage: number;
+        totalItems: number;
+        currentPage: number;
+        totalPages: number;
+    };
+};
+
+// Query filters
+export type PaymentListQuery = {
+    status?: PaymentStatus;
+    method?: PaymentMethod;
+    type?: PaymentType;
+    bookingId?: string;
+    page?: number;
+    limit?: number;
+};
