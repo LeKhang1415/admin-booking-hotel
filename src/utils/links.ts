@@ -21,6 +21,7 @@ import UpdateBooking from "../pages/Bookings/UpdateBooking";
 import CheckinCheckout from "../pages/Checkin-Checkout";
 import Payment from "../pages/Payment";
 import PaymentDetail from "../pages/Payment/PaymentDetail";
+import Chat from "../pages/Chat";
 
 type NavLink = {
     href: string;
@@ -129,5 +130,9 @@ export const routes: Routes[] = [
     {
         path: "payment/:bookingId",
         element: PaymentDetail,
+    },
+    {
+        path: "chat",
+        element: Chat,
     },
 ];

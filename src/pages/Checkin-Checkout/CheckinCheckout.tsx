@@ -10,7 +10,6 @@ import { BookingList } from "./components/BookingList";
 import Pagination from "../../components/Pagination";
 import { useCallback } from "react";
 import { useBookingSocket } from "./hooks/useBookingSocket";
-import type { Booking } from "../../types/booking.types";
 
 function CheckinCheckout() {
     const {
@@ -22,21 +21,15 @@ function CheckinCheckout() {
     const { todaySummary, refetch: refetchSummary } = useTodaySummary();
 
     // socket callbacks
-    const handleNoShow = useCallback(
-        (_booking: Booking) => {
-            refetchBookings();
-            refetchSummary();
-        },
-        [refetchBookings, refetchSummary]
-    );
+    const handleNoShow = useCallback(() => {
+        refetchBookings();
+        refetchSummary();
+    }, [refetchBookings, refetchSummary]);
 
-    const handleCheckedOut = useCallback(
-        (_booking: Booking) => {
-            refetchBookings();
-            refetchSummary();
-        },
-        [refetchBookings, refetchSummary]
-    );
+    const handleCheckedOut = useCallback(() => {
+        refetchBookings();
+        refetchSummary();
+    }, [refetchBookings, refetchSummary]);
 
     // kết nối socket
     useBookingSocket(handleNoShow, handleCheckedOut);
