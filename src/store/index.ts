@@ -5,6 +5,7 @@ import sidebarReducer from "./slices/sidebarSlice";
 import authReducer from "./slices/authSlice";
 import bookingReducer from "./slices/bookingSlice";
 import type { AuthState } from "./slices/authSlice";
+import selectedConversationReducer from "./slices/selectedConversationSlice";
 
 const authPersistConfig = {
     key: "auth",
@@ -17,6 +18,7 @@ export const store = configureStore({
         sidebar: sidebarReducer,
         booking: bookingReducer,
         auth: persistReducer<AuthState>(authPersistConfig, authReducer),
+        selectedConversation: selectedConversationReducer,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({

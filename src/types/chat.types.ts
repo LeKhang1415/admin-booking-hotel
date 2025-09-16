@@ -20,3 +20,8 @@ export type ConversationResponse = {
         totalPages: number;
     };
 };
+
+export type SelectedConversationType = {
+    id: string;
+    userEmail: string;
+};
