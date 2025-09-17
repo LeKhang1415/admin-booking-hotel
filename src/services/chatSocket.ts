@@ -46,6 +46,7 @@ export const connectSocket = (navigate: (path: string, opts?: any) => void) => {
             }
         } else {
             toast.error("Lỗi kết nối server. Vui lòng thử lại.");
+            navigate("/", { replace: true });
         }
     });
 

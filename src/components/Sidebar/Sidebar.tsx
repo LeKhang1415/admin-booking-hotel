@@ -52,13 +52,6 @@ export default function Sidebar() {
                         );
                     })}
                 </ul>
-
-                {/* Footer với gradient nhẹ */}
-                <div className="p-4 bg-gradient-to-t from-yellow-100/30 to-transparent">
-                    <div className="text-xs text-muted-2 text-center">
-                        © 2024 Travl Admin
-                    </div>
-                </div>
             </nav>
         </aside>
     );

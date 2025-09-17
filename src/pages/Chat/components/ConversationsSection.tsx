@@ -1,29 +1,11 @@
-import { useEffect, useState } from "react";
-import { chatApi } from "../../../services/chat.api";
-import type { Conversation } from "../../../types/chat.types";
 import ConversationItem from "./ConversationItem";
 import ConversationsList from "./ConversationsList";
+import useConversations from "../hooks/useConversations";
 
 export default function ConversationsSection() {
-    const [conversations, setConversations] = useState<Conversation[]>([]);
-    const [isLoading, setIsLoading] = useState(false);
+    const { conversations, isLoading } = useConversations();
 
-    useEffect(() => {
-        const fetchConversations = async () => {
-            try {
-                setIsLoading(true);
-                const res = await chatApi.getAll();
-                const convs = res?.data?.data?.data || [];
-                setConversations(convs);
-            } catch (error) {
-                console.error("Failed to fetch conversations:", error);
-            } finally {
-                setIsLoading(false);
-            }
-        };
-
-        fetchConversations();
-    }, []);
+    if (!conversations) return null;
 
     return (
         <div className="py-4 h-full bg-card-bg shadow-lg rounded-lg relative">
