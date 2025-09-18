@@ -1,29 +1,18 @@
-import { useSearchParams } from "react-router-dom";
-import { useCallback } from "react";
+type Option = { label: string; value: string };
 
 type Props = {
     label: string;
-    field: string;
-    options: { label: string; value: string }[];
+    value: string;
+    onChange: (value: string) => void;
+    options: Option[];
 };
 
-export default function FilterRadio({ label, field, options }: Props) {
-    const [searchParams, setSearchParams] = useSearchParams();
-
-    const handleChange = useCallback(
-        (value: string) => {
-            if (value) {
-                searchParams.set(field, value);
-            } else {
-                searchParams.delete(field);
-            }
-            setSearchParams(searchParams);
-        },
-        [searchParams, setSearchParams, field]
-    );
-
-    const selected = searchParams.get(field);
-
+export default function FilterRadio({
+    label,
+    value,
+    onChange,
+    options,
+}: Props) {
     return (
         <div className="space-y-2">
             <p className="font-medium text-text">{label}</p>
@@ -31,14 +20,14 @@ export default function FilterRadio({ label, field, options }: Props) {
                 {options.map((opt) => (
                     <label
                         key={opt.value}
-                        className={`inline-flex items-center gap-2 cursor-pointer`}
+                        className="inline-flex items-center gap-2 cursor-pointer"
                     >
                         <input
                             type="radio"
-                            name={field}
+                            name={label}
                             value={opt.value}
-                            checked={selected === opt.value}
-                            onChange={() => handleChange(opt.value)}
+                            checked={value === opt.value}
+                            onChange={() => onChange(opt.value)}
                             className="w-4 h-4 accent-accent"
                         />
                         {opt.label}

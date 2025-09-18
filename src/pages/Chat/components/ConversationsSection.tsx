@@ -1,8 +1,14 @@
 import ConversationItem from "./ConversationItem";
 import ConversationsList from "./ConversationsList";
 import useConversations from "../hooks/useConversations";
+import Search from "../../../components/Search";
+import useUrl from "../../../hooks/useUrl";
 
 export default function ConversationsSection() {
+    const { currentValue: search, handler: setSearch } = useUrl<string>({
+        field: "search",
+        defaultValue: "",
+    });
     const { conversations, isLoading } = useConversations();
 
     if (!conversations) return null;
@@ -10,7 +16,8 @@ export default function ConversationsSection() {
     return (
         <div className="py-4 h-full bg-card-bg shadow-lg rounded-lg relative">
             <div className="px-4">
-                <h4 className="font-semibold text-lg mt-2">
+                <Search value={search ?? ""} onChange={setSearch} />
+                <h4 className="font-semibold text-lg mt-2 border-t pt-3 border-border">
                     Messages ({!isLoading ? conversations.length : 0})
                 </h4>
             </div>

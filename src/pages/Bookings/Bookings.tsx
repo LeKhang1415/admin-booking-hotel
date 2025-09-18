@@ -1,4 +1,3 @@
-import Button from "../../components/Button";
 import Heading from "../../components/Heading";
 import Main from "../../components/Main";
 import Menus from "../../components/Menus";
@@ -9,25 +8,50 @@ import Table from "../../components/Table";
 import FindAvailableRoomsModal from "./components/FindAvailableRoomsModal";
 import BookingRow from "./components/BookingRow";
 import useBookings from "./hooks/useBookings";
+import Search from "../../components/Search";
+import Select from "../../components/Select";
+import useUrl from "../../hooks/useUrl";
+import { BookingStatus } from "../../types/booking.types";
+import { GoPlus } from "react-icons/go";
 
 function Bookings() {
+    const { currentValue: search, handler: setSearch } = useUrl<string>({
+        field: "search",
+        defaultValue: "",
+    });
+
+    const { currentValue: status, handler: setStatus } = useUrl<string>({
+        field: "status",
+        defaultValue: "",
+    });
+
+    const statusOptions = [
+        { value: "", label: "All status" },
+        { value: BookingStatus.UNPAID, label: "Unpaid" },
+        { value: BookingStatus.PAID, label: "Paid" },
+        { value: BookingStatus.CHECKED_IN, label: "Checked In" },
+        { value: BookingStatus.COMPLETED, label: "Completed" },
+        { value: BookingStatus.CANCELLED, label: "Cancelled" },
+        { value: BookingStatus.REJECTED, label: "Rejected" },
+    ];
+
     const { bookings, isLoading, totalPages } = useBookings();
 
     return (
         <Main>
             <Heading>
                 <>
+                    <div>
+                        <h1 className="text-3xl font-bold text-text">
+                            Manage Bookings
+                        </h1>
+                    </div>
                     <Modal>
-                        <Modal.Open opens="filter-rooms">
-                            <Button variant="outline" className="px-4 py-2">
-                                Filter Bookings
-                            </Button>
-                        </Modal.Open>
-
                         <Modal.Open opens="available-rooms">
-                            <Button className="px-6 py-3">
+                            <button className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-accent to-accent-600 text-white rounded-xl hover:shadow-lg transition-all">
+                                <GoPlus className="w-4 h-4" />
                                 Find Available Rooms
-                            </Button>
+                            </button>
                         </Modal.Open>
                         <Modal.Content name="available-rooms">
                             <FindAvailableRoomsModal />
@@ -35,6 +59,27 @@ function Bookings() {
                     </Modal>
                 </>
             </Heading>
+
+            {/* Filters */}
+            <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+                <div className="flex flex-col sm:flex-row gap-4">
+                    <div className="flex-1">
+                        <div className="relative">
+                            <Search value={search ?? ""} onChange={setSearch} />
+                        </div>
+                    </div>
+                    <div className="flex items-center gap-3">
+                        <Select
+                            name="status"
+                            value={status}
+                            onChange={setStatus}
+                            options={statusOptions}
+                            className="px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        />
+                    </div>
+                </div>
+            </div>
+
             {isLoading && (
                 <div className="h-full center">
                     <Spinner size="lg" />

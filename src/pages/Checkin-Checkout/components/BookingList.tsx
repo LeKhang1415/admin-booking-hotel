@@ -17,7 +17,7 @@ export function BookingList({ bookings, loading }: BookingListProps) {
 
             {bookings.length === 0 ? (
                 <div className="text-center py-12">
-                    <p className="text-gray-500">Không tìm thấy booking nào</p>
+                    <p className="text-gray-500">No booking today</p>
                 </div>
             ) : (
                 <div className="divide-gray-200">

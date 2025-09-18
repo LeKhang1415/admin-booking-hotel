@@ -35,6 +35,7 @@ export type RoomsListQuery = {
     minPricePerHour?: number;
     maxPricePerHour?: number;
     numberOfPeople?: number;
+    search?: string;
 
     // Type room filters
     typeRoomId?: string;

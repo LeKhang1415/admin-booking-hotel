@@ -15,6 +15,8 @@ function useTodayBooking() {
         {
             limit: Number(queryParams.limit) || 10,
             page: Number(queryParams.page) || 1,
+            search: queryParams.search || undefined,
+            status: queryParams.status || undefined,
         },
         isUndefined
     );
@@ -27,6 +29,7 @@ function useTodayBooking() {
     const todayBookings: Booking[] = data?.data?.data.data || [];
     const totalPages = data?.data?.data.meta.totalPages ?? 0;
 
+    // Prefetch trang kế tiếp
     if (page < totalPages) {
         queryClient.prefetchQuery({
             queryKey: ["today-booking", { ...queryConfig, page: page + 1 }],
@@ -35,6 +38,7 @@ function useTodayBooking() {
         });
     }
 
+    // Prefetch trang trước
     if (page > 1) {
         queryClient.prefetchQuery({
             queryKey: ["today-booking", { ...queryConfig, page: page - 1 }],

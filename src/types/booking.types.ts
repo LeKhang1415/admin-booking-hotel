@@ -107,11 +107,14 @@ export type BookingListQuery = {
     endDate?: string;
     bookingDateFrom?: string;
     bookingDateTo?: string;
+    search?: string;
     page?: number;
     limit?: number;
 };
 
 export type TodayBookingQuery = {
+    search?: string;
+    status?: BookingStatus;
     page?: number;
     limit?: number;
 };

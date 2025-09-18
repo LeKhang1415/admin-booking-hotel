@@ -32,6 +32,7 @@ function useRooms() {
                 ? Number(queryParams.numberOfPeople)
                 : undefined,
             typeRoomId: queryParams.typeRoomId,
+            search: queryParams.search || undefined,
         },
         isUndefined
     );
@@ -44,6 +45,7 @@ function useRooms() {
     const rooms: Room[] = data?.data?.data.data || [];
     const totalPages = data?.data?.data.meta.totalPages ?? 0;
 
+    // Prefetch next page
     if (page < totalPages) {
         queryClient.prefetchQuery({
             queryKey: ["rooms", { ...queryConfig, page: page + 1 }],
@@ -52,6 +54,7 @@ function useRooms() {
         });
     }
 
+    // Prefetch previous page
     if (page > 1) {
         queryClient.prefetchQuery({
             queryKey: ["rooms", { ...queryConfig, page: page - 1 }],

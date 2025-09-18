@@ -21,7 +21,7 @@ export type UserResponse = {
 };
 
 export type UserListQuery = {
-    // Pagination fields
+    search?: string;
     page?: number;
     limit?: number;
 };

@@ -56,8 +56,8 @@ function CreateUserContent({ close }: { close?: () => void }) {
     };
 
     const roleOptions = [
-        { value: UserRole.STAFF, label: "Staff" },
         { value: UserRole.CUSTOMER, label: "Customer" },
+        { value: UserRole.STAFF, label: "Staff" },
     ];
 
     return (

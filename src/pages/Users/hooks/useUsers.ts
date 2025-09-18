@@ -16,6 +16,7 @@ function useUsers() {
         {
             limit: Number(queryParams.limit) || 10,
             page: Number(queryParams.page) || 1,
+            search: queryParams.search || "",
         },
         isUndefined
     );

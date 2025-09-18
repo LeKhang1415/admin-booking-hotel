@@ -27,6 +27,8 @@ function useBookings() {
 
             bookingDateFrom: queryParams.bookingDateFrom,
             bookingDateTo: queryParams.bookingDateTo,
+
+            search: queryParams.search,
         },
         isUndefined
     );

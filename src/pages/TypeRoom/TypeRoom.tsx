@@ -3,12 +3,12 @@ import Menus from "../../components/Menus";
 import Pagination from "../../components/Pagination";
 import Main from "../../components/Main";
 import Heading from "../../components/Heading";
-import Button from "../../components/Button";
 import Modal from "../../components/Modal";
 import useTypeRooms from "./hooks/useTypeRooms";
 import TypeRoomRow from "./components/TypeRoomRow";
 import CreateTypeRoomContent from "./components/CreateTypeRoomContent";
 import Spinner from "../../components/Spinner";
+import { GoPlus } from "react-icons/go";
 
 function TypeRoom() {
     const { typeRooms, isLoading, totalPages } = useTypeRooms();
@@ -16,12 +16,17 @@ function TypeRoom() {
         <Main>
             <Heading>
                 <>
-                    <div className="text-white">Filter</div>
+                    <div>
+                        <h1 className="text-3xl font-bold text-text">
+                            Manage Type Room
+                        </h1>
+                    </div>
                     <Modal>
                         <Modal.Open opens="create-type-room">
-                            <Button className="px-6 py-3">
-                                + New Type Room
-                            </Button>
+                            <button className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-accent to-accent-600 text-white rounded-xl hover:shadow-lg transition-all">
+                                <GoPlus className="w-4 h-4" />
+                                Add Type Room
+                            </button>
                         </Modal.Open>
                         <Modal.Content name="create-type-room">
                             <CreateTypeRoomContent />

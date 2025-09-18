@@ -10,6 +10,11 @@ import { BookingList } from "./components/BookingList";
 import Pagination from "../../components/Pagination";
 import { useCallback } from "react";
 import { useBookingSocket } from "./hooks/useBookingSocket";
+import Heading from "../../components/Heading";
+import Select from "../../components/Select";
+import { BookingStatus } from "../../types/booking.types";
+import useUrl from "../../hooks/useUrl";
+import Search from "../../components/Search";
 
 function CheckinCheckout() {
     const {
@@ -18,6 +23,25 @@ function CheckinCheckout() {
         totalPages,
         refetch: refetchBookings,
     } = useTodayBooking();
+
+    const { currentValue: search, handler: setSearch } = useUrl<string>({
+        field: "search",
+        defaultValue: "",
+    });
+
+    const { currentValue: status, handler: setStatus } = useUrl<string>({
+        field: "status",
+        defaultValue: "",
+    });
+
+    const statusOptions = [
+        { value: "", label: "All status" },
+        { value: BookingStatus.UNPAID, label: "Unpaid" },
+        { value: BookingStatus.PAID, label: "Paid" },
+        { value: BookingStatus.CHECKED_IN, label: "Checked In" },
+        { value: BookingStatus.COMPLETED, label: "Completed" },
+    ];
+
     const { todaySummary, refetch: refetchSummary } = useTodaySummary();
 
     // socket callbacks
@@ -36,14 +60,14 @@ function CheckinCheckout() {
 
     return (
         <Main>
-            <div className="max-w-6xl bg-card-bg p-6 rounded-xl shadow shadow-card w-full mx-auto mb-5">
-                <h2 className="text-2xl text-black font-bold mb-1">
-                    Check In / Check Out
-                </h2>
-            </div>
+            <Heading>
+                <h1 className="text-3xl font-bold text-text">
+                    Check In - Check Out
+                </h1>
+            </Heading>
 
             {/* Stats */}
-            <div className="max-w-6xl w-full mx-auto">
+            <div className="w-full mx-auto">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-5">
                     <StatCard
                         icon={<CiCalendar className="w-6 h-6 text-blue-600" />}
@@ -76,8 +100,28 @@ function CheckinCheckout() {
                 </div>
             </div>
 
+            {/* Filters */}
+            <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+                <div className="flex flex-col sm:flex-row gap-4">
+                    <div className="flex-1">
+                        <div className="relative">
+                            <Search value={search ?? ""} onChange={setSearch} />
+                        </div>
+                    </div>
+                    <div className="flex items-center gap-3">
+                        <Select
+                            name="status"
+                            value={status}
+                            onChange={setStatus}
+                            options={statusOptions}
+                            className="px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        />
+                    </div>
+                </div>
+            </div>
+
             {/* Booking list */}
-            <div className="max-w-6xl w-full mx-auto mt-6">
+            <div className="w-full mx-auto mt-6">
                 <BookingList
                     bookings={todayBookings || []}
                     loading={isLoading}
@@ -85,7 +129,7 @@ function CheckinCheckout() {
             </div>
 
             {/* Pagination */}
-            <div className="max-w-6xl w-full mx-auto">
+            <div className="w-full mx-auto">
                 <Pagination
                     className="flex justify-between mb-5 mt-4"
                     totalPages={totalPages}

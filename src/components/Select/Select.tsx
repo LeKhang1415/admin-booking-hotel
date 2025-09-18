@@ -1,13 +1,16 @@
 import { type SelectHTMLAttributes } from "react";
 import { type RegisterOptions, type UseFormRegister } from "react-hook-form";
 
-type Props = SelectHTMLAttributes<HTMLSelectElement> & {
+type Option = { value: string | number; label: string };
+
+type Props = Omit<SelectHTMLAttributes<HTMLSelectElement>, "onChange"> & {
     label?: string;
     name: string;
     rules?: RegisterOptions;
     errorMessage?: string;
+    onChange?: (value: string) => void;
     register?: UseFormRegister<any>;
-    options: { value: string | number; label: string }[];
+    options: Option[];
     placeholder?: string;
 };
 
@@ -19,8 +22,13 @@ export default function Select({
     errorMessage,
     options,
     placeholder,
+    onChange,
     ...rest
 }: Props) {
+    const registerProps: Partial<ReturnType<UseFormRegister<any>>> = register
+        ? register(name, rules)
+        : {};
+
     return (
         <div>
             {label && (
@@ -35,8 +43,12 @@ export default function Select({
             <select
                 id={name}
                 className="w-full border text-text border-border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-focus h-[40px] min-w-64 text-sm bg-card-bg hover:border-accent transition-colors"
-                {...(register ? register(name, rules) : {})}
+                {...registerProps}
                 {...rest}
+                onChange={(e) => {
+                    registerProps?.onChange?.(e);
+                    onChange?.(e.target.value);
+                }}
             >
                 {placeholder && (
                     <option value="" disabled hidden>
