@@ -3,6 +3,7 @@ import { setSelectedConversation } from "../../../store/slices/selectedConversat
 import classNames from "classnames";
 import type { Conversation } from "../../../types/chat.types";
 import type { RootState } from "../../../store";
+import { truncateText } from "../../../utils/utils";
 
 export default function ConversationItem({
     conversation,
@@ -30,14 +31,14 @@ export default function ConversationItem({
     return (
         <li
             className={classNames(
-                "cursor-pointer hover:opacity-90 p-3 rounded-lg shadow-sm",
+                "cursor-pointer hover:opacity-90 p-3 rounded-lg shadow-sm overflow-hidden",
                 isActive ? "bg-gray-200" : "bg-white"
             )}
             onClick={handleClick}
         >
             <div className="flex items-center gap-3">
                 {/* Avatar chữ cái đầu */}
-                <div className="w-10 h-10 rounded-full flex items-center justify-center bg-gradient-to-br from-accent to-accent-600">
+                <div className="w-10 h-10 rounded-full hidden md:flex items-center justify-center bg-gradient-to-br from-accent to-accent-600">
                     <span className="text-sm font-semibold text-on-accent">
                         {conversation.userEmail.charAt(0).toUpperCase()}
                     </span>
@@ -45,10 +46,11 @@ export default function ConversationItem({
 
                 <div className="flex-1">
                     <h2 className="text-sm font-bold text-main truncate">
-                        {conversation.userEmail}
+                        {truncateText(conversation.userEmail, 25)}
                     </h2>
                     <p className="text-xs text-gray-600 truncate">
-                        {isFromMe ? "You: " : ""} {conversation.lastMessageText}
+                        {isFromMe ? "You: " : ""}{" "}
+                        {truncateText(conversation.lastMessageText, 20)}
                     </p>
                 </div>
 

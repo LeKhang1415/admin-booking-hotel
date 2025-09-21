@@ -3,7 +3,7 @@ import ChatHeader from "./ChatHeader";
 
 export default function ChatSection() {
     return (
-        <div className="bg-card-bg h-full rounded-lg py-4 shadow-lg flex flex-col">
+        <div className="bg-card-bg h-full rounded-lg pt-4 shadow-lg flex flex-col">
             <ChatHeader />
             <ChatBody />
         </div>

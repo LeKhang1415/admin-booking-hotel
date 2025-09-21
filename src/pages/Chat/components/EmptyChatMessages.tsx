@@ -6,7 +6,7 @@ export default function EmptyChatMessages({
     children: React.ReactNode;
 }) {
     return (
-        <div className="h-[calc(100%-32px)] flex items-center justify-center">
+        <div className="max-w-full h-[490px] flex items-center justify-center">
             <div>
                 <LuMessageSquareText size={220} className="mx-auto" />
                 <p className="text-center mt-2 font-medium text-slate-400">
