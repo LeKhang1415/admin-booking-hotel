@@ -5,7 +5,12 @@ import useBooking from "./hooks/useBooking";
 import DateTimePicker from "../../components/DateTimePicker";
 import Input from "../../components/Input";
 import Select from "../../components/Select";
-import { capitalizeFirst, formatCurrency, formatDate } from "../../utils/utils";
+import {
+    capitalizeFirst,
+    formatCurrency,
+    formatDate,
+    statusColor,
+} from "../../utils/utils";
 import useAllRooms from "../Rooms/hooks/useAllRooms";
 import type { SelectOptsType } from "../../types/utils.type";
 import usePreviewBooking from "./hooks/usePreviewBooking";
@@ -23,6 +28,7 @@ import Modal from "../../components/Modal";
 import RejectContent from "./components/RejectContent";
 import MarkAsPaidContent from "./components/MarkAsPaidContent";
 import toast from "react-hot-toast";
+import classNames from "classnames";
 
 interface BookingFormData {
     roomId: string;
@@ -36,20 +42,12 @@ interface BookingFormData {
     endTime: Date;
 }
 
-const statusColor: Record<BookingStatus, string> = {
-    [BookingStatus.UNPAID]: "bg-danger text-on-danger",
-    [BookingStatus.PAID]: "bg-success text-on-success",
-    [BookingStatus.CHECKED_IN]: "bg-accent text-on-accent",
-    [BookingStatus.COMPLETED]: "bg-warm text-white",
-    [BookingStatus.CANCELLED]: "bg-gray-300 text-gray-600",
-    [BookingStatus.REJECTED]: "bg-gray-500 text-gray-100",
-};
-
 function UpdateBooking() {
     const { id } = useParams<{ id: string }>();
     const { booking, isLoading } = useBooking(id);
     const { rooms } = useAllRooms();
     const navigate = useNavigate();
+    const bookingStatus = statusColor[booking!.bookingStatus];
 
     const { mutate: updateBooking, isPending: isUpdating } = useUpdateBooking(
         id!,
@@ -172,7 +170,7 @@ function UpdateBooking() {
 
     const isDaily = displayStayType === StayType.DAILY;
     const price = isDaily ? displayRoom.pricePerDay : displayRoom.pricePerHour;
-    const unit = isDaily ? "ngày" : "giờ";
+    const unit = isDaily ? "day" : "hours";
 
     const onSubmit = (data: BookingFormData) => {
         // Chuyển đổi dữ liệu form thành format UpdateBookingDto
@@ -207,12 +205,13 @@ function UpdateBooking() {
                 </div>
                 <div className="flex items-center gap-4">
                     <span
-                        className={`px-3 py-1 rounded-md text-xs font-semibold uppercase tracking-wide ${
-                            statusColor[booking.bookingStatus] ||
-                            "bg-elevated text-text"
-                        }`}
+                        className={classNames(
+                            "block px-4 py-2 text-center rounded-xl capitalize font-semibold text-sm",
+                            bookingStatus?.bg,
+                            bookingStatus?.text
+                        )}
                     >
-                        {capitalizeFirst(booking.bookingStatus)}
+                        {booking.bookingStatus}
                     </span>
                 </div>
             </div>

@@ -1,4 +1,4 @@
-import { formatDate, capitalizeFirst } from "../../../utils/utils";
+import { formatDate, statusColor } from "../../../utils/utils";
 import Menus from "../../../components/Menus";
 import { FiEdit, FiTrash2 } from "react-icons/fi";
 import Table from "../../../components/Table";
@@ -8,22 +8,13 @@ import {
     StayType,
     type Booking,
 } from "../../../types/booking.types";
-import { MdCalendarToday } from "react-icons/md";
-import { TbClockHour10 } from "react-icons/tb";
 import { useNavigate } from "react-router-dom";
 import { FaMoneyBill } from "react-icons/fa";
-
-const statusColor: Record<BookingStatus, string> = {
-    [BookingStatus.UNPAID]: "bg-danger text-white",
-    [BookingStatus.PAID]: "bg-success text-white",
-    [BookingStatus.CHECKED_IN]: "bg-accent text-black",
-    [BookingStatus.COMPLETED]: "bg-muted text-white",
-    [BookingStatus.CANCELLED]: "bg-border text-text",
-    [BookingStatus.REJECTED]: "bg-border text-text",
-};
+import classNames from "classnames";
 
 function BookingRow({ booking }: { booking: Booking }) {
     const { customer, room } = booking;
+    const bookingStatus = statusColor[booking.bookingStatus];
     const navigate = useNavigate();
 
     return (
@@ -64,30 +55,26 @@ function BookingRow({ booking }: { booking: Booking }) {
 
             {/* Stay type */}
             <div className="flex items-center gap-2">
-                {booking.stayType === StayType.DAILY ? (
-                    <MdCalendarToday className="w-4 h-4 text-muted-2" />
-                ) : (
-                    <TbClockHour10 className="w-4 h-4 text-muted-2" />
-                )}
-                <div className="uppercase font-semibold text-muted">
+                <span className="inline-block px-3 py-1 bg-purple-100 text-purple-800 text-sm rounded-full capitalize">
                     {booking.stayType}
-                </div>
+                </span>
             </div>
 
             {/* Guests */}
             <div className="text-muted text-sm">
-                {booking.numberOfGuest} khách
+                {booking.numberOfGuest} guests
             </div>
 
             {/* Status */}
             <div>
                 <span
-                    className={`px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wide shadow-md ${
-                        statusColor[booking.bookingStatus] ||
-                        "bg-elevated text-text"
-                    }`}
+                    className={classNames(
+                        "block px-4 py-1 text-center rounded-xl capitalize font-semibold text-sm",
+                        bookingStatus?.bg,
+                        bookingStatus?.text
+                    )}
                 >
-                    {capitalizeFirst(booking.bookingStatus)}
+                    {booking.bookingStatus}
                 </span>
             </div>
 

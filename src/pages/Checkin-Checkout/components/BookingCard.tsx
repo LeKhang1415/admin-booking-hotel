@@ -7,34 +7,13 @@ import {
     StayType,
     type Booking,
 } from "../../../types/booking.types";
-import { formatCurrency, formatDate } from "../../../utils/utils";
+import { formatCurrency, formatDate, statusColor } from "../../../utils/utils";
 import Button from "../../../components/Button";
 
 import Modal from "../../../components/Modal";
 import CheckInModalContent from "./CheckInModalContent";
 import CheckOutModalContent from "./CheckOutModalContent";
-
-const statusStyles: Record<BookingStatus, string> = {
-    [BookingStatus.UNPAID]: "bg-red-100 text-red-600 border border-red-200",
-    [BookingStatus.PAID]: "bg-green-100 text-green-600 border border-green-200",
-    [BookingStatus.CHECKED_IN]:
-        "bg-blue-100 text-blue-600 border border-blue-200",
-    [BookingStatus.COMPLETED]:
-        "bg-gray-100 text-gray-600 border border-gray-200",
-    [BookingStatus.CANCELLED]:
-        "bg-neutral-100 text-neutral-500 border border-neutral-200",
-    [BookingStatus.REJECTED]:
-        "bg-neutral-100 text-neutral-500 border border-neutral-200",
-};
-
-const statusText: Record<BookingStatus, string> = {
-    [BookingStatus.UNPAID]: "Unpaid",
-    [BookingStatus.PAID]: "Paid",
-    [BookingStatus.CHECKED_IN]: "Checked In",
-    [BookingStatus.COMPLETED]: "Completed",
-    [BookingStatus.CANCELLED]: "Cancelled",
-    [BookingStatus.REJECTED]: "Rejected",
-};
+import classNames from "classnames";
 
 interface BookingCardProps {
     booking: Booking;
@@ -43,6 +22,7 @@ interface BookingCardProps {
 
 function BookingCard({ booking, loading = false }: BookingCardProps) {
     const navigate = useNavigate();
+    const bookingStatus = statusColor[booking.bookingStatus];
 
     return (
         <div className="p-6 bg-card-bg text-text border-b border-border transition-colors">
@@ -73,12 +53,13 @@ function BookingCard({ booking, loading = false }: BookingCardProps) {
                         </div>
 
                         <span
-                            className={`px-4 py-2 rounded-md text-sm font-medium border ${
-                                statusStyles[booking.bookingStatus]
-                            }`}
+                            className={classNames(
+                                "block px-4 py-2 text-center rounded-xl capitalize font-semibold text-sm",
+                                bookingStatus?.bg,
+                                bookingStatus?.text
+                            )}
                         >
-                            {statusText[booking.bookingStatus] ??
-                                booking.bookingStatus}
+                            {booking.bookingStatus}
                         </span>
                     </div>
 

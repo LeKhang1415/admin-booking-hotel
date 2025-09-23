@@ -14,6 +14,7 @@ import { useAppSelector } from "./hooks/redux";
 import Login from "./pages/Login";
 import { PersistGate } from "redux-persist/integration/react";
 import LoginLayout from "./layout/LoginLayout";
+import NotFound from "./pages/NotFound";
 
 function ProtectedRoutes() {
     const { isAuthenticated } = useAppSelector((state) => state.auth);
@@ -32,6 +33,7 @@ function App() {
             <PersistGate persistor={persistor}>
                 <BrowserRouter>
                     <Routes>
+                        <Route path="*" element={<NotFound />} />
                         {/* Routes cho user chưa đăng nhập */}
                         <Route element={<RejectedRoutes />}>
                             <Route element={<LoginLayout />}>
@@ -60,12 +62,6 @@ function App() {
                                 ))}
                             </Route>
                         </Route>
-
-                        {/* Catch all route - redirect về login nếu không match */}
-                        <Route
-                            path="*"
-                            element={<Navigate to="/login" replace />}
-                        />
                     </Routes>
                 </BrowserRouter>
 

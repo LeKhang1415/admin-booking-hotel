@@ -51,6 +51,16 @@ function ChatBody() {
         };
     }, [selectedConversation.id]);
 
+    if (!selectedConversation?.id) {
+        return (
+            <div className="flex align-center justify-center h-full">
+                <EmptyChatMessages>
+                    No conversation selected. Pick a chat to start messaging!
+                </EmptyChatMessages>
+            </div>
+        );
+    }
+
     if (isLoading) return <div>Loading...</div>;
 
     return (

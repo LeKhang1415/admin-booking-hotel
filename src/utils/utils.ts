@@ -1,4 +1,5 @@
 import { format } from "date-fns";
+import { BookingStatus } from "../types/booking.types";
 
 export function formatCurrency(value: number): string {
     return value.toLocaleString("vi-VN", {
@@ -99,3 +100,34 @@ export function truncateText(text: string, maxLength: number) {
     if (!text) return "";
     return text.length > maxLength ? text.slice(0, maxLength) + "..." : text;
 }
+
+export const statusColor = {
+    [BookingStatus.UNPAID]: {
+        bg: "bg-yellow-100 hover:bg-yellow-200",
+        text: "text-yellow-800",
+    },
+    [BookingStatus.PAID]: {
+        bg: "bg-green-100 hover:bg-green-200",
+        text: "text-green-800",
+    },
+    [BookingStatus.CHECKED_IN]: {
+        bg: "bg-purple-100 hover:bg-purple-200",
+        text: "text-purple-800",
+    },
+    [BookingStatus.COMPLETED]: {
+        bg: "bg-blue-100 hover:bg-blue-200",
+        text: "text-blue-800",
+    },
+    [BookingStatus.CANCELLED]: {
+        bg: "bg-red-100 hover:bg-red-200",
+        text: "text-red-800",
+    },
+    [BookingStatus.REJECTED]: {
+        bg: "bg-orange-100 hover:bg-orange-200",
+        text: "text-orange-800",
+    },
+    [BookingStatus.NO_SHOW]: {
+        bg: "bg-gray-100 hover:bg-gray-200",
+        text: "text-gray-800",
+    },
+};

@@ -88,7 +88,7 @@ function Bookings() {
             {!isLoading && (
                 <div className="flex-1 mt-4">
                     <Menus>
-                        <Table columns="2fr 1.5fr 1.25fr 2fr 1fr 1fr 1fr 0.75fr">
+                        <Table columns="2fr 1.5fr 1.25fr 2fr 1fr 1fr 1.25fr 0.75fr">
                             <Table.Header>
                                 <div>User</div>
                                 <div>Room</div>

@@ -6,7 +6,7 @@ import { PiUsersThreeThin } from "react-icons/pi";
 import { MdBedroomChild } from "react-icons/md";
 import { MdOutlineRateReview, MdOutlineRoomPreferences } from "react-icons/md";
 import { BsBuildingCheck } from "react-icons/bs";
-import { MdOutlinePayment } from "react-icons/md";
+import { FaFacebookMessenger } from "react-icons/fa";
 
 import Dashboard from "../pages/Dashboard";
 import Rooms from "../pages/Rooms";
@@ -19,8 +19,7 @@ import AvailableRooms from "../pages/Bookings/AvailableRooms";
 import CreateBooking from "../pages/Bookings/CreateBooking";
 import UpdateBooking from "../pages/Bookings/UpdateBooking";
 import CheckinCheckout from "../pages/Checkin-Checkout";
-import Payment from "../pages/Payment";
-import PaymentDetail from "../pages/Payment/PaymentDetail";
+import PaymentDetail from "../pages/Checkin-Checkout/PaymentDetail";
 import Chat from "../pages/Chat";
 
 type NavLink = {
@@ -70,11 +69,10 @@ export const links: NavLink[] = [
         label: "reviews",
         icon: MdOutlineRateReview,
     },
-
     {
-        href: "/payment",
-        label: "payment",
-        icon: MdOutlinePayment,
+        href: "/chat",
+        label: "chat",
+        icon: FaFacebookMessenger,
     },
 ];
 
@@ -123,10 +121,7 @@ export const routes: Routes[] = [
         path: "users",
         element: Users,
     },
-    {
-        path: "payment",
-        element: Payment,
-    },
+
     {
         path: "payment/:bookingId",
         element: PaymentDetail,

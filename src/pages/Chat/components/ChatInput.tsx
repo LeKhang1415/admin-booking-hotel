@@ -7,7 +7,6 @@ import {
     stopTyping,
 } from "../../../services/chatSocket";
 import useDebounce from "../../../hooks/useDebounce";
-import { IoImagesOutline } from "react-icons/io5";
 import { IoMdSend } from "react-icons/io";
 
 function ChatInput() {
@@ -17,6 +16,10 @@ function ChatInput() {
     const { selectedConversation } = useSelector(
         (state: RootState) => state.selectedConversation
     );
+
+    if (!selectedConversation?.id) {
+        return null;
+    }
 
     const debouncedText = useDebounce(text, 1500);
 
@@ -56,10 +59,6 @@ function ChatInput() {
     return (
         <form onSubmit={handleSend} className="px-4 mt-auto">
             <div className="flex items-center gap-3">
-                <input type="file" id="file" hidden />
-                <label htmlFor="file" className="cursor-pointer">
-                    <IoImagesOutline size={24} />
-                </label>
                 <input
                     ref={inputRef}
                     onChange={(e) => setText(e.target.value)}

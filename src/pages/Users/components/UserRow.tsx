@@ -6,8 +6,6 @@ import UpdateUserContent from "./UpdateUserContent";
 import DeleteUserContent from "./DeleteUserContent";
 import type { User } from "../../../types/user.type";
 import { MdOutlineMail } from "react-icons/md";
-import { SiStaffbase } from "react-icons/si";
-import { RiCustomerService2Fill } from "react-icons/ri";
 
 function UserRow({ user }: { user: User }) {
     return (
@@ -27,12 +25,7 @@ function UserRow({ user }: { user: User }) {
 
             {/* Role */}
             <div className="flex items-center gap-2 py-3">
-                {user.role === "Staff" ? (
-                    <SiStaffbase className="w-4 h-4 text-blue-500" />
-                ) : (
-                    <RiCustomerService2Fill className="w-4 h-4 text-green-500" />
-                )}
-                <span className="text-sm font-medium text-muted-2">
+                <span className="inline-block px-3 py-1 bg-green-100 text-green-800 text-sm rounded-full capitalize">
                     {user.role}
                 </span>
             </div>

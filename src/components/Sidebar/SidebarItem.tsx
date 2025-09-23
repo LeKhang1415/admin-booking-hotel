@@ -24,10 +24,10 @@ export default function SidebarItem({ href, icon, text }: SidebarItemProps) {
                 }
             `}
         >
-            <Link to={href} className="flex items-center w-full py-3 px-3">
+            <Link to={href} className="flex items-center w-full p-1.5">
                 <div
                     className={`
-                        p-2 rounded-lg transition-all duration-200 flex-shrink-0
+                        p-1.5 rounded-lg transition-all duration-200 flex-shrink-0
                         ${
                             isActive
                                 ? "bg-white/20 text-black shadow-sm"
