@@ -17,34 +17,36 @@ function ChatInput() {
         (state: RootState) => state.selectedConversation
     );
 
-    if (!selectedConversation?.id) {
+    if (!selectedConversation?.conversation?.id) {
         return null;
     }
+
+    const conversationId = selectedConversation.conversation.id;
 
     const debouncedText = useDebounce(text, 1500);
 
     useEffect(() => {
-        if (!selectedConversation?.id) return;
+        if (conversationId) return;
         if (text) {
-            startTyping(selectedConversation.id);
+            startTyping(conversationId);
         }
-    }, [text, selectedConversation?.id]);
+    }, [text, selectedConversation?.conversation?.id]);
 
     // Ngừng gõ → gửi stopTyping
     useEffect(() => {
-        if (!selectedConversation?.id) return;
+        if (!conversationId) return;
         if (!debouncedText) {
-            stopTyping(selectedConversation.id);
+            stopTyping(conversationId);
         }
-    }, [debouncedText, selectedConversation?.id]);
+    }, [debouncedText, conversationId]);
 
     const handleSend = (e?: React.FormEvent) => {
         e?.preventDefault();
-        if (!text.trim() || !selectedConversation?.id) return;
+        if (!text.trim() || !conversationId) return;
 
-        sendMessage(selectedConversation.id, text.trim());
+        sendMessage(conversationId, text.trim());
         setText("");
-        stopTyping(selectedConversation.id);
+        stopTyping(conversationId);
 
         inputRef.current?.focus();
     };

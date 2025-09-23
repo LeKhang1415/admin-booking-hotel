@@ -16,14 +16,14 @@ export default function ConversationItem({
         (state: RootState) => state.selectedConversation
     );
 
-    const isActive = selectedConversation.id === conversation.id;
+    const isActive = selectedConversation?.conversation?.id === conversation.id;
     const isFromMe = user?.email === conversation.lastMessageFromEmail;
 
     const handleClick = () => {
         dispatch(
             setSelectedConversation({
-                id: conversation.id,
-                userEmail: conversation.userEmail,
+                conversation,
+                name: conversation.user.name,
             })
         );
     };
@@ -40,13 +40,13 @@ export default function ConversationItem({
                 {/* Avatar chữ cái đầu */}
                 <div className="w-10 h-10 rounded-full hidden md:flex items-center justify-center bg-gradient-to-br from-accent to-accent-600">
                     <span className="text-sm font-semibold text-on-accent">
-                        {conversation.userEmail.charAt(0).toUpperCase()}
+                        {conversation.user.email.charAt(0).toUpperCase()}
                     </span>
                 </div>
 
                 <div className="flex-1">
                     <h2 className="text-sm font-bold text-main truncate">
-                        {truncateText(conversation.userEmail, 25)}
+                        {truncateText(conversation.user.name, 25)}
                     </h2>
                     <p className="text-xs text-gray-600 truncate">
                         {isFromMe ? "You: " : ""}{" "}

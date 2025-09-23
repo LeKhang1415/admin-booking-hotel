@@ -17,8 +17,21 @@ function ChatBody() {
     const { selectedConversation } = useSelector(
         (state: RootState) => state.selectedConversation
     );
+
+    if (!selectedConversation.conversation) {
+        return (
+            <div className="flex align-center justify-center h-full">
+                <EmptyChatMessages>
+                    No conversation selected. Pick a chat to start messaging!
+                </EmptyChatMessages>
+            </div>
+        );
+    }
+
+    const conversationId = selectedConversation.conversation.id;
+
     const { messages: initialMessages, isLoading } = useMessages(
-        selectedConversation.id,
+        conversationId,
         20
     );
     const [messages, setMessages] = useState<Message[]>([]);
@@ -37,29 +50,19 @@ function ChatBody() {
     }, [initialMessages]);
 
     useEffect(() => {
-        if (!selectedConversation?.id) return;
+        if (!conversationId) return;
 
-        joinRoom(selectedConversation.id);
+        joinRoom(conversationId);
 
         listenNewMessage((msg) => {
             setMessages((prev) => [...prev, msg]);
         });
 
         return () => {
-            leaveRoom(selectedConversation.id);
+            leaveRoom(conversationId);
             offNewMessage();
         };
-    }, [selectedConversation.id]);
-
-    if (!selectedConversation?.id) {
-        return (
-            <div className="flex align-center justify-center h-full">
-                <EmptyChatMessages>
-                    No conversation selected. Pick a chat to start messaging!
-                </EmptyChatMessages>
-            </div>
-        );
-    }
+    }, [conversationId]);
 
     if (isLoading) return <div>Loading...</div>;
 

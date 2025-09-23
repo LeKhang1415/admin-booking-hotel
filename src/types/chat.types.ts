@@ -1,3 +1,5 @@
+import type { User } from "./user.type";
+
 export const MessageStatus = {
     SENT: "sent",
     DELIVERED: "delivered",
@@ -8,8 +10,8 @@ export type MessageStatus = (typeof MessageStatus)[keyof typeof MessageStatus];
 
 export interface Conversation {
     id: string;
-    userEmail: string;
-    adminEmail: string;
+    user: User;
+    admin: User;
     lastMessageText: string;
     lastMessageFromEmail: string;
     lastMessageAt: string;
@@ -30,8 +32,8 @@ export type ConversationResponse = {
 };
 
 export type SelectedConversationType = {
-    id: string;
-    userEmail: string;
+    conversation?: Conversation;
+    name: string;
 };
 
 export type Attachment = {

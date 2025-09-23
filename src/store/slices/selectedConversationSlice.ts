@@ -8,8 +8,8 @@ type SelectedConversationState = {
 
 const initialState: SelectedConversationState = {
     selectedConversation: {
-        id: "",
-        userEmail: "",
+        conversation: undefined,
+        name: "",
     },
 };
 
