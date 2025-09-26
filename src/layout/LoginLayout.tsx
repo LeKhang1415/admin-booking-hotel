@@ -8,9 +8,6 @@ export default function LoginLayout() {
                 {/* Logo + Title */}
                 <div className="mt-10 text-center font-bold tracking-tight">
                     <div className="flex items-center justify-center gap-3">
-                        <div className="w-10 h-10 rounded-full flex items-center justify-center bg-accent text-black font-bold shadow-card">
-                            L
-                        </div>
                         <h2 className="uppercase text-sm leading-5 font-bold text-text">
                             Travl Hotel
                         </h2>
@@ -18,7 +15,7 @@ export default function LoginLayout() {
                 </div>
 
                 {/* Welcome Text */}
-                <div className="flex flex-col items-center mt-2">
+                <div className="flex flex-col items-center">
                     <h3 className="text-3xl font-bold text-text">Welcome!</h3>
                     <p className="mt-2 text-sm text-muted">
                         Sign in to continue to your dashboard
@@ -27,7 +24,7 @@ export default function LoginLayout() {
             </div>
 
             {/* Login Form */}
-            <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-sm">
+            <div className="sm:mx-auto sm:w-full sm:max-w-sm">
                 <Outlet />
             </div>
         </div>

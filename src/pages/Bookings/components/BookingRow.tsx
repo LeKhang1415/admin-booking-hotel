@@ -3,13 +3,9 @@ import Menus from "../../../components/Menus";
 import { FiEdit, FiTrash2 } from "react-icons/fi";
 import Table from "../../../components/Table";
 import Modal from "../../../components/Modal";
-import {
-    BookingStatus,
-    StayType,
-    type Booking,
-} from "../../../types/booking.types";
+import { BookingStatus, type Booking } from "../../../types/booking.types";
 import { useNavigate } from "react-router-dom";
-import { FaMoneyBill } from "react-icons/fa";
+import { FaEye, FaMoneyBill } from "react-icons/fa";
 import classNames from "classnames";
 
 function BookingRow({ booking }: { booking: Booking }) {
@@ -97,6 +93,15 @@ function BookingRow({ booking }: { booking: Booking }) {
                                     Payment
                                 </Menus.Button>
                             )}
+                            {/* View */}
+                            <Menus.Button
+                                icon={<FaEye />}
+                                onClick={() =>
+                                    navigate(`/bookings/${booking.bookingId}`)
+                                }
+                            >
+                                Detail
+                            </Menus.Button>
                             {/* Edit */}
                             <Menus.Button
                                 icon={<FiEdit />}

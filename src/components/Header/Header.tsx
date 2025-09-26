@@ -31,7 +31,7 @@ export default function Header() {
     }
 
     return (
-        <header className="bg-surface/70 backdrop-blur-sm border-b border-border">
+        <header className="bg-surface backdrop-blur-sm border-b border-border">
             <div className="flex items-center justify-between px-4 lg:px-6 py-3">
                 {/* Left: Menu toggle + breadcrumb */}
                 <div className="flex items-center gap-4">

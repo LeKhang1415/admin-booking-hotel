@@ -45,6 +45,8 @@ export type Booking = {
     payments: Payment[];
     totalAmount: number;
     extraCharges: number;
+    createdDate: string;
+    updateDate: string;
 };
 
 export type BookingResponse = {
