@@ -17,8 +17,6 @@ function BookingDetail() {
 
     if (isLoading) return <Spinner center />;
 
-    console.log(booking);
-
     return (
         <Main>
             {booking && (

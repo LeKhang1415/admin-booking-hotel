@@ -5,4 +5,6 @@ export const CHAT_EVENTS = {
     LEFT_CONVERSATION: "leaveRoom",
     TYPING: "typing",
     INBOX_UPDATED: "inboxUpdated",
+    MARK_AS_READ: "markAsRead",
+    CONVERSATION_READ: "conversationRead",
 };

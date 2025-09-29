@@ -2,9 +2,14 @@ import { useEffect } from "react";
 import Main from "../../components/Main";
 import ChatSection from "./components/ChatSection";
 import ConversationsSection from "./components/ConversationsSection";
-import { connectSocket } from "../../services/chatSocket";
+import {
+    connectSocket,
+    listenConversationRead,
+    listenInboxUpdated,
+    offConversationRead,
+    offInboxUpdated,
+} from "../../services/chatSocket";
 import { useNavigate } from "react-router-dom";
-import { CHAT_EVENTS } from "../../services/socket/events"; // nơi bạn config React Query
 import { useQueryClient } from "@tanstack/react-query";
 
 function Chat() {
@@ -14,13 +19,17 @@ function Chat() {
     useEffect(() => {
         const socket = connectSocket(navigate);
 
-        socket?.on(CHAT_EVENTS.INBOX_UPDATED, (msg) => {
-            console.log("📩 Inbox updated:", msg);
+        listenInboxUpdated(() => {
+            queryClient.invalidateQueries({ queryKey: ["conversations"] });
+        });
+
+        listenConversationRead(() => {
             queryClient.invalidateQueries({ queryKey: ["conversations"] });
         });
 
         return () => {
-            socket?.off(CHAT_EVENTS.INBOX_UPDATED);
+            offInboxUpdated();
+            offConversationRead();
             socket?.disconnect();
         };
     }, [navigate]);

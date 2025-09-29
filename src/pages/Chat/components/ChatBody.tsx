@@ -8,27 +8,25 @@ import {
     joinRoom,
     leaveRoom,
     listenNewMessage,
+    listenTyping,
+    markAsRead,
     offNewMessage,
+    offTyping,
 } from "../../../services/chatSocket";
 import type { Message } from "../../../types/chat.types";
 import EmptyChatMessages from "./EmptyChatMessages";
+import TypingIndicator from "./TypingIndicator";
 
 function ChatBody() {
     const { selectedConversation } = useSelector(
         (state: RootState) => state.selectedConversation
     );
 
-    if (!selectedConversation.conversation) {
-        return (
-            <div className="flex align-center justify-center h-full">
-                <EmptyChatMessages>
-                    No conversation selected. Pick a chat to start messaging!
-                </EmptyChatMessages>
-            </div>
-        );
-    }
+    const conversationId = selectedConversation.conversation?.id;
 
-    const conversationId = selectedConversation.conversation.id;
+    const userEmail = selectedConversation.conversation?.user.email;
+
+    const userName = selectedConversation.conversation?.user.name;
 
     const { messages: initialMessages, isLoading } = useMessages(
         conversationId,
@@ -37,6 +35,23 @@ function ChatBody() {
     const [messages, setMessages] = useState<Message[]>([]);
     const bottomRef = useRef<HTMLDivElement | null>(null);
 
+    const [isTyping, setIsTyping] = useState<boolean>(false);
+
+    useEffect(() => {
+        listenTyping((typingData: any) => {
+            if (typingData.conversationId === conversationId) {
+                if (typingData.isTyping) {
+                    setIsTyping(true);
+                } else {
+                    setIsTyping(false);
+                }
+            }
+        });
+
+        return () => {
+            offTyping();
+        };
+    }, [conversationId]);
     useEffect(() => {
         if (bottomRef.current) {
             bottomRef.current.scrollIntoView({ behavior: "smooth" });
@@ -58,11 +73,23 @@ function ChatBody() {
             setMessages((prev) => [...prev, msg]);
         });
 
+        markAsRead(conversationId, userEmail);
+
         return () => {
             leaveRoom(conversationId);
             offNewMessage();
         };
     }, [conversationId]);
+
+    if (!conversationId) {
+        return (
+            <div className="flex align-center justify-center h-full">
+                <EmptyChatMessages>
+                    No conversation selected. Pick a chat to start messaging!
+                </EmptyChatMessages>
+            </div>
+        );
+    }
 
     if (isLoading) return <div>Loading...</div>;
 
@@ -81,7 +108,7 @@ function ChatBody() {
                     <div ref={bottomRef} />
                 </div>
             )}
-
+            {isTyping && <TypingIndicator userName={userName} />}
             <div className="px-2 py-3 border-t border-border">
                 <ChatInput />
             </div>

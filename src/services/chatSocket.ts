@@ -84,20 +84,33 @@ export const sendMessage = (
 
 // Bật typing
 export const startTyping = (conversationId: string, toUserEmail?: string) => {
-    socket?.emit(CHAT_EVENTS.TYPING, {
-        conversationId,
-        toUserEmail,
-        isTyping: true,
-    });
+    socket?.emit(
+        CHAT_EVENTS.TYPING,
+        JSON.stringify({
+            conversationId,
+            toUserEmail,
+            isTyping: true,
+        })
+    );
 };
 
 // Tắt typing
 export const stopTyping = (conversationId: string, toUserEmail?: string) => {
-    socket?.emit(CHAT_EVENTS.TYPING, {
-        conversationId,
-        toUserEmail,
-        isTyping: false,
-    });
+    socket?.emit(
+        CHAT_EVENTS.TYPING,
+        JSON.stringify({
+            conversationId,
+            toUserEmail,
+            isTyping: false,
+        })
+    );
+};
+
+export const listenTyping = (cb: (data: any) => void) => {
+    socket?.on(CHAT_EVENTS.TYPING, cb);
+};
+export const offTyping = () => {
+    socket?.off(CHAT_EVENTS.TYPING);
 };
 
 // Listen message
@@ -116,4 +129,20 @@ export const listenInboxUpdated = (cb: (msg: any) => void) => {
 };
 export const offInboxUpdated = () => {
     socket?.off("inboxUpdated");
+};
+
+// Đánh dấu đã đọc
+export const markAsRead = (conversationId: string, toUserEmail?: string) => {
+    socket?.emit(
+        CHAT_EVENTS.MARK_AS_READ,
+        JSON.stringify({ conversationId, toUserEmail })
+    );
+};
+
+// Listen conversation read (admin)
+export const listenConversationRead = (cb: (msg: any) => void) => {
+    socket?.on(CHAT_EVENTS.CONVERSATION_READ, cb);
+};
+export const offConversationRead = () => {
+    socket?.off(CHAT_EVENTS.CONVERSATION_READ);
 };
