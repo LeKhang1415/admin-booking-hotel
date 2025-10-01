@@ -15,6 +15,8 @@ import Login from "./pages/Login";
 import { PersistGate } from "redux-persist/integration/react";
 import LoginLayout from "./layout/LoginLayout";
 import NotFound from "./pages/NotFound";
+import PaymentSuccess from "./pages/Payment/PaymentSuccess";
+import PaymentFailure from "./pages/Payment/PaymentFailure";
 
 function ProtectedRoutes() {
     const { isAuthenticated } = useAppSelector((state) => state.auth);
@@ -43,6 +45,14 @@ function App() {
 
                         {/* Routes cho user đã đăng nhập */}
                         <Route element={<ProtectedRoutes />}>
+                            <Route
+                                path="/payment-success"
+                                element={<PaymentSuccess />}
+                            />
+                            <Route
+                                path="/payment-fail"
+                                element={<PaymentFailure />}
+                            />
                             <Route path="/" element={<MainLayout />}>
                                 {/* Điều hướng mặc định */}
                                 <Route
