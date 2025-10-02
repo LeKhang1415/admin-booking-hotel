@@ -3,21 +3,36 @@ import { useEffect } from "react";
 import { io, Socket } from "socket.io-client";
 
 export function useBookingSocket(
-    onNoShow: () => void,
-    onCheckedOut: () => void
+    onNoShow: (booking: any) => void,
+    onCheckedOut: (booking: any) => void
 ) {
     useEffect(() => {
-        const socket: Socket = io("/booking", {
+        const socket: Socket = io("http://localhost:3000/booking", {
+            transports: ["websocket"],
             autoConnect: true,
-            path: "/socket.io",
         });
 
-        socket.on("connect", () => console.log("socket connected", socket.id));
-        socket.on("bookingNoShow", () => onNoShow());
-        socket.on("bookingCheckedOut", () => onCheckedOut());
+        socket.on("connect", () =>
+            console.log("✅ socket connected:", socket.id)
+        );
 
-        socket.on("disconnect", (r) => console.log("socket disconnect", r));
-        socket.on("connect_error", (err) => console.error("socket err", err));
+        socket.on("bookingNoShow", (booking) => {
+            console.log("📢 bookingNoShow:", booking);
+            onNoShow(booking);
+        });
+
+        socket.on("bookingCheckedOut", (booking) => {
+            console.log("📢 bookingCheckedOut:", booking);
+            onCheckedOut(booking);
+        });
+
+        socket.on("disconnect", (reason) =>
+            console.log("❌ socket disconnected:", reason)
+        );
+
+        socket.on("connect_error", (err) =>
+            console.error("⚠️ socket connection error:", err)
+        );
 
         return () => {
             socket.disconnect();
