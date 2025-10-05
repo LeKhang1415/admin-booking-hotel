@@ -4,6 +4,7 @@ import Modal from "../../../components/Modal";
 import Button from "../../../components/Button";
 import { formatDate } from "../../../utils/utils";
 import { FiCheckCircle } from "react-icons/fi";
+import toast from "react-hot-toast";
 
 type CheckInModalContentProps = {
     booking: Booking;
@@ -16,10 +17,18 @@ function CheckInModalContent({ booking, close }: CheckInModalContentProps) {
     const handleConfirm = () => {
         checkIn(booking.bookingId, {
             onSuccess: () => {
+                toast.success("Check-in successful!");
                 close?.();
+            },
+            onError: (error: any) => {
+                const message =
+                    error?.response?.data?.message ||
+                    "Check-in failed. Please try again.";
+                toast.error(message);
             },
         });
     };
+
     const now = new Date();
 
     return (
@@ -50,7 +59,7 @@ function CheckInModalContent({ booking, close }: CheckInModalContentProps) {
                             {formatDate(booking.endTime, true, true)}
                         </span>
                     </div>
-                    {/* Notification box */}
+
                     <div className="rounded-md border border-green-300 bg-green-50 p-3 text-sm text-green-700 flex items-start gap-2">
                         <FiCheckCircle className="h-5 w-5 mt-0.5 flex-shrink-0" />
                         <p>
@@ -60,6 +69,7 @@ function CheckInModalContent({ booking, close }: CheckInModalContentProps) {
                     </div>
                 </div>
             </Modal.Body>
+
             <Modal.Footer>
                 <Button
                     onClick={close}
@@ -71,7 +81,7 @@ function CheckInModalContent({ booking, close }: CheckInModalContentProps) {
                 <Button
                     onClick={handleConfirm}
                     isLoading={isCheckingIn}
-                    className=" w-full py-2 rounded-md bg-green-600 hover:bg-green-400"
+                    className="w-full py-2 rounded-md bg-green-600 hover:bg-green-500"
                 >
                     Confirm Check-In
                 </Button>

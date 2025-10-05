@@ -1,3 +1,4 @@
+import type { Booking } from "./booking.types";
 import type { Room } from "./room.types";
 
 export interface Review {
@@ -10,9 +11,9 @@ export interface Review {
         email: string;
     };
     room: Room;
-    booking: {
-        bookingId: string;
-    };
+    booking: Booking;
+    createdAt: string;
+    updatedAt: string;
     isActive: boolean;
 }
 

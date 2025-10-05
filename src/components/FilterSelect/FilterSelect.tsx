@@ -1,11 +1,13 @@
+import classNames from "classnames";
 import type { SelectOptsType } from "../../types/utils.type";
 
 export type FilterSelectProps = {
-    label: string;
+    label?: string;
     value: string;
     onChange: (value: string) => void;
     options: SelectOptsType[];
     placeholder?: string;
+    className?: string;
 };
 
 export default function FilterSelect({
@@ -14,6 +16,7 @@ export default function FilterSelect({
     onChange,
     options,
     placeholder = "All",
+    className,
 }: FilterSelectProps) {
     return (
         <div>
@@ -26,7 +29,10 @@ export default function FilterSelect({
             <select
                 value={value}
                 onChange={(e) => onChange(e.target.value)}
-                className="w-full border text-text border-border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-focus h-[40px] min-w-64 text-sm bg-card-bg hover:border-accent transition-colors"
+                className={classNames(
+                    "w-full border text-text border-border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-focus h-[40px] text-sm bg-card-bg hover:border-accent transition-colors",
+                    className
+                )}
             >
                 <option key="all" value="">
                     {placeholder}

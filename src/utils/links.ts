@@ -19,7 +19,7 @@ import AvailableRooms from "../pages/Bookings/AvailableRooms";
 import CreateBooking from "../pages/Bookings/CreateBooking";
 import UpdateBooking from "../pages/Bookings/UpdateBooking";
 import CheckinCheckout from "../pages/Checkin-Checkout";
-import PaymentDetail from "../pages/Checkin-Checkout/PaymentDetail";
+import PaymentDetail from "../pages/Payment/PaymentDetail";
 import Chat from "../pages/Chat";
 
 type NavLink = {

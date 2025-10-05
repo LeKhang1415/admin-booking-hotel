@@ -6,11 +6,11 @@ import { CiCreditCard1, CiUser } from "react-icons/ci";
 import { LuBanknote } from "react-icons/lu";
 import { FaRegCheckCircle } from "react-icons/fa";
 import Main from "../../components/Main";
-import useVnpayPayment from "./hooks/useVnpayPayment";
+import useVnpayPayment from "../Checkin-Checkout/hooks/useVnpayPayment";
 import Modal from "../../components/Modal";
-import CashPaymentContent from "./components/CashPaymentContent";
+import CashPaymentContent from "../Checkin-Checkout/components/CashPaymentContent";
 
-export default function PaymentPage() {
+export default function PaymentDetail() {
     const { bookingId } = useParams();
     const { booking } = useBooking(bookingId);
     const vnpayMutation = useVnpayPayment();

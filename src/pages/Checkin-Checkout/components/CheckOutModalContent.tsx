@@ -4,6 +4,7 @@ import Modal from "../../../components/Modal";
 import Button from "../../../components/Button";
 import { formatDate } from "../../../utils/utils";
 import { FiLogOut } from "react-icons/fi";
+import toast from "react-hot-toast";
 
 type CheckOutModalContentProps = {
     booking: Booking;
@@ -17,6 +18,12 @@ function CheckOutModalContent({ booking, close }: CheckOutModalContentProps) {
         checkOut(booking.bookingId, {
             onSuccess: () => {
                 close?.();
+            },
+            onError: (error: any) => {
+                const message =
+                    error?.response?.data?.message ||
+                    "Check-out failed. Please try again.";
+                toast.error(message);
             },
         });
     };

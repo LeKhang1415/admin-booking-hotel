@@ -9,18 +9,30 @@ function useReviews() {
     const { currentValue } = useUrl<number>({ field: "page", defaultValue: 1 });
     const page = Number(currentValue);
     const queryClient = useQueryClient();
-    const queryParams = useQueryParams<ReviewListQuery>();
+    const queryParams = useQueryParams<ReviewListQuery & { sort?: string }>();
+
+    let sortBy: "createdAt" | "rating" = "createdAt";
+    let sortOrder: "ASC" | "DESC" = "DESC";
+
+    if (queryParams.sort) {
+        if (queryParams.sort.startsWith("-")) {
+            sortBy = queryParams.sort.substring(1) as "createdAt" | "rating";
+            sortOrder = "DESC";
+        } else {
+            sortBy = queryParams.sort as "createdAt" | "rating";
+            sortOrder = "ASC";
+        }
+    }
 
     const queryConfig: ReviewListQuery = omitBy(
         {
             limit: Number(queryParams.limit) || 10,
             page: Number(queryParams.page) || 1,
-
             roomId: queryParams.roomId,
             userId: queryParams.userId,
             rating: queryParams.rating ? Number(queryParams.rating) : undefined,
-            sortBy: queryParams.sortBy || "createdAt",
-            sortOrder: queryParams.sortOrder || "DESC",
+            sortBy,
+            sortOrder,
         },
         isUndefined
     );
