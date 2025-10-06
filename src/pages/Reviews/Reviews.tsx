@@ -1,5 +1,6 @@
 import Heading from "../../components/Heading";
 import Main from "../../components/Main";
+import Menus from "../../components/Menus";
 import Pagination from "../../components/Pagination";
 import Spinner from "../../components/Spinner";
 import Table from "../../components/Table";
@@ -28,32 +29,35 @@ function Reviews() {
             )}
             {!isLoading && (
                 <div className="flex-1 mt-4">
-                    <Table columns="1.5fr 1fr 0.75fr 1.5fr 1fr 0.75fr">
-                        <Table.Header>
-                            <div>User</div>
-                            <div>Room</div>
-                            <div>Rating</div>
-                            <div>Comment</div>
-                            <div>Create At</div>
-                            <div>Action</div>
-                        </Table.Header>
+                    <Menus>
+                        <Table columns="1.5fr 1fr 0.75fr 1.5fr 1fr 0.75fr 0.75fr">
+                            <Table.Header>
+                                <div>User</div>
+                                <div>Room</div>
+                                <div>Rating</div>
+                                <div>Comment</div>
+                                <div>Create At</div>
+                                <div>Status</div>
+                                <div>Action</div>
+                            </Table.Header>
 
-                        <Table.Body
-                            data={reviews}
-                            render={(review) => (
-                                <ReviewRow
-                                    key={review.id}
-                                    review={review}
-                                ></ReviewRow>
-                            )}
-                        />
-                        <Table.Footer>
-                            <Pagination
-                                className="flex justify-between mb-[20px] px-5 mt-2"
-                                totalPages={totalPages}
+                            <Table.Body
+                                data={reviews}
+                                render={(review) => (
+                                    <ReviewRow
+                                        key={review.id}
+                                        review={review}
+                                    ></ReviewRow>
+                                )}
                             />
-                        </Table.Footer>
-                    </Table>
+                            <Table.Footer>
+                                <Pagination
+                                    className="flex justify-between mb-[20px] px-5 mt-2"
+                                    totalPages={totalPages}
+                                />
+                            </Table.Footer>
+                        </Table>
+                    </Menus>
                 </div>
             )}
         </Main>

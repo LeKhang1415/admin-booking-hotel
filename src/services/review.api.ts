@@ -7,4 +7,10 @@ export const reviewApi = {
         http.get<SuccessResponseApi<ReviewResponse>>("/reviews", {
             params,
         }),
+
+    deleteReview: (reviewId: string) => http.delete(`/reviews/${reviewId}`),
+    toggleReviewStatus: (reviewId: string) =>
+        http.post<SuccessResponseApi<ReviewResponse>>(
+            `/reviews/${reviewId}/toggle-status`
+        ),
 };

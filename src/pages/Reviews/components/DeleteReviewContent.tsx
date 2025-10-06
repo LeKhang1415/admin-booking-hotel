@@ -1,32 +1,27 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { reviewApi } from "../../../services/review.api";
 import type { AxiosError } from "axios";
 import toast from "react-hot-toast";
-import Modal from "../../../components/Modal";
 import Button from "../../../components/Button";
-import { typeRoomApi } from "../../../services/type-room.api";
+import Modal from "../../../components/Modal";
 
-type DeleteTypeRoomContentProps = {
-    typeRoomId: string;
-    name: string;
+type DeleteReviewContentProps = {
+    reviewId: string;
     close?: () => void;
 };
 
-function DeleteTypeRoomContent({
-    typeRoomId,
-    name,
-    close,
-}: DeleteTypeRoomContentProps) {
+function DeleteReviewContent({ reviewId, close }: DeleteReviewContentProps) {
     const queryClient = useQueryClient();
 
     const { mutate, isPending } = useMutation({
-        mutationFn: () => typeRoomApi.deleteTypeRoom(typeRoomId),
+        mutationFn: () => reviewApi.deleteReview(reviewId),
     });
 
     const handleDelete = () => {
         mutate(undefined, {
             onSuccess: () => {
-                toast.success("Type room deleted successfully!");
-                queryClient.invalidateQueries({ queryKey: ["typeRooms"] });
+                toast.success("Review deleted successfully!");
+                queryClient.invalidateQueries({ queryKey: ["reviews"] });
                 close?.();
             },
             onError: (error) => {
@@ -34,8 +29,7 @@ function DeleteTypeRoomContent({
                 const errorMessage = axiosError.response?.data
                     ?.message as string;
                 toast.error(
-                    errorMessage ||
-                        "Failed to delete type room. Please try again!"
+                    errorMessage || "Failed to delete Review. Please try again!"
                 );
             },
         });
@@ -43,7 +37,7 @@ function DeleteTypeRoomContent({
 
     return (
         <>
-            <Modal.Header>Delete Type Room</Modal.Header>
+            <Modal.Header>Delete Review</Modal.Header>
 
             <Modal.Body>
                 <div className="p-4 md:p-5 text-center ">
@@ -63,7 +57,7 @@ function DeleteTypeRoomContent({
                         />
                     </svg>
                     <h3 className="mb-5 text-lg font-normal text-red-500">
-                        {`Are you sure you want to delete ${name}?`}
+                        {`Are you sure you want to delete this review?`}
                     </h3>
                 </div>
             </Modal.Body>
@@ -82,11 +76,11 @@ function DeleteTypeRoomContent({
                     onClick={handleDelete}
                     isLoading={isPending}
                 >
-                    Delete Type Room
+                    Delete Review
                 </Button>
             </Modal.Footer>
         </>
     );
 }
 
-export default DeleteTypeRoomContent;
+export default DeleteReviewContent;

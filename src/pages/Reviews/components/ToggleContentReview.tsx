@@ -1,41 +1,44 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { reviewApi } from "../../../services/review.api";
 import type { AxiosError } from "axios";
 import toast from "react-hot-toast";
-import Modal from "../../../components/Modal";
 import Button from "../../../components/Button";
-import { typeRoomApi } from "../../../services/type-room.api";
+import Modal from "../../../components/Modal";
 
-type DeleteTypeRoomContentProps = {
-    typeRoomId: string;
-    name: string;
+type ToggleContentReviewProps = {
+    reviewId: string;
+    isActive: boolean;
     close?: () => void;
 };
 
-function DeleteTypeRoomContent({
-    typeRoomId,
-    name,
+function ToggleContentReview({
+    reviewId,
+    isActive,
     close,
-}: DeleteTypeRoomContentProps) {
+}: ToggleContentReviewProps) {
     const queryClient = useQueryClient();
 
     const { mutate, isPending } = useMutation({
-        mutationFn: () => typeRoomApi.deleteTypeRoom(typeRoomId),
+        mutationFn: () => reviewApi.toggleReviewStatus(reviewId),
     });
 
-    const handleDelete = () => {
+    const handleToggle = () => {
         mutate(undefined, {
             onSuccess: () => {
-                toast.success("Type room deleted successfully!");
-                queryClient.invalidateQueries({ queryKey: ["typeRooms"] });
+                toast.success(
+                    `Review ${
+                        isActive ? "deactivated" : "activated"
+                    } successfully!`
+                );
+                queryClient.invalidateQueries({ queryKey: ["reviews"] });
                 close?.();
             },
             onError: (error) => {
                 const axiosError = error as AxiosError<{ message: string }>;
-                const errorMessage = axiosError.response?.data
-                    ?.message as string;
+                const errorMessage = axiosError.response?.data?.message;
                 toast.error(
                     errorMessage ||
-                        "Failed to delete type room. Please try again!"
+                        "Failed to update review status. Please try again!"
                 );
             },
         });
@@ -43,12 +46,16 @@ function DeleteTypeRoomContent({
 
     return (
         <>
-            <Modal.Header>Delete Type Room</Modal.Header>
+            <Modal.Header>
+                {isActive ? "Deactivate Review" : "Activate Review"}
+            </Modal.Header>
 
             <Modal.Body>
-                <div className="p-4 md:p-5 text-center ">
+                <div className="p-4 md:p-5 text-center">
                     <svg
-                        className="mx-auto mb-4 text-red-500 w-12 h-12"
+                        className={`mx-auto mb-4 ${
+                            isActive ? "text-red-500" : "text-green-500"
+                        } w-12 h-12`}
                         aria-hidden="true"
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
@@ -62,8 +69,15 @@ function DeleteTypeRoomContent({
                             d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
                         />
                     </svg>
-                    <h3 className="mb-5 text-lg font-normal text-red-500">
-                        {`Are you sure you want to delete ${name}?`}
+
+                    <h3
+                        className={`mb-5 text-lg font-normal ${
+                            isActive ? "text-red-500" : "text-green-600"
+                        }`}
+                    >
+                        {isActive
+                            ? "Are you sure you want to deactivate this review?"
+                            : "Do you want to activate this review?"}
                     </h3>
                 </div>
             </Modal.Body>
@@ -79,14 +93,19 @@ function DeleteTypeRoomContent({
                 </Button>
                 <Button
                     type="button"
-                    onClick={handleDelete}
+                    onClick={handleToggle}
                     isLoading={isPending}
+                    className={
+                        isActive
+                            ? "bg-red-500 hover:bg-red-600"
+                            : "bg-green-500 hover:bg-green-600"
+                    }
                 >
-                    Delete Type Room
+                    {isActive ? "Deactivate" : "Activate"}
                 </Button>
             </Modal.Footer>
         </>
     );
 }
 
-export default DeleteTypeRoomContent;
+export default ToggleContentReview;
