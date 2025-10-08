@@ -1,3 +1,4 @@
+import { get } from "lodash";
 import type {
     BookingListQuery,
     BookingResponse,
@@ -8,6 +9,8 @@ import type {
     UpdateBookingDto,
     TodayBookingQuery,
     BookingSummary,
+    TopRoom,
+    BookingYearSummary,
 } from "../types/booking.types";
 import type { SuccessResponseApi } from "../types/utils.type";
 import http from "../utils/http";
@@ -53,10 +56,21 @@ export const bookingApi = {
         http.post<SuccessResponseApi<Booking>>(`/booking/check-out/${id}`),
 
     preview: (data: BookingPreviewDto, isUpdate = false) => {
-        console.log("📦 Preview payload gửi lên:", data, "isUpdate:", isUpdate);
         return http.post<SuccessResponseApi<BookingPreviewResponse>>(
             `/booking/preview?isUpdate=${isUpdate}`,
             data
         );
     },
+    getTopRooms: (params?: { year?: number; limit?: number }) =>
+        http.get<SuccessResponseApi<TopRoom[]>>("/booking/top-rooms", {
+            params,
+        }),
+
+    getIncomeStatistics: (params: { year: number }) =>
+        http.get<SuccessResponseApi<BookingYearSummary>>(
+            "/booking/top-monthly-bookings",
+            {
+                params,
+            }
+        ),
 };

@@ -121,3 +121,27 @@ export type TodayBookingQuery = {
     page?: number;
     limit?: number;
 };
+
+export interface TopRoom {
+    roomId: string;
+    roomName: string;
+    roomPricePerHour: number;
+    roomImage: string;
+    totalBookings: number;
+    totalRevenue: number;
+}
+
+export interface MonthlyData {
+    month: number;
+    bookingCount: number;
+    totalRevenue: number;
+}
+
+export interface BookingYearSummary {
+    year: number;
+    totalBookings: number;
+    totalRevenue: number;
+    averageBookingsPerMonth: number;
+    averageRevenuePerMonth: number;
+    monthlyData: MonthlyData[];
+}
