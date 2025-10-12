@@ -1,4 +1,3 @@
-import { get } from "lodash";
 import type {
     BookingListQuery,
     BookingResponse,
@@ -11,6 +10,7 @@ import type {
     BookingSummary,
     TopRoom,
     BookingYearSummary,
+    BookingStatusRatio,
 } from "../types/booking.types";
 import type { SuccessResponseApi } from "../types/utils.type";
 import http from "../utils/http";
@@ -69,6 +69,14 @@ export const bookingApi = {
     getIncomeStatistics: (params: { year: number }) =>
         http.get<SuccessResponseApi<BookingYearSummary>>(
             "/booking/top-monthly-bookings",
+            {
+                params,
+            }
+        ),
+
+    getStatusRatio: (params: { year: number }) =>
+        http.get<SuccessResponseApi<BookingStatusRatio[]>>(
+            "/booking/status-ratio",
             {
                 params,
             }

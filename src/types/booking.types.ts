@@ -145,3 +145,8 @@ export interface BookingYearSummary {
     averageRevenuePerMonth: number;
     monthlyData: MonthlyData[];
 }
+
+export interface BookingStatusRatio {
+    status: BookingStatus;
+    count: number;
+}
